@@ -82,4 +82,10 @@ public class LoginController {
 
         return result;
     }
+
+    @GetMapping("logout")
+    public String logout() {
+        ShiroUtils.logout();
+        return "redirect:login.html";
+    }
 }
