@@ -16,5 +16,9 @@ public class SystemController {
         return "index";
     }
 
+    @RequestMapping("/login.html")
+    public String login() {
+        return "login";
+    }
 
 }
