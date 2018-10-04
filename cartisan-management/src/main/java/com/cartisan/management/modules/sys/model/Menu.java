@@ -1,9 +1,10 @@
 package com.cartisan.management.modules.sys.model;
 
-import com.sun.tracing.dtrace.ArgsAttributes;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>Title: Menu</p>
@@ -12,9 +13,21 @@ import lombok.NoArgsConstructor;
  * @author colin
  */
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
 public class Menu {
+    public Menu(Long menuId, Long parentId, String parentName, String name,
+                String icon, String url, String perms, int order, int type) {
+        this.menuId = menuId;
+        this.parentId = parentId;
+        this.parentName = parentName;
+        this.name = name;
+        this.icon = icon;
+        this.url = url;
+        this.perms = perms;
+        this.order = order;
+        this.type = type;
+    }
+
     private Long menuId;
     private Long parentId;
     private String parentName;
@@ -24,4 +37,6 @@ public class Menu {
     private String perms;
     private int order;
     private int type;
+
+    private List<Menu> list = new ArrayList<>();
 }

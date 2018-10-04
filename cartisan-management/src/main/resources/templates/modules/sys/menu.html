@@ -70,24 +70,28 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
             <!-- sidebar menu: : style can be found in sidebar.less -->
-            <ul class="sidebar-menu" data-widget="tree">
+            <ul class="sidebar-menu" data-widget="tree" id="menus">
                 <li class="header">导航菜单</li>
-                <li>
-                    <a href="/index.html">
-                        <i class="fa fa-dashboard"></i> <span>控制台</span>
-                    </a>
-                </li>
-                <li class="treeview active">
-                    <a href="#">
-                        <i class="fa fa-cog"></i> <span>系统管理</span>
-                        <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="active"><a href="/modules/sys/menu.html"><i class="fa fa-th-list"></i> 菜单管理</a></li>
-                    </ul>
-                </li>
+
+                <!-- vue生成的菜单 -->
+                <menu-item :item="item" v-for="item in menuList"></menu-item>
+
+                <!--<li>-->
+                    <!--<a href="/index.html">-->
+                        <!--<i class="fa fa-dashboard"></i> <span>控制台</span>-->
+                    <!--</a>-->
+                <!--</li>-->
+                <!--<li class="treeview active">-->
+                    <!--<a href="#">-->
+                        <!--<i class="fa fa-cog"></i> <span>系统管理</span>-->
+                        <!--<span class="pull-right-container">-->
+              <!--<i class="fa fa-angle-left pull-right"></i>-->
+            <!--</span>-->
+                    <!--</a>-->
+                    <!--<ul class="treeview-menu">-->
+                        <!--<li class="active"><a href="/modules/sys/menu.html"><i class="fa fa-th-list"></i> 菜单管理</a></li>-->
+                    <!--</ul>-->
+                <!--</li>-->
             </ul>
         </section>
         <!-- /.sidebar -->
@@ -150,6 +154,12 @@
 
 <!-- jQuery 3 -->
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<!-- 生产环境版本，优化了尺寸和速度 -->
+<!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
+
 <!-- Bootstrap 3.3.7 -->
 <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- SlimScroll -->
@@ -163,6 +173,7 @@
 <script src="/plugins/treegrid/js/jquery.treegrid.bootstrap3.js"></script>
 <script src="/plugins/treegrid/js/jquery.treegrid.extension.js"></script>
 <script src="/plugins/treegrid/js/tree.table.js"></script>
+<script src="/modules/sys/sidebar-menu.js"></script>
 <script th:src="@{/modules/sys/menu.js(_=${#execInfo.now.getTimeInMillis()})}"></script>
 <script>
     $(document).ready(function () {
