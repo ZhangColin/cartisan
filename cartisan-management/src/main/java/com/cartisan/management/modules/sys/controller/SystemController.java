@@ -1,7 +1,8 @@
 package com.cartisan.management.modules.sys.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * <p>Title: SystemController</p>
@@ -11,12 +12,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 public class SystemController {
-    @RequestMapping(value = {"/", "index.html"})
+    @GetMapping("/modules/{module}/{page}.html")
+    public String module(@PathVariable("module") String module,
+                         @PathVariable("page") String page) {
+        return "modules/" + module + "/" + page;
+    }
+
+    @GetMapping(value = {"/", "index.html"})
     public String index() {
         return "index";
     }
 
-    @RequestMapping("/login.html")
+    @GetMapping("/login.html")
     public String login() {
         return "login";
     }
