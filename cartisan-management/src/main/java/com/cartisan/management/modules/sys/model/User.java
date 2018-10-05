@@ -10,6 +10,14 @@ import lombok.Data;
  */
 @Data
 public class User {
+    public User() {
+    }
+
+    public User(Long userId, String username) {
+        this.userId = userId;
+        this.username = username;
+    }
+
     public Long userId;
     public String username;
     public String password;

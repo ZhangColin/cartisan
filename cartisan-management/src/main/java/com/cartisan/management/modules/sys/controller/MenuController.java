@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
  * @author colin
  */
 @RestController
-@RequestMapping("/sys/menu")
+@RequestMapping("/modules/sys/menu")
 public class MenuController {
     @GetMapping("/nav")
     public HashMap<String, Object> nav() {
@@ -48,7 +48,13 @@ public class MenuController {
         final Menu updateMenu = new Menu(5L, 3L, "菜单管理", "修改", "fa fa-pencil-square-o", "", "sys:menu:update", 2, 2);
         final Menu deleteMenu = new Menu(6L, 3L, "菜单管理", "删除", "fa fa-trash-o", "", "sys:menu:delete", 3, 2);
 
-        menus.addAll(asList(dashboard, system, menu, addMenu, updateMenu, deleteMenu));
+        final Menu user = new Menu(7L, 2L, "系统管理", "用户管理", "fa fa-user", "/modules/sys/user.html", "sys:user:list", 1, 1);
+        final Menu addUser = new Menu(8L, 7L, "用户管理", "新增", "fa fa-plus", "", "sys:user:add", 1, 2);
+        final Menu updateUser = new Menu(9L, 7L, "用户管理", "修改", "fa fa-pencil-square-o", "", "sys:user:update", 2, 2);
+        final Menu deleteUser = new Menu(10L, 7L, "用户管理", "删除", "fa fa-trash-o", "", "sys:user:delete", 3, 2);
+
+
+        menus.addAll(asList(dashboard, system, menu, addMenu, updateMenu, deleteMenu, user, addUser, updateUser, deleteUser));
 
         return menus;
 
