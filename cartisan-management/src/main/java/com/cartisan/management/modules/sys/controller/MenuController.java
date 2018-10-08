@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.toList;
  * @author colin
  */
 @RestController
-@RequestMapping("/modules/sys/menu")
+@RequestMapping("/sys/menu")
 public class MenuController {
     @GetMapping("/nav")
     public HashMap<String, Object> nav() {
@@ -43,12 +43,12 @@ public class MenuController {
 
         final Menu dashboard = new Menu(1L, 0L, "", "控制台", "fa fa-dashboard", "/index.html", "sys:dashboard", 1, 1);
         final Menu system = new Menu(2L, 0L, "", "系统管理", "fa fa-cog", "", "", 2, 0);
-        final Menu menu = new Menu(3L, 2L, "系统管理", "菜单管理", "fa fa-th-list", "/modules/sys/menu.html", "sys:menu:list", 1, 1);
+        final Menu menu = new Menu(3L, 2L, "系统管理", "菜单管理", "fa fa-th-list", "sys/menu.html", "sys:menu:list", 1, 1);
         final Menu addMenu = new Menu(4L, 3L, "菜单管理", "新增", "fa fa-plus", "", "sys:menu:add", 1, 2);
         final Menu updateMenu = new Menu(5L, 3L, "菜单管理", "修改", "fa fa-pencil-square-o", "", "sys:menu:update", 2, 2);
         final Menu deleteMenu = new Menu(6L, 3L, "菜单管理", "删除", "fa fa-trash-o", "", "sys:menu:delete", 3, 2);
 
-        final Menu user = new Menu(7L, 2L, "系统管理", "用户管理", "fa fa-user", "/modules/sys/user.html", "sys:user:list", 1, 1);
+        final Menu user = new Menu(7L, 2L, "系统管理", "用户管理", "fa fa-user", "sys/user.html", "sys:user:list", 1, 1);
         final Menu addUser = new Menu(8L, 7L, "用户管理", "新增", "fa fa-plus", "", "sys:user:add", 1, 2);
         final Menu updateUser = new Menu(9L, 7L, "用户管理", "修改", "fa fa-pencil-square-o", "", "sys:user:update", 2, 2);
         final Menu deleteUser = new Menu(10L, 7L, "用户管理", "删除", "fa fa-trash-o", "", "sys:user:delete", 3, 2);

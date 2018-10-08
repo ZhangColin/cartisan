@@ -7,21 +7,19 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/bower_components/bootstrap/dist/css/bootstrap.min.css}">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" th:href="@{/bower_components/font-awesome/css/font-awesome.min.css}">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="/bower_components/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" th:href="@{/bower_components/Ionicons/css/ionicons.min.css}">
     <!-- DataTables -->
-    <link rel="stylesheet" href="/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css}">
 
     <!-- Theme style -->
-    <link rel="stylesheet" href="/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" th:href="@{/dist/css/AdminLTE.min.css}">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="/dist/css/skins/_all-skins.min.css">
-
-    <link rel="stylesheet" href="/plugins/treegrid/css/jquery.treegrid.css">
+    <link rel="stylesheet" th:href="@{/dist/css/skins/_all-skins.min.css}">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -40,7 +38,7 @@
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="../../index2.html" class="logo">
+        <a th:href="@{index2.html}" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>CA</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -59,7 +57,7 @@
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="/logout"><i class="fa fa-sign-out"></i> 退出</a>
+                        <a th:href="@{/logout}"><i class="fa fa-sign-out"></i> 退出</a>
                     </li>
                 </ul>
             </div>
@@ -94,7 +92,7 @@
                 <small>列表</small>
             </h1>
             <ol class="breadcrumb">
-                <li><a href="/index.html"><i class="fa fa-dashboard"></i> 首页</a></li>
+                <li><a th:href="@{/index.html}"><i class="fa fa-dashboard"></i> 首页</a></li>
                 <li><a href="#">系统管理</a></li>
                 <li class="active">用户管理</li>
             </ol>
@@ -154,7 +152,7 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
-<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<script th:src="@{/bower_components/jquery/dist/jquery.min.js}"></script>
 
 <!-- 开发环境版本，包含了有帮助的命令行警告 -->
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -162,18 +160,18 @@
 <!--<script src="https://cdn.jsdelivr.net/npm/vue"></script>-->
 
 <!-- Bootstrap 3.3.7 -->
-<script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script th:src="@{/bower_components/bootstrap/dist/js/bootstrap.min.js}"></script>
 <!-- DataTables -->
-<script src="/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="/bower_components/datatables.net/js/dataTables.setting.js"></script>
-<script src="/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script th:src="@{/bower_components/datatables.net/js/jquery.dataTables.min.js}"></script>
+<script th:src="@{/bower_components/datatables.net/js/dataTables.setting.js}"></script>
+<script th:src="@{/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js}"></script>
 <!-- SlimScroll -->
-<script src="/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script th:src="@{/bower_components/jquery-slimscroll/jquery.slimscroll.min.js}"></script>
 <!-- FastClick -->
-<script src="/bower_components/fastclick/lib/fastclick.js"></script>
+<script th:src="@{/bower_components/fastclick/lib/fastclick.js}"></script>
 <!-- AdminLTE App -->
-<script src="/dist/js/adminlte.min.js"></script>
-<script src="/modules/sys/sidebar-menu.js"></script>
+<script th:src="@{/dist/js/adminlte.min.js}"></script>
+<script th:src="@{/modules/sys/sidebar-menu.js}"></script>
 <script  th:src="@{/modules/sys/user.js(_=${#execInfo.now.getTimeInMillis()})}"></script>
 </body>
 </html>

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 @Controller
 public class SystemController {
-    @GetMapping("/modules/{module}/{page}.html")
+    @GetMapping("/{module}/{page}.html")
     public String module(@PathVariable("module") String module,
                          @PathVariable("page") String page) {
         return "modules/" + module + "/" + page;

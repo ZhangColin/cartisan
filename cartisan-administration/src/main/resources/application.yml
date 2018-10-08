@@ -1,0 +1,4 @@
+server:
+  port: 60001
+  servlet:
+    context-path: /administration

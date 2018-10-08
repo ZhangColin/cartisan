@@ -18,7 +18,7 @@ import static java.util.Arrays.asList;
  * @author colin
  */
 @RestController
-@RequestMapping("/modules/sys/user")
+@RequestMapping("/sys/user")
 public class UserController {
 
     @GetMapping("/list")
