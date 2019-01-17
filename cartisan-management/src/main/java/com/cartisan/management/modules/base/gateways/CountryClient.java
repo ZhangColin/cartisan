@@ -4,6 +4,7 @@ import com.cartisan.common.entity.Result;
 import com.cartisan.management.modules.base.dtos.CountryDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ public class CountryClient {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Cacheable(value = "cache:management:base:gateways:CountryClient:findCountries", key = "#continentId")
     public List<CountryDto> findCountries(Long continentId) {
 
         return restTemplate.exchange(

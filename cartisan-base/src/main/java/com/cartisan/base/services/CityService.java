@@ -6,6 +6,7 @@ import com.cartisan.base.repositories.CityRepository;
 import com.cartisan.common.entity.PageResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,6 +29,7 @@ public class CityService {
     @Autowired
     private CityRepository cityRepository;
 
+    @Cacheable(value="cache:base:services:CityService:findCities", key="#countryId")
     public List<CityDto> findCities(Long countryId) {
         return cityRepository.findByCountryId(countryId).stream()
                 .map(CityDto::convertFrom).collect(Collectors.toList());

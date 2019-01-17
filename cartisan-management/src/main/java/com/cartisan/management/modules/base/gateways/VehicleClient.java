@@ -2,6 +2,7 @@ package com.cartisan.management.modules.base.gateways;
 
 import com.cartisan.common.entity.Result;
 import com.cartisan.management.modules.base.dtos.VehicleDto;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 @FeignClient(name = "cartisan-base")
 public interface VehicleClient {
+    @Cacheable(value = "cache:management:base:gateways:VehicleClient:findVehicles", key = "#countryId")
     @GetMapping("/base/vehicle")
     Result<List<VehicleDto>> findVehicles(@RequestParam Long countryId);
 }

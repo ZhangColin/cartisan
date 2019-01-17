@@ -4,6 +4,7 @@ import com.cartisan.common.entity.PageResult;
 import com.cartisan.common.entity.Result;
 import com.cartisan.management.modules.base.dtos.AirportDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -24,19 +25,14 @@ public class AirportClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    public PageResult<List<AirportDto>> findAirport(Long cityId, Integer currentPage, Integer pageSize) {
-        String params = "pageSize=" + pageSize + "&currentPage=" + currentPage;
-        if (cityId != null) {
-            params += "&cityId=" + cityId.toString();
-        }
-
-        final PageResult<List<AirportDto>> body = restTemplate.exchange(
-                "http://cartisan-base/base/airport?" + params,
+    @Cacheable(value = "cache:management:base:gateways:AirportClient:findAirport", key = "#cityId")
+    public List<AirportDto> findAirport(Long cityId) {
+        return restTemplate.exchange(
+                "http://cartisan-base/base/airport?cityId=" + cityId,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<PageResult<List<AirportDto>>>() {
+                new ParameterizedTypeReference<List<AirportDto>>() {
                 }).getBody();
-        return body;
 
     }
 

@@ -5,6 +5,7 @@ import com.cartisan.base.dtos.CountryDto;
 import com.cartisan.base.repositories.CountryRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class CountryService {
     @Autowired
     private CountryRepository countryRepository;
 
+    @Cacheable(value="cache:base:services:CountryService:findCountries", key="#continentId")
     public List<CountryDto> findCountries(Long continentId) {
         return countryRepository.findByContinentId(continentId)
                 .stream().map(CountryDto::convertFrom).collect(Collectors.toList());

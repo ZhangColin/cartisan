@@ -35,9 +35,8 @@ public class AirportController {
     private CountryClient countryClient;
 
     @GetMapping
-    public PageResult<List<AirportDto>> findAirports(Long cityId, Integer currentPage, Integer pageSize) {
-        final PageResult<List<AirportDto>> airport = airportClient.findAirport(cityId, currentPage, pageSize);
-        return airport;
+    public List<AirportDto> findAirports(Long cityId) {
+        return airportClient.findAirport(cityId);
     }
 
     @GetMapping("/search/{currentPage}/{pageSize}")

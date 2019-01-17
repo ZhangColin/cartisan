@@ -24,7 +24,7 @@ public class AirportController {
     private AirportService airportService;
 
     @GetMapping
-    public List<AirportDto> findAirports(Long cityId) {
+    public List<AirportDto> findAirports(@RequestParam Long cityId) {
         return airportService.findAirports(cityId);
     }
 

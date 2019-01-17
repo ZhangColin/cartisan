@@ -5,6 +5,7 @@ import com.cartisan.base.dtos.AirportDto;
 import com.cartisan.base.repositories.AirportRepository;
 import com.cartisan.common.entity.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class AirportService {
     @Autowired
     private AirportRepository airportRepository;
 
+    @Cacheable(value="cache:base:services:AirportService:findAirports", key="#cityId")
     public List<AirportDto> findAirports(Long cityId) {
         List<Airport> airports = airportRepository.findByCityId(cityId);
 

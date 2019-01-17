@@ -5,6 +5,7 @@ import com.cartisan.common.entity.Result;
 import com.cartisan.management.modules.base.dtos.CityDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -26,6 +27,7 @@ public class CityClient {
     @Autowired
     private RestTemplate restTemplate;
 
+    @Cacheable(value = "cache:management:base:gateways:CityClient:findCities", key = "#countryId")
     public List<CityDto> findCities(Long countryId) {
         RestTemplate restTemplate = new RestTemplate();
         String params = "";

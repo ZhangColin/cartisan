@@ -3,6 +3,7 @@ package com.cartisan.management.modules.base.gateways;
 import com.cartisan.common.entity.Result;
 import com.cartisan.management.modules.base.dtos.ContinentDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.core.ParameterizedTypeReference;
@@ -24,6 +25,7 @@ public class ContinentClient {
     @Autowired
     private LoadBalancerClient loadBalancerClient;
 
+    @Cacheable(value = "cache:management:base:gateways:ContinentClient:findContinents")
     public List<ContinentDto> findContinents() {
         final ServiceInstance serviceInstance = loadBalancerClient.choose("cartisan-base");
         final String url = String.format("http://%s:%s/base/continent",

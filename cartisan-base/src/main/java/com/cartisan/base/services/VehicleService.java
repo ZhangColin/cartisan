@@ -4,6 +4,7 @@ import com.cartisan.base.domains.Vehicle;
 import com.cartisan.base.dtos.VehicleDto;
 import com.cartisan.base.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class VehicleService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
+    @Cacheable(value="cache:base:services:VehicleService:findVehicles", key="#countryId")
     public List<VehicleDto> findVehicles(Long countryId) {
         List<Vehicle> vehicles;
         if (countryId == null) {

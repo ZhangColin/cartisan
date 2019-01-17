@@ -3,6 +3,7 @@ package com.cartisan.base.dtos;
 import com.cartisan.base.domains.Country;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * <p>Title: CountryDto</p>
@@ -12,6 +13,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class CountryDto {
     private Long id;
     private String code;
