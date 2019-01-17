@@ -17,7 +17,8 @@ import java.util.List;
  */
 @FeignClient(name = "cartisan-base")
 public interface VehicleClient {
-    @Cacheable(value = "cache:management:base:gateways:VehicleClient:findVehicles", key = "#countryId")
+    @Cacheable(value = "cache:management:base:gateways:VehicleClient:findVehicles",
+            key = "#countryId==null?'0':#countryId")
     @GetMapping("/base/vehicle")
     Result<List<VehicleDto>> findVehicles(@RequestParam Long countryId);
 }

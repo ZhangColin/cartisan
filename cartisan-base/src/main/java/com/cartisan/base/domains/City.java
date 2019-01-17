@@ -2,11 +2,9 @@ package com.cartisan.base.domains;
 
 import com.cartisan.common.domains.AbstractEntity;
 import lombok.Data;
+import org.hibernate.annotations.Where;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * <p>Title: Label</p>
@@ -16,10 +14,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "bas_cities")
+@Where(clause = "active=1 and deleted=0")
 @Data
 public class City extends AbstractEntity {
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "code")
     private String code;

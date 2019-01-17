@@ -5,9 +5,7 @@ import com.cartisan.common.entity.StatusCode;
 import com.cartisan.management.modules.base.dtos.VehicleDto;
 import com.cartisan.management.modules.base.gateways.VehicleClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,4 +27,5 @@ public class VehicleController {
         return new Result<>(true, StatusCode.OK, "查询成功",
                 vehicleClient.findVehicles(countryId).getData());
     }
+
 }
