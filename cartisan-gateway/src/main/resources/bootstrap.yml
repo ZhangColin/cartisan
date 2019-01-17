@@ -3,6 +3,6 @@ server:
 
 spring:
   application:
-    name: cartisan-gateway
+    name: gateway
   profiles:
     active: dev

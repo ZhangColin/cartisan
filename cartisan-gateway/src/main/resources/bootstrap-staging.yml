@@ -3,7 +3,7 @@ spring:
     config:
       discovery:
         enabled: true
-        service-id: CARTISAN-CONFIG
+        service-id: config
       profile: staging
 
 eureka:

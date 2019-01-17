@@ -36,7 +36,7 @@ public class CityClient {
         }
 
         return restTemplate.exchange(
-                "http://cartisan-base/base/city?" + params,
+                "http://base/city?" + params,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<Result<List<CityDto>>>() {
@@ -45,7 +45,7 @@ public class CityClient {
     }
 
     public PageResult<CityDto> searchCities(Long[] countryIds, String name, Integer currentPage, Integer pageSize) {
-        String url = String.format("http://cartisan-base/base/city/search/%s/%s", currentPage, pageSize);
+        String url = String.format("http://base/city/search/%s/%s", currentPage, pageSize);
 
         List<String> params = new ArrayList<>();
 

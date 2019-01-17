@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: cartisan-config
+    name: config
   cloud:
     config:
       server:
@@ -15,6 +15,7 @@ spring:
 eureka:
   client:
     service-url:
+      # 这个注册是通过容器编排来查找的，所以名称是容器名称，不是注册中心应用的名称
       defaultZone: http://cartisan-eureka1:8761/eureka,http://cartisan-eureka2:8762/eureka
   instance:
     prefer-ip-address: true

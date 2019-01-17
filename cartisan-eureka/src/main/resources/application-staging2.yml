@@ -2,7 +2,7 @@ server:
   port: 8762
 spring:
   application:
-    name: cartisan-eureka
+    name: eureka
 eureka:
   server:
     enable-self-preservation: false #生产中需要打开

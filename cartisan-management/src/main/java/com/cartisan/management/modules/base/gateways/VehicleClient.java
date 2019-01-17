@@ -15,11 +15,11 @@ import java.util.List;
  *
  * @author colin
  */
-@FeignClient(name = "cartisan-base")
+@FeignClient(name = "base")
 public interface VehicleClient {
     @Cacheable(value = "cache:management:base:gateways:VehicleClient:findVehicles",
             key = "#countryId==null?'0':#countryId")
-    @GetMapping("/base/vehicle")
+    @GetMapping("/vehicle")
     Result<List<VehicleDto>> findVehicles(@RequestParam Long countryId);
 }
 //@Component

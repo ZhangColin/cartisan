@@ -27,7 +27,7 @@ public class ContinentClient {
 
     @Cacheable(value = "cache:management:base:gateways:ContinentClient:findContinents")
     public List<ContinentDto> findContinents() {
-        final ServiceInstance serviceInstance = loadBalancerClient.choose("cartisan-base");
+        final ServiceInstance serviceInstance = loadBalancerClient.choose("base");
         final String url = String.format("http://%s:%s/base/continent",
                 serviceInstance.getHost(), serviceInstance.getPort());
 

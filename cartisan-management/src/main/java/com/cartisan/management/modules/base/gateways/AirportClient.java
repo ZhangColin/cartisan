@@ -28,7 +28,7 @@ public class AirportClient {
     @Cacheable(value = "cache:management:base:gateways:AirportClient:findAirport", key = "#cityId")
     public List<AirportDto> findAirport(Long cityId) {
         return restTemplate.exchange(
-                "http://cartisan-base/base/airport?cityId=" + cityId,
+                "http://base/airport?cityId=" + cityId,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<AirportDto>>() {
@@ -37,7 +37,7 @@ public class AirportClient {
     }
 
     public PageResult<AirportDto> searchAirports(Long[] cityIds, Integer currentPage, Integer pageSize) {
-        String url = String.format("http://cartisan-base/base/airport/search/%s/%s", currentPage, pageSize);
+        String url = String.format("http://base/airport/search/%s/%s", currentPage, pageSize);
         if (cityIds != null) {
             url += "?" + String.join("&",
                     Arrays.stream(cityIds).map(cityId -> "cityIds=" + cityId).collect(Collectors.toList()));

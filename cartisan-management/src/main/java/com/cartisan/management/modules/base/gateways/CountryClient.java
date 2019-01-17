@@ -28,7 +28,7 @@ public class CountryClient {
     public List<CountryDto> findCountries(Long continentId) {
 
         return restTemplate.exchange(
-                "http://cartisan-base/base/country?continentId=" + continentId,
+                "http://base/country?continentId=" + continentId,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<Result<List<CountryDto>>>() {
@@ -46,7 +46,7 @@ public class CountryClient {
         }
 
         return restTemplate.exchange(
-                "http://cartisan-base/base/country/search?" + String.join("&", params),
+                "http://base/country/search?" + String.join("&", params),
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<Result<List<CountryDto>>>() {

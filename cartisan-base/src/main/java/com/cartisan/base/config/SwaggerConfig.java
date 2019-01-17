@@ -1,6 +1,5 @@
 package com.cartisan.base.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -21,8 +20,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
-    @Value("${server.servlet.context-path}")
-    private String contextPath;
+//    @Value("${server.servlet.context-path}")
+//    private String contextPath;
 
     @Bean
     public Docket createRestApi() {
@@ -40,7 +39,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Cartisan base Restful APIs")
-                .description("查看数据源：<a href=\""+contextPath+"/druid/index.html\">druid</a>")
+//                .description("查看数据源：<a href=\""+contextPath+"/druid/index.html\">druid</a>")
                 .termsOfServiceUrl("http://www.cartisan.com")
                 .contact(new Contact("colin", "", "zhang_colin@163.com"))
                 .version("1.0")
