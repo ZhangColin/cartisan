@@ -28,4 +28,24 @@ public class VehicleController {
                 vehicleClient.findVehicles(countryId).getData());
     }
 
+    @PostMapping
+    public Result addVehicle(@RequestBody VehicleDto vehicleDto) {
+        vehicleClient.addVehicle(vehicleDto);
+
+        return new Result(true, StatusCode.OK, "添加成功");
+    }
+
+    @PutMapping("/{id}")
+    public Result editVehicle(@PathVariable Long id, @RequestBody VehicleDto vehicleDto) {
+        vehicleClient.editVehicle(id, vehicleDto);
+
+        return new Result(true, StatusCode.OK, "更新成功");
+    }
+
+    @DeleteMapping("/{id}")
+    public Result removeVehicle(@PathVariable long id) {
+        vehicleClient.removeVehicle(id);
+
+        return new Result(true, StatusCode.OK, "删除成功");
+    }
 }

@@ -8,14 +8,16 @@ export function searchVehicles(params) {
   });
 };
 
-export function save(vehicle) {
+export function saveVehicle(vehicle) {
   let method = 'post';
+  let url = '/vehicle';
   if (vehicle.id) {
-    method = 'get';
+    method = 'put';
+    url += '/' + vehicle.id;
   }
   return request({
-    url: '/vehicle',
+    url: url,
     method: method,
-    params: vehicle
+    data: vehicle
   });
 };

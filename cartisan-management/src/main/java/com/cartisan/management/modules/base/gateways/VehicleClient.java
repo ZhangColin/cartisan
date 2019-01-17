@@ -2,10 +2,10 @@ package com.cartisan.management.modules.base.gateways;
 
 import com.cartisan.common.entity.Result;
 import com.cartisan.management.modules.base.dtos.VehicleDto;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +21,18 @@ public interface VehicleClient {
             key = "#countryId==null?'0':#countryId")
     @GetMapping("/vehicle")
     Result<List<VehicleDto>> findVehicles(@RequestParam Long countryId);
+
+    @PostMapping("vehicle")
+    @CacheEvict(value="cache:management:base:gateways:VehicleClient:findVehicles", allEntries = true)
+    void addVehicle(@RequestBody VehicleDto vehicleDto);
+
+    @PutMapping("/vehicle/{id}")
+    @CacheEvict(value="cache:management:base:gateways:VehicleClient:findVehicles", allEntries = true)
+    void editVehicle(@PathVariable Long id, @RequestBody VehicleDto vehicleDto);
+
+    @DeleteMapping("/vehicle/{id}")
+    @CacheEvict(value="cache:management:base:gateways:VehicleClient:findVehicles", allEntries = true)
+    void removeVehicle(@PathVariable Long id);
 }
 //@Component
 //public class VehicleClient {

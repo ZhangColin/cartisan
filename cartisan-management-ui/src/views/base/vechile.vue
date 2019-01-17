@@ -18,7 +18,7 @@
         <el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
       </el-form-item>
     </el-form>
-    <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" border fit highlight-current-row>
+    <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" stripe border fit highlight-current-row size="mini">
       <el-table-column align="left" label="ID">
         <template slot-scope="scope">
           {{ scope.row.id }}
@@ -117,7 +117,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="submitVehicle">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -125,7 +125,7 @@
 
 <script>
 
-  import {searchVehicles} from '@/api/base/vehicle';
+  import {saveVehicle, searchVehicles} from '@/api/base/vehicle';
 
   import {findCountries} from '@/api/base/country';
   import {findContinents} from '@/api/base/continent';
@@ -201,6 +201,26 @@
             this.editFillData.countries = response.data;
           });
         }
+      },
+      submitVehicle() {
+        saveVehicle(this.editData).then(response => {
+          this.editData = {
+            id: '',
+            code: '',
+            name: '',
+            description: '',
+            passengers: '',
+            passengersDescription: '',
+            bigLuggage: '',
+            smallLuggage: '',
+            pictureUrl: '',
+            continentId: '',
+            countryId: '',
+            countryName: ''
+          };
+          this.dialogFormVisible = false;
+          this.searchData();
+        });
       }
     }
   };
