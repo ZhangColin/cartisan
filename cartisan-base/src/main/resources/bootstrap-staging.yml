@@ -2,7 +2,6 @@ spring:
   cloud:
     config:
       discovery:
-        enabled: true
         service-id: config
       profile: staging
 
@@ -10,5 +9,4 @@ eureka:
   client:
     service-url:
       defaultZone: http://cartisan-eureka1:8761/eureka,http://cartisan-eureka2:8762/eureka
-  instance:
-    prefer-ip-address: true
+

@@ -9,9 +9,6 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 import org.springframework.context.annotation.Bean;
 
 /**
- * <p>Title: ConfigApplication</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @SpringBootApplication

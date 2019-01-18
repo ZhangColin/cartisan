@@ -5,12 +5,12 @@ spring:
     name: eureka
 eureka:
   server:
-    enable-self-preservation: false #生产中需要打开
+    enable-self-preservation: true #生产中需要打开
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://${eureka.instance.hostname}1:8761/eureka/
+      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
   instance:
     prefer-ip-address: true
-    hostname: cartisan-eureka
+    hostname: cartisan-eureka1

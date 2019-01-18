@@ -13,22 +13,10 @@ import org.springframework.context.annotation.Bean;
  *
  * @author colin
  */
-@SpringCloudApplication
 public class BaseApplication extends CartisanApplication {
     public static void main(String[] args) {
         SpringApplication.run(BaseApplication.class);
     }
 
-    @Bean
-    public ServletRegistrationBean hystrixStreamServlet() {
-        final HystrixMetricsStreamServlet hystrixMetricsStreamServlet = new HystrixMetricsStreamServlet();
-        final ServletRegistrationBean<HystrixMetricsStreamServlet> registrationBean =
-                new ServletRegistrationBean<>(hystrixMetricsStreamServlet);
-        // 系统启动时的加载顺序
-        registrationBean.setLoadOnStartup(1);
-        registrationBean.addUrlMappings("/hystrix.stream");
-        registrationBean.setName("HystrixMetricsStreamServlet");
 
-        return registrationBean;
-    }
 }

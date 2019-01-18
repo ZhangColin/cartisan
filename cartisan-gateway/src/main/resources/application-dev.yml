@@ -1,4 +1,10 @@
 spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
   redis:
     host: localhost
     port: 6379
@@ -12,8 +18,11 @@ zuul:
       sensitiveHeaders:
   # 全部服务忽略敏感头
   sensitiveHeaders:
+
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+
+

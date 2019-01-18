@@ -1,4 +1,3 @@
 logging:
   level:
     com.cartisan.common.filters.RequestLoggingFilter: debug
-

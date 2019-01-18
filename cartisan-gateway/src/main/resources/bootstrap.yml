@@ -5,4 +5,5 @@ spring:
   application:
     name: gateway
   profiles:
+    include: web
     active: dev
