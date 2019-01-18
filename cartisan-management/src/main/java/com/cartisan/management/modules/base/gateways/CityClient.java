@@ -29,7 +29,6 @@ public class CityClient {
 
     @Cacheable(value = "cache:management:base:gateways:CityClient:findCities", key = "#countryId")
     public List<CityDto> findCities(Long countryId) {
-        RestTemplate restTemplate = new RestTemplate();
         String params = "";
         if (countryId != null) {
             params = "countryId=" + countryId.toString();

@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author colin
  */
-@FeignClient(name = "base")
+@FeignClient(name = "base", fallback=VehicleClientFallback.class)
 public interface VehicleClient {
     @Cacheable(value = "cache:management:base:gateways:VehicleClient:findVehicles",
             key = "#countryId==null?'0':#countryId")

@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <el-form :inline="true" :model="searchParams">
+    <el-form :inline="true" :model="searchParams" size="medium">
       <el-form-item label="大洲">
         <el-select v-model="searchParams.continentId" placeholder="大洲" @change="searchContinentChange" clearable>
           <el-option v-for="continent in searchFillData.continents" :key="continent.id" :value="continent.id"
@@ -18,7 +18,7 @@
         <el-button type="primary" @click="dialogFormVisible = true">新增</el-button>
       </el-form-item>
     </el-form>
-    <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" stripe border fit highlight-current-row size="mini">
+    <el-table v-loading="listLoading" :data="list" element-loading-text="Loading" stripe border fit highlight-current-row size="small">
       <el-table-column align="left" label="ID">
         <template slot-scope="scope">
           {{ scope.row.id }}
