@@ -6,9 +6,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
- * <p>Title: CartisanExceptionHandler</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @RestControllerAdvice

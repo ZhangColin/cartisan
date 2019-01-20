@@ -15,9 +15,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * <p>Title: CountryService</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Service

@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * <p>Title: CityController</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @RestController

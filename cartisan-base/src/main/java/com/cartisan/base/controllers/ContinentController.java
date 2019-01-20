@@ -5,7 +5,6 @@ import com.cartisan.base.services.ContinentService;
 import com.cartisan.common.entity.Result;
 import com.cartisan.common.entity.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,9 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * <p>Title: ContinentController</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @RestController

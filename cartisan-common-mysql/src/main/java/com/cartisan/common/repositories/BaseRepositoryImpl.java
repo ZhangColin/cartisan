@@ -10,9 +10,6 @@ import javax.transaction.Transactional;
 import java.io.Serializable;
 
 /**
- * <p>Title: BaseRepositoryImpl</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Slf4j

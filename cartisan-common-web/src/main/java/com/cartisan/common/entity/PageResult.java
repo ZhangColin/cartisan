@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 /**
- * <p>Title: PageResult</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Data

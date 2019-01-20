@@ -1,4 +1,4 @@
-package com.cartisan.management.modules.base.configs;
+package com.cartisan.common.config;
 
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;

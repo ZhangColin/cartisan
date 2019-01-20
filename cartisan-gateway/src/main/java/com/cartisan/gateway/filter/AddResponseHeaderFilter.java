@@ -11,9 +11,6 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.SEND_RESPONSE_FILTER_ORDER;
 
 /**
- * <p>Title: AddResponseHeaderFilter</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Component

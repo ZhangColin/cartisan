@@ -15,9 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
- * <p>Title: LogAspect</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Aspect

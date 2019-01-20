@@ -7,9 +7,6 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 
 /**
- * <p>Title: Label</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Entity

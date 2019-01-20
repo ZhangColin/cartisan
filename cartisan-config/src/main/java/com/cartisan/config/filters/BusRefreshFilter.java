@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * <p>Title: WebHookFilter</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @WebFilter(filterName = "BusRefreshFilter", urlPatterns = "/")

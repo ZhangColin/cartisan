@@ -8,9 +8,6 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * <p>Title: RequestLoggingFilter</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Slf4j

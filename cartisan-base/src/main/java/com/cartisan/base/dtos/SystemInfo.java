@@ -5,9 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * <p>Title: SystemInfo</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Data

@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
 /**
- * <p>Title: AnnotationInterceptor</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Slf4j

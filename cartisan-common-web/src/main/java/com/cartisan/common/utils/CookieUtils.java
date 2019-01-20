@@ -5,9 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * <p>Title: CookieUtil</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 public class CookieUtils {

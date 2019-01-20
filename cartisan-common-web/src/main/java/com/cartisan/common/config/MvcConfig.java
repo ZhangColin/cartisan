@@ -9,9 +9,6 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * <p>Title: MvcConfig</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Configuration

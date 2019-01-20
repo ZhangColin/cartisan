@@ -11,9 +11,6 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 /**
- * <p>Title: TokenFilter</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 //@Component

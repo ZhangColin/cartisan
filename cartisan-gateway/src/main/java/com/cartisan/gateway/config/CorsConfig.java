@@ -9,9 +9,6 @@ import org.springframework.web.filter.CorsFilter;
 import static java.util.Arrays.asList;
 
 /**
- * <p>Title: CorsConfig</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Configuration

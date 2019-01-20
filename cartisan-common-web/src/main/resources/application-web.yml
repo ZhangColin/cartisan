@@ -2,14 +2,10 @@ spring:
   profiles:
     include: log
 
-  cloud:
-    config:
-      discovery:
-        enabled: true
-
   zipkin:
     sender:
       type: web
+
   sleuth:
     web:
       client:

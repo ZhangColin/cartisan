@@ -8,9 +8,6 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
- * <p>Title: AirportRepository</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 public interface AirportRepository extends BaseRepository<Airport, Long> {

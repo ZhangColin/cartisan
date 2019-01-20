@@ -7,9 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * <p>Title: UrlInterceptor</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Slf4j

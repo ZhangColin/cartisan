@@ -6,9 +6,6 @@ import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * <p>Title: ZuulConfig</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Component

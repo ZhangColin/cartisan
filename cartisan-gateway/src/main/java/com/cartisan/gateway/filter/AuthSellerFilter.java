@@ -1,6 +1,6 @@
 package com.cartisan.gateway.filter;
 
-import com.cartisan.gateway.CookieUtils;
+import com.cartisan.common.utils.CookieUtils;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.apache.commons.lang.StringUtils;
@@ -15,9 +15,6 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.PRE_TYPE;
 
 /**
- * <p>Title: AuthFilter</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 //@Component

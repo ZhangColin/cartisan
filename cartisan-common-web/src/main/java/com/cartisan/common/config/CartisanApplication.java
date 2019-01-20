@@ -9,9 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * <p>Title: CartisanApplication</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @SpringCloudApplication

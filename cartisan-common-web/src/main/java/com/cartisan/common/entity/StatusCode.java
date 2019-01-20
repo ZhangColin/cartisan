@@ -1,9 +1,6 @@
 package com.cartisan.common.entity;
 
 /**
- * <p>Title: StatusCode</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 public class StatusCode {

@@ -3,9 +3,6 @@ package com.cartisan.common.entity;
 import lombok.Data;
 
 /**
- * <p>Title: Result</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Data

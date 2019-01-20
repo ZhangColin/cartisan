@@ -6,9 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * <p>Title: ContinentDto</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Data

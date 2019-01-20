@@ -1,4 +1,4 @@
-package com.cartisan.base.config;
+package com.cartisan.common.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -18,9 +18,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.time.Duration;
 
 /**
- * <p>Title: RedisConfig</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Configuration

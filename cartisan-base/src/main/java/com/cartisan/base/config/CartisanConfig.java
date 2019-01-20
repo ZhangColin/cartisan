@@ -6,9 +6,6 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
- * <p>Title: SystemInfo</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @Data

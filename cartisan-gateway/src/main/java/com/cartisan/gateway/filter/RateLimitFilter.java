@@ -8,9 +8,6 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
 import static org.springframework.cloud.netflix.zuul.filters.support.FilterConstants.SERVLET_DETECTION_FILTER_ORDER;
 
 /**
- * <p>Title: TokenFilter</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 //@Component
