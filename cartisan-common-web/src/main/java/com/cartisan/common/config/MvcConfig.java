@@ -1,7 +1,7 @@
 package com.cartisan.common.config;
 
-import com.cartisan.common.filters.RequestLoggingFilter;
-import com.cartisan.common.interceptors.SignatureInterceptor;
+import com.cartisan.common.filter.RequestLoggingFilter;
+import com.cartisan.common.interceptor.SignatureInterceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

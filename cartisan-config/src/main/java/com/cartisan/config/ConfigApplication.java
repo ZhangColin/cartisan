@@ -1,6 +1,6 @@
 package com.cartisan.config;
 
-import com.cartisan.config.filters.BusRefreshFilter;
+import com.cartisan.config.filter.BusRefreshFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
