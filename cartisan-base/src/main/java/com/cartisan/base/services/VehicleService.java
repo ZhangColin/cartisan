@@ -3,6 +3,7 @@ package com.cartisan.base.services;
 import com.cartisan.base.domains.Vehicle;
 import com.cartisan.base.dtos.VehicleDto;
 import com.cartisan.base.repositories.VehicleRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 /**
  * @author colin
  */
+@Slf4j
 @Service
 public class VehicleService {
 

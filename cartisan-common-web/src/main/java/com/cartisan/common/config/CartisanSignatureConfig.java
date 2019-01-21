@@ -1,4 +1,4 @@
-package com.cartisan.base.config;
+package com.cartisan.common.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @Component
-@ConfigurationProperties("cartisan")
+@ConfigurationProperties("cartisan.signature")
 @RefreshScope
-public class CartisanConfig {
-    private String name;
-    private String version;
+public class CartisanSignatureConfig {
+    private boolean enable;
+    private String secret;
 }

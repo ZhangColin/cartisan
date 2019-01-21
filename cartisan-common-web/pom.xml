@@ -16,6 +16,14 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!-- cartisan 基础库 -->
+        <dependency>
+            <groupId>com.cartisan</groupId>
+            <artifactId>cartisan-common-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Web 应用 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -89,16 +97,7 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
-
-
-
-
-        <!--<dependency>-->
-        <!--<groupId>com.alibaba</groupId>-->
-        <!--<artifactId>fastjson</artifactId>-->
-        <!--<version>1.2.53</version>-->
-        <!--</dependency>-->
-
+        <!-- 工具 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
