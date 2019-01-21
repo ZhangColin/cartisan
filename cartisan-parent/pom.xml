@@ -44,7 +44,7 @@
                 <scope>import</scope>
             </dependency>
 
-            <!-- db -->
+            <!-- 数据库 -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
@@ -57,7 +57,7 @@
                 <version>${druid-spring-boot-starter.version}</version>
             </dependency>
 
-            <!-- util -->
+            <!-- 工具 -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>

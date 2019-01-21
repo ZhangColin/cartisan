@@ -38,10 +38,9 @@ public class AuthSellerFilter extends ZuulFilter {
         final HttpServletRequest request = requestContext.getRequest();
 
         if ("/order/finish".equals(request.getRequestURI())) {
-            Cookie cookie = CookieUtils.get(request, "token");
-            if (cookie == null
-                    || StringUtils.isEmpty(cookie.getValue())
-                    || StringUtils.isEmpty(stringRedisTemplate.opsForValue().get(String.format("token_%s", cookie.getValue())))) {
+            String cookie = CookieUtils.getCookieValue(request, "token");
+            if (StringUtils.isEmpty(cookie)
+                    || StringUtils.isEmpty(stringRedisTemplate.opsForValue().get(String.format("token_%s", cookie)))) {
                 return true;
             }
         }
@@ -57,10 +56,9 @@ public class AuthSellerFilter extends ZuulFilter {
          * /order/finish 只能卖家访问
          */
 
-        Cookie cookie = CookieUtils.get(request, "token");
-        if (cookie == null
-                || StringUtils.isEmpty(cookie.getValue())
-                || StringUtils.isEmpty(stringRedisTemplate.opsForValue().get(String.format("token_%s", cookie.getValue())))) {
+        String cookie = CookieUtils.getCookieValue(request, "token");
+        if (StringUtils.isEmpty(cookie)
+                || StringUtils.isEmpty(stringRedisTemplate.opsForValue().get(String.format("token_%s", cookie)))) {
             requestContext.setSendZuulResponse(false);
             requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
         }

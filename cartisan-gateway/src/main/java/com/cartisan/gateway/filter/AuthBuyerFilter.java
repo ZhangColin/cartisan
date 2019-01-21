@@ -38,8 +38,8 @@ public class AuthBuyerFilter extends ZuulFilter {
         final HttpServletRequest request = requestContext.getRequest();
 
         if ("/cartisan-example-order/example-order/order/create".equals(request.getRequestURI())) {
-            Cookie cookie = CookieUtils.get(request, "openid");
-            if (cookie == null || StringUtils.isEmpty(cookie.getValue())) {
+            String cookie = CookieUtils.getCookieValue(request, "openid");
+            if (StringUtils.isEmpty(cookie)) {
                 return true;
             }
         }
@@ -54,8 +54,8 @@ public class AuthBuyerFilter extends ZuulFilter {
         /**
          * /order/create 只能买家访问
          */
-        Cookie cookie = CookieUtils.get(request, "openid");
-        if (cookie == null || StringUtils.isEmpty(cookie.getValue())) {
+        String cookie = CookieUtils.getCookieValue(request, "openid");
+        if (StringUtils.isEmpty(cookie)) {
             requestContext.setSendZuulResponse(false);
             requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());
         }
