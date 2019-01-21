@@ -1,12 +1,18 @@
 package com.cartisan.common.config;
 
 import com.cartisan.common.filters.RequestLoggingFilter;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.List;
 
 /**
  * @author colin
@@ -14,28 +20,21 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @Slf4j
 public class MvcConfig implements WebMvcConfigurer {
-//    @Autowired
-//    private Environment environment;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-    //    @Override
-//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
-//
-//        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-//        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-//        fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
-//        converters.add(fastJsonHttpMessageConverter);
-//    }
-//    @Bean
-//    public HttpMessageConverters fastJsonHttpMessageConverters() {
-//        FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
-//
-//        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-//        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-//        fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
-//
-//        return new HttpMessageConverters(fastJsonHttpMessageConverter);
-//    }
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        converters.add(createMappingJackson2HttpMessageConverter());
+    }
+
+    private MappingJackson2HttpMessageConverter createMappingJackson2HttpMessageConverter() {
+        final MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter
+                = new MappingJackson2HttpMessageConverter();
+        mappingJackson2HttpMessageConverter.setObjectMapper(objectMapper);
+
+        return mappingJackson2HttpMessageConverter;
+    }
 
     @Bean
     public FilterRegistrationBean requestLogFilter() {
@@ -75,14 +74,4 @@ public class MvcConfig implements WebMvcConfigurer {
 //        registry.addInterceptor(annotationInterceptor()).addPathPatterns("/**");
 //        registry.addInterceptor(jwtFilter).addPathPatterns("/**").excludePathPatterns("/**/login");
     }
-
-    // 跨域问题由网关层统一处理
-//    @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        final String activeProfile = environment.getProperty("spring.profiles.active");
-//        log.info("cartisan-common: log active profile [{}]", activeProfile);
-//        if (activeProfile.equals("dev")) {
-//            registry.addMapping("/**");
-//        }
-//    }
 }
