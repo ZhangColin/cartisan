@@ -5,6 +5,7 @@ import com.cartisan.common.interceptor.SignatureInterceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,8 @@ import java.util.List;
 @Slf4j
 public class MvcConfig implements WebMvcConfigurer {
     @Autowired
-    private ObjectMapper objectMapper;
+    @Qualifier("outerObjectMapper")
+    private ObjectMapper outerObjectMapper;
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
@@ -32,7 +34,7 @@ public class MvcConfig implements WebMvcConfigurer {
     private MappingJackson2HttpMessageConverter createMappingJackson2HttpMessageConverter() {
         final MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter
                 = new MappingJackson2HttpMessageConverter();
-        mappingJackson2HttpMessageConverter.setObjectMapper(objectMapper);
+        mappingJackson2HttpMessageConverter.setObjectMapper(outerObjectMapper);
 
         return mappingJackson2HttpMessageConverter;
     }

@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -35,7 +36,8 @@ public class SignatureInterceptor extends HandlerInterceptorAdapter {
     private CartisanSignatureConfig signatureConfig;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    @Qualifier("outerObjectMapper")
+    private ObjectMapper outerObjectMapper;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -53,7 +55,7 @@ public class SignatureInterceptor extends HandlerInterceptorAdapter {
         response.setHeader("Content-type", "application/json;charset=UTF-8");
         response.setStatus(HttpStatus.OK.value());
 
-        response.getWriter().write(objectMapper.writeValueAsString(result));
+        response.getWriter().write(outerObjectMapper.writeValueAsString(result));
 
         return false;
     }
@@ -85,7 +87,7 @@ public class SignatureInterceptor extends HandlerInterceptorAdapter {
         if (!result) {
             log.warn("签名认证失败，请求接口：{}，请求IP：{}，请求参数：{}，正确签名应该为：{}",
                     request.getRequestURI(), getIpAddress(request),
-                    objectMapper.writeValueAsString(request.getParameterMap()),
+                    outerObjectMapper.writeValueAsString(request.getParameterMap()),
                     sign);
         }
 

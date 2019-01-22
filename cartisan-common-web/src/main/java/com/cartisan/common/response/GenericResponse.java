@@ -1,5 +1,6 @@
 package com.cartisan.common.response;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
@@ -7,9 +8,13 @@ import lombok.Data;
  */
 @Data
 public class GenericResponse<T> {
+    @ApiModelProperty(value = "执行状态", required = true)
     private Boolean flag;
+    @ApiModelProperty(value = "执行结果编码", required = true , example = "20000")
     private Integer code;
+    @ApiModelProperty(value = "提示信息", required = true)
     private String message;
+    @ApiModelProperty(value = "返回结果", required = true)
     private T data;
 
     public GenericResponse() {

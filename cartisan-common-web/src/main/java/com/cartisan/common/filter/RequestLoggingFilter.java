@@ -15,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 public class RequestLoggingFilter extends CommonsRequestLoggingFilter {
     @Override
     protected void beforeRequest(HttpServletRequest request, String message) {
-        if (!StringUtils.contains(request.getRequestURI(), "druid")) {
+        if (!StringUtils.contains(request.getRequestURI(), "druid")
+            && !StringUtils.contains(request.getRequestURI(), "swagger")
+            && !StringUtils.contains(request.getRequestURI(), "api-docs")) {
             MDC.put("identify", RandomStringUtils.randomAlphabetic(10));
             super.beforeRequest(request, message);
         }
@@ -23,7 +25,9 @@ public class RequestLoggingFilter extends CommonsRequestLoggingFilter {
 
     @Override
     protected void afterRequest(HttpServletRequest request, String message) {
-        if (!StringUtils.contains(request.getRequestURI(), "druid")) {
+        if (!StringUtils.contains(request.getRequestURI(), "druid")
+                && !StringUtils.contains(request.getRequestURI(), "swagger")
+                && !StringUtils.contains(request.getRequestURI(), "api-docs")) {
             MDC.remove("identify");
             super.afterRequest(request, message);
         }

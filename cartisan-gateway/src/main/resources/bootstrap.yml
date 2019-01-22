@@ -7,3 +7,13 @@ spring:
   profiles:
     include: web
     active: dev
+
+cartisan:
+  info:
+    title: 网关
+    serviceUrl: http://www.cartisan.com
+    version: 1.0
+    contact:
+      name: colin
+      url: zhang_colin.github.com
+      email: zhang_colin@163.com

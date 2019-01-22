@@ -10,9 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * <p>Title: ContinentClient</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 @FeignClient(name = "base", fallback=VehicleClientFallback.class)

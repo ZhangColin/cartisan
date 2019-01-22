@@ -33,6 +33,3 @@ cartisan:
   signature:
     enable: false
     secret: cartisan
-  redis:
-    root: base
-

@@ -1,0 +1,34 @@
+<!--<?xml version="1.0" encoding="utf-8" ?>-->
+<!--<configuration>-->
+    <!--<include resource="org/springframework/boot/logging/logback/defaults.xml"/>-->
+
+    <!--<springProfile name="dev">-->
+        <!--<include resource="org/springframework/boot/logging/logback/console-appender.xml"/>-->
+
+        <!--<root level="INFO">-->
+            <!--<appender-ref ref="CONSOLE"/>-->
+        <!--</root>-->
+    <!--</springProfile>-->
+
+    <!--<springProfile name="dev,test,staging,prod">-->
+        <!--<property name="LOG_FILE" value="${LOG_FILE:-spring.log}"/>-->
+        <!--<property name="LOG_PATH" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}"/>-->
+        <!--<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+            <!--<encoder>-->
+                <!--<pattern>${FILE_LOG_PATTERN}</pattern>-->
+            <!--</encoder>-->
+            <!--&lt;!&ndash;<file>${LOG_PATH}/${LOG_FILE}.log</file>&ndash;&gt;-->
+            <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+                <!--<fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/${LOG_FILE}.%d{yyyy-MM-dd}-%i.log</fileNamePattern>-->
+                <!--<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">-->
+                    <!--<maxFileSize>30MB</maxFileSize>-->
+                <!--</timeBasedFileNamingAndTriggeringPolicy>-->
+                <!--<maxHistory>30</maxHistory>-->
+            <!--</rollingPolicy>-->
+        <!--</appender>-->
+
+        <!--<root level="INFO">-->
+            <!--<appender-ref ref="FILE"/>-->
+        <!--</root>-->
+    <!--</springProfile>-->
+<!--</configuration>-->

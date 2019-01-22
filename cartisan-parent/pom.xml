@@ -32,6 +32,10 @@
 
         <!-- util -->
         <commons-lang3.version>3.8.1</commons-lang3.version>
+
+        <!-- Swagger 文档 -->
+        <swagger.version>1.5.21</swagger.version>
+        <swagger-fox.version>2.9.2</swagger-fox.version>
     </properties>
 
     <dependencyManagement>
@@ -64,6 +68,27 @@
                 <version>${commons-lang3.version}</version>
             </dependency>
 
+            <!-- Swagger 文档 -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger-fox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger-fox.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-models</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
