@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
@@ -63,6 +63,33 @@ public class RedisConfig extends CachingConfigurerSupport {
 
         return redisTemplate;
     }
+
+    @Bean
+    public ValueOperations<String, String> valueOperations(RedisTemplate redisTemplate) {
+        return redisTemplate.opsForValue();
+    }
+
+    @Bean
+    public HashOperations<String, String, Object> hashOperations(RedisTemplate redisTemplate) {
+        return redisTemplate.opsForHash();
+    }
+
+    @Bean
+    public ListOperations<String, Object> listOperations(RedisTemplate redisTemplate) {
+        return redisTemplate.opsForList();
+    }
+
+    @Bean
+    public SetOperations<String, Object> setOperations(RedisTemplate redisTemplate) {
+        return redisTemplate.opsForSet();
+    }
+
+    @Bean
+    public ZSetOperations<String, Object> zSetOperations(RedisTemplate redisTemplate) {
+        return redisTemplate.opsForZSet();
+    }
+
+
 
 //    /**
 //     * 使用 redisTemplate 的序列化方式配置 redisCache

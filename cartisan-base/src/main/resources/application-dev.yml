@@ -3,6 +3,9 @@ spring:
     url: jdbc:mysql://localhost:3306/cartisan?characterEncoding=utf-8&useSSL=false
     username: root
     password: truth
+#    platform: h2
+#    schema: classpath:schema.sql
+#    data: classpath:data.sql
   jpa:
     show-sql: true
 
@@ -23,8 +26,13 @@ spring:
     sampler:
       probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
 
+logging:
+  file: cartisan-base
+
 cartisan:
   signature:
     enable: false
     secret: cartisan
+  redis:
+    root: base
 

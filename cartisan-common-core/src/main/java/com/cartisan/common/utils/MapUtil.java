@@ -13,8 +13,8 @@ import java.util.stream.Collectors;
 /**
  * @author colin
  */
-public class Maps {
-    private Maps() {
+public class MapUtil {
+    private MapUtil() {
     }
 
     public static <K, V> MapBuilder<K, V> builder() {

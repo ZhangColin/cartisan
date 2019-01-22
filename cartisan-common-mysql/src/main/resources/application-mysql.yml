@@ -18,3 +18,16 @@ spring:
         url-pattern: "/druid/*"
   jpa:
     database: MySQL
+    generate-ddl: false   # 是否生成 ddl 语句
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+
+
+logging:
+  level:
+    org.hibernate: info
+    org.hibernate.type.descriptor.sql.BasicBinder: info
+    org.hibernate.type.descriptor.sql.BasicExtractor: info
+    com.cartisan.common.filters.RequestLoggingFilter: debug
+    com.cartisan: debug

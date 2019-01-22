@@ -12,9 +12,6 @@ import javax.persistence.EntityManager;
 import java.io.Serializable;
 
 /**
- * <p>Title: BaseRepositoryFactoryBean</p>
- * <p>Description: </p>
- *
  * @author colin
  */
 public class CartisanRepositoryFactoryBean<R extends JpaRepository<T, Serializable>, T extends AbstractEntity>
