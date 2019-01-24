@@ -21,26 +21,26 @@
 </template>
 
 <script>
-  import {findContinents} from '@/api/base/continent';
-
-  export default {
-    data() {
-      return {
-        list: null,
-        listLoading: true
-      };
-    },
-    created() {
-      this.fetchData();
-    },
-    methods: {
-      fetchData() {
-        this.listLoading = true;
-        findContinents().then(response => {
-          this.list = response.data;
-          this.listLoading = false;
-        });
-      }
+import { findContinents } from '@/api/base/continent';
+export default {
+  name: 'Continent',
+  data() {
+    return {
+      list: null,
+      listLoading: true
+    };
+  },
+  created() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      this.listLoading = true;
+      findContinents().then(response => {
+        this.list = response.data;
+        this.listLoading = false;
+      });
     }
-  };
+  }
+};
 </script>

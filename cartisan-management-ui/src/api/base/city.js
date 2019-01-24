@@ -4,9 +4,9 @@ export function findCities(countryId) {
   return request({
     url: '/city',
     method: 'get',
-    params: {countryId}
+    params: { countryId }
   });
-};
+}
 
 export function searchCities(currentPage, pageSize, params) {
   return request({
@@ -14,4 +14,4 @@ export function searchCities(currentPage, pageSize, params) {
     method: 'get',
     params
   });
-};
+}

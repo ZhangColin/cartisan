@@ -5,4 +5,4 @@ export function findContinents() {
     url: '/continent',
     method: 'get'
   });
-};
+}

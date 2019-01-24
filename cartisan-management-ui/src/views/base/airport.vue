@@ -2,21 +2,30 @@
   <div class="app-container">
     <el-form :inline="true" :model="searchParams">
       <el-form-item label="大洲">
-        <el-select v-model="searchParams.continentId" placeholder="大洲" @change="continentSelectChange" clearable>
-          <el-option v-for="continent in continents" :key="continent.id" :value="continent.id"
-                     :label="continent.name"></el-option>
+        <el-select v-model="searchParams.continentId" placeholder="大洲" clearable @change="continentSelectChange">
+          <el-option
+            v-for="continent in continents"
+            :key="continent.id"
+            :value="continent.id"
+            :label="continent.name"/>
         </el-select>
       </el-form-item>
       <el-form-item label="国家">
-        <el-select v-model="searchParams.countryId" placeholder="国家" @change="countrySelectChange" clearable filterable>
-          <el-option v-for="country in countries" :key="country.id" :value="country.id"
-                     :label="country.name"></el-option>
+        <el-select v-model="searchParams.countryId" placeholder="国家" clearable filterable @change="countrySelectChange">
+          <el-option
+            v-for="country in countries"
+            :key="country.id"
+            :value="country.id"
+            :label="country.name"/>
         </el-select>
       </el-form-item>
       <el-form-item label="城市">
         <el-select v-model="searchParams.cityId" placeholder="城市" clearable filterable>
-          <el-option v-for="city in cities" :key="city.id" :value="city.id"
-                     :label="city.name"></el-option>
+          <el-option
+            v-for="city in cities"
+            :key="city.id"
+            :value="city.id"
+            :label="city.name"/>
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -56,7 +65,7 @@
       </el-table-column>
       <el-table-column label="经纬度" align="left">
         <template slot-scope="scope">
-          {{ scope.row.latitude }},{{scope.row.longitude}}
+          {{ scope.row.latitude }},{{ scope.row.longitude }}
         </template>
       </el-table-column>
       <el-table-column label="城市" align="left">
@@ -65,92 +74,94 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination align="right" @size-change="sizeChange"
-                   @current-change="currentChange"
-                   layout="total, sizes, prev, pager, next, jumper"
-                   :current-page="page.currentPage" :page-sizes="[5, 10, 20]"
-                   :page-size="page.pageSize" :total="page.total"></el-pagination>
+    <el-pagination
+      :current-page="page.currentPage"
+      :page-sizes="[5, 10, 20]"
+      :page-size="page.pageSize"
+      :total="page.total"
+      align="right"
+      layout="total, sizes, prev, pager, next, jumper"
+      @size-change="sizeChange"
+      @current-change="currentChange"/>
 
   </div>
 </template>
 
 <script>
-
-  import {searchAirports} from '@/api/base/airport';
-
-  import {findCities} from '@/api/base/city';
-  import {findCountries} from '@/api/base/country';
-  import {findContinents} from '@/api/base/continent';
-
-  export default {
-    data() {
-      return {
-        list: null,
-        listLoading: false,
-        continents: [],
-        countries: [],
-        cities: [],
-        searchParams: {
-          continentId: '',
-          countryId: '',
-          cityId: ''
-        },
-        page: {
-          total: 0,
-          currentPage: 1,
-          pageSize: 10
-        }
-      };
-    },
-    created() {
-      findContinents().then(response => {
-        this.continents = response.data;
+import { searchAirports } from '@/api/base/airport';
+import { findCities } from '@/api/base/city';
+import { findCountries } from '@/api/base/country';
+import { findContinents } from '@/api/base/continent';
+export default {
+  name: 'Airport',
+  data() {
+    return {
+      list: null,
+      listLoading: false,
+      continents: [],
+      countries: [],
+      cities: [],
+      searchParams: {
+        continentId: '',
+        countryId: '',
+        cityId: ''
+      },
+      page: {
+        total: 0,
+        currentPage: 1,
+        pageSize: 10
+      }
+    };
+  },
+  created() {
+    findContinents().then(response => {
+      this.continents = response.data;
+    });
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      this.listLoading = true;
+      searchAirports(this.page.currentPage, this.page.pageSize, this.searchParams).then(response => {
+        this.list = response.data.rows;
+        this.page.total = response.data.total;
+        this.listLoading = false;
       });
+    },
+    searchData() {
+      this.page.currentPage = 1;
       this.fetchData();
     },
-    methods: {
-      fetchData() {
-        this.listLoading = true;
-        searchAirports(this.page.currentPage, this.page.pageSize, this.searchParams).then(response => {
-          this.list = response.data.rows;
-          this.page.total = response.data.total;
-          this.listLoading = false;
+    sizeChange(pageSize) {
+      this.page.currentPage = 1;
+      this.searchParams.pageSize = pageSize;
+      this.fetchData();
+    },
+    currentChange(currentPage) {
+      this.searchParams.currentPage = currentPage;
+      this.fetchData();
+    },
+    continentSelectChange(continentId) {
+      this.searchParams.countryId = '';
+      this.searchParams.cityId = '';
+      if (!continentId) {
+        this.countries = [];
+      } else {
+        findCountries(continentId).then(response => {
+          this.countries = response.data;
         });
-      },
-      searchData() {
-        this.page.currentPage = 1;
-        this.fetchData();
-      },
-      sizeChange(pageSize) {
-        this.page.currentPage = 1;
-        this.searchParams.pageSize = pageSize;
-        this.fetchData();
-      },
-      currentChange(currentPage) {
-        this.searchParams.currentPage = currentPage;
-        this.fetchData();
-      },
-      continentSelectChange(continentId) {
-        this.searchParams.countryId = '';
-        this.searchParams.cityId = '';
-        if (!continentId) {
-          this.countries = [];
-        } else {
-          findCountries(continentId).then(response => {
-            this.countries = response.data;
-          });
-        }
-      },
-      countrySelectChange(countryId) {
-        this.searchParams.cityId = '';
-        if (!countryId) {
-          this.cities = [];
-        } else {
-          findCities(countryId).then(response => {
-            this.cities = response.data;
-          });
-        }
+      }
+    },
+    countrySelectChange(countryId) {
+      this.searchParams.cityId = '';
+      if (!countryId) {
+        this.cities = [];
+      } else {
+        findCities(countryId).then(response => {
+          this.cities = response.data;
+        });
       }
     }
-  };
+  }
+};
 </script>

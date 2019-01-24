@@ -6,7 +6,7 @@ export function searchVehicles(params) {
     method: 'get',
     params
   });
-};
+}
 
 export function saveVehicle(vehicle) {
   let method = 'post';
@@ -20,4 +20,4 @@ export function saveVehicle(vehicle) {
     method: method,
     data: vehicle
   });
-};
+}

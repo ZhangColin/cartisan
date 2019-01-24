@@ -6,4 +6,4 @@ export function searchAirports(currentPage, pageSize, params) {
     method: 'get',
     params
   });
-};
+}

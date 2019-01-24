@@ -4,9 +4,9 @@ export function findCountries(continentId) {
   return request({
     url: '/country',
     method: 'get',
-    params: {continentId}
+    params: { continentId }
   });
-};
+}
 
 export function searchCountries(params) {
   return request({
@@ -14,4 +14,4 @@ export function searchCountries(params) {
     method: 'get',
     params
   });
-};
+}

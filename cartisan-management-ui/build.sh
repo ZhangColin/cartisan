@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-npm run build
+npm run build:staging
 
 docker build -t hub.c.163.com/zhangcolin/cartisan-management-ui .
 
