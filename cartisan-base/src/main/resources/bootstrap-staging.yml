@@ -11,3 +11,6 @@ eureka:
     service-url:
       defaultZone: http://cartisan-eureka1:8761/eureka,http://cartisan-eureka2:8762/eureka
 
+logging:
+  path: /var/log/cartisan/base/
+  file: cartisan-base
