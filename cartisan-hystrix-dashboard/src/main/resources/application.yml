@@ -2,5 +2,5 @@ server:
   port: 8887
 spring:
   application:
-    name: cartisan-hystrix-dashboard
+    name: hystrix-dashboard
 

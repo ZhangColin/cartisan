@@ -1,0 +1,22 @@
+server:
+  port: 9002
+
+spring:
+  application:
+    name: goods
+  profiles:
+    include: web, mysql
+    active: dev
+
+
+cartisan:
+  redis:
+    root: base
+  info:
+    title: 商品服务
+    serviceUrl: http://www.cartisan.com
+    version: 1.0
+    contact:
+      name: colin
+      url: zhang_colin.github.com
+      email: zhang_colin@163.com

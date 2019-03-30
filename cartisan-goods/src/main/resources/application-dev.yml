@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/cartisan?characterEncoding=utf-8&useSSL=false
+    username: root
+    password: truth
+#    platform: h2
+#    schema: classpath:schema.sql
+#    data: classpath:data.sql
+  jpa:
+    show-sql: true
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  redis:
+    host: localhost
+    port: 6379
+
+  zipkin:
+    base-url: http://localhost:9411   # 指定zipkin的服务端的地址
+
+  sleuth:
+    sampler:
+      probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
+
+cartisan:
+  signature:
+    enable: false
+    secret: cartisan
