@@ -5,6 +5,7 @@ import Layout from '@/views/layout/Layout';
 
 /* Router Modules */
 import base from './modules/base';
+import goods from './modules/goods';
 import example from './modules/sample';
 
 Vue.use(Router);
@@ -83,5 +84,6 @@ export default new Router({
 
 export const asyncRouterMap = [
   base,
+  goods,
   example
 ];
