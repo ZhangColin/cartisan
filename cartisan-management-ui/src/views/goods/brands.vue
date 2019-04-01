@@ -138,10 +138,10 @@ export default {
       this.mu = val;
     },
     handleAdd() {
-      this.$router.push({ path: '/goods/brandAdd' });
+      this.$router.push({ path: '/goods/brands/brandAdd' });
     },
     handleEdit(index, row) {
-      this.$router.push({ path: '/goods/brandEdit', query: { id: row.id }});
+      this.$router.push({ path: '/goods/brands/brandEdit', query: { id: row.id }});
     },
     handleDelete(index, row) {
       this.$confirm('是否要删除该品牌', '提示', {

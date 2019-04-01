@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-card shadow="never">
       <el-form ref="brandForm" :model="brand" :rules="rules" label-width="150px">
-        <el-form-item label="名称：" prop="name">
+        <el-form-item label="名称：" >
           <el-input v-model="brand.name"/>
         </el-form-item>
-        <el-form-item label="首字母：" prop="firstLetter">
+        <el-form-item label="首字母：">
           <el-input v-model="brand.firstLetter"/>
         </el-form-item>
         <el-form-item label="制造商：">
@@ -20,18 +20,18 @@
             <el-radio :label="false">否</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="logo：" prop="logo">
+        <el-form-item label="logo：">
           <el-input v-model="brand.logo"/>
         </el-form-item>
-        <el-form-item label="专区大图：" prop="bigPic">
+        <el-form-item label="专区大图：">
           <el-input v-model="brand.bigPic"/>
         </el-form-item>
-        <el-form-item label="排序：" prop="sort">
+        <el-form-item label="排序：">
           <el-input v-model.number="brand.sort"/>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSubmit()">提交</el-button>
-          <el-button v-if="!isEdit" @click="handleReset()">重置</el-button>
+          <el-button @click="handleReset()">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -77,13 +77,18 @@ export default {
     };
   },
   created() {
-    if (this.isEdit) {
-      getBrand(this.$route.query.id).then(response => {
-        this.brand = response.data;
-      });
-    }
+    this.init();
   },
   methods: {
+    init() {
+      if (this.isEdit) {
+        getBrand(this.$route.query.id).then(response => {
+          this.brand = response.data;
+        });
+      } else {
+        this.brand = Object.assign({}, defaultBrand);
+      }
+    },
     handleSubmit() {
       this.$refs['brandForm'].validate(valid => {
         if (valid) {
@@ -104,7 +109,7 @@ export default {
               });
             } else {
               addBrand(this.brand).then(response => {
-                this.$refs['brandForm'].resetFields();
+                this.init();
                 this.$message({
                   message: '提交成功',
                   type: 'success',
@@ -125,8 +130,7 @@ export default {
       });
     },
     handleReset() {
-      this.$refs['brandFrom'].resetFields();
-      this.brand = Object.assign({}, defaultBrand);
+      this.init();
     }
   }
 };

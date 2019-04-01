@@ -6,7 +6,7 @@
 import brandForm from './brandForm';
 
 export default {
-  name: 'UpdateBrand',
+  name: 'EditBrand',
   components: { brandForm }
 };
 </script>
