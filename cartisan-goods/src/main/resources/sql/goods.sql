@@ -1,3 +1,41 @@
+-- 产品属性参数分类（产品类型）
+DROP TABLE IF EXISTS `goods_product_attribute_categories`;
+CREATE TABLE `goods_product_attribute_categories` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(64) NOT NULL COMMENT '名称',
+  `attribute_count` int(11) NOT NULL DEFAULT 0 COMMENT '属性数量',
+  `param_count` int(11) NOT NULL DEFAULT 0 COMMENT '参数数量',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `active` bit(1) NOT NULL DEFAULT b'1',
+  `deleted` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  INDEX (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品属性参数分类（产品类型）';
+
+-- 产品属性参数
+DROP TABLE IF EXISTS `goods_product_attributes`;
+CREATE TABLE `goods_product_attributes` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `product_attribute_id` bigint NOT NULL COMMENT '产品属性参数分类',
+  `name` varchar(64) NOT NULL COMMENT '名称',
+  `select_type` tinyint NOT NULL DEFAULT 0 COMMENT '属性选择类型：0->唯一；1->单选；2->多选',
+  `input_type` tinyint NOT NULL DEFAULT 0 COMMENT '属性录入方式：0->手工录入；1->从列表中选取',
+  `input_list` varchar(255) NOT NULL DEFAULT '' COMMENT '可选值列表',
+  `filter_type` tinyint NOT NULL DEFAULT 0 COMMENT '分类筛选样式：0->普通；1->颜色',
+  `search_type` tinyint NOT NULL DEFAULT 0 COMMENT '检索类型；0->不需要进行检索；1->关键字检索；2->范围检索',
+  `related` tinyint NOT NULL DEFAULT 0 COMMENT '相同属性产品是否关联；0->不关联；1->关联',
+  `hand_add` tinyint NOT NULL DEFAULT 0 COMMENT '是否支持手动新增；0->不支持；1->支持',
+  `type` tinyint NOT NULL DEFAULT 0 COMMENT '属性的类型；0->规格；1->参数',
+  `sort` int NOT NULL DEFAULT 0 COMMENT '排序字段：最高的可以单独上传图片',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `active` bit(1) NOT NULL DEFAULT b'1',
+  `deleted` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  INDEX (`product_attribute_id`, `type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品属性参数';
+
 -- 品牌
 DROP TABLE IF EXISTS `goods_brands`;
 CREATE TABLE `goods_brands` (
@@ -6,15 +44,15 @@ CREATE TABLE `goods_brands` (
   `first_letter` varchar(1) NOT NULL COMMENT '首字母',
   `is_manufacturer` tinyint NOT NULL DEFAULT 0 COMMENT '是否为品牌制造商：0->不是；1->是',
   `is_show` tinyint NOT NULL DEFAULT 0 COMMENT '是否显示：0->显示；1->不显示',
-  `logo` varchar(255) NOT NULL COMMENT 'logo',
-  `big_pic` varchar(255) NOT NULL COMMENT '专区大图',
-  `sort` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
+  `logo` varchar(255) NOT NULL DEFAULT '' COMMENT 'logo',
+  `big_pic` varchar(255) NOT NULL DEFAULT '' COMMENT '专区大图',
+  `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` bit(1) NOT NULL DEFAULT b'1',
   `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX (`name`)
+  INDEX (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='品牌';
 
 -- 添加品牌数据
