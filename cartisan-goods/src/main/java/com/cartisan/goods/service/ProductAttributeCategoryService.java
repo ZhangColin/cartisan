@@ -1,6 +1,7 @@
 package com.cartisan.goods.service;
 
 import com.cartisan.common.dto.PageResult;
+import com.cartisan.goods.domain.AttributeType;
 import com.cartisan.goods.domain.ProductAttributeCategory;
 import com.cartisan.goods.dto.ProductAttributeCategoryDto;
 import com.cartisan.goods.repository.ProductAttributeCategoryRepository;
@@ -21,7 +22,7 @@ public class ProductAttributeCategoryService {
     @Autowired
     private ProductAttributeCategoryRepository repository;
 
-    public List<ProductAttributeCategoryDto> findAllProductAttributeCategories() {
+    public List<ProductAttributeCategoryDto> getAllProductAttributeCategories() {
         final List<ProductAttributeCategory> categories = repository.findAll();
         return categories.stream().map(ProductAttributeCategoryDto::convertFrom).collect(Collectors.toList());
     }
@@ -58,5 +59,31 @@ public class ProductAttributeCategoryService {
     @Transactional(rollbackOn = Exception.class)
     public void removeProductAttributeCategory(long id) {
         repository.deleteById(id);
+    }
+
+    @Transactional(rollbackOn = Exception.class)
+    public void attributeIncrement (Long id, AttributeType type) {
+        final ProductAttributeCategory category = repository.findById(id).get();
+
+        if (AttributeType.Specification.getCode().equals(type.getCode())) {
+            category.specificationCountIncrement();
+        } else if (AttributeType.Param.getCode().equals(type.getCode())) {
+            category.paramCountIncrement();
+        }
+
+        repository.save(category);
+    }
+
+    @Transactional(rollbackOn = Exception.class)
+    public void attributeDecrement (Long id, AttributeType type) {
+        final ProductAttributeCategory category = repository.findById(id).get();
+
+        if (AttributeType.Specification.getCode().equals(type.getCode())) {
+            category.specificationCountDecrement();
+        } else if (AttributeType.Param.getCode().equals(type.getCode())) {
+            category.paramCountDecrement();
+        }
+
+        repository.save(category);
     }
 }

@@ -33,7 +33,7 @@ Content-Type: application/json;charset=UTF-8
   "sort": 100
 }
 
-### 修改车型
+### 更新品牌
 PUT http://localhost:9002/brands/11
 Accept: application/json
 Content-Type: application/json;charset=UTF-8
@@ -48,7 +48,7 @@ Content-Type: application/json;charset=UTF-8
   "sort": 100
 }
 
-### 删除车型
+### 删除品牌
 DELETE http://localhost:9002/brands/11
 Accept: application/json
 Content-Type: application/json;charset=UTF-8

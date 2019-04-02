@@ -19,7 +19,7 @@ public class BrandDto {
     private Boolean isShow;
     private String logo;
     private String bigPic;
-    private Long sort;
+    private Integer sort;
 
     public static BrandDto convertFrom(Brand brand) {
         return new BrandDto(brand.getId(), brand.getName(), brand.getFirstLetter(),

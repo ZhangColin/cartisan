@@ -21,8 +21,8 @@ public class ProductAttributeCategory extends AbstractEntity {
 
     @Column(name = "name")
     private String name;
-    @Column(name = "attribute_count")
-    private Integer attributeCount;
+    @Column(name = "specification_count")
+    private Integer specificationCount;
     @Column(name = "param_count")
     private Integer paramCount;
 
@@ -31,7 +31,23 @@ public class ProductAttributeCategory extends AbstractEntity {
 
     public ProductAttributeCategory(String name) {
         this.name = name;
-        this.attributeCount = 0;
+        this.specificationCount = 0;
         this.paramCount = 0;
+    }
+
+    public void specificationCountIncrement() {
+        this.specificationCount++;
+    }
+
+    public void specificationCountDecrement() {
+        this.specificationCount--;
+    }
+
+    public void paramCountIncrement() {
+        this.paramCount++;
+    }
+
+    public void paramCountDecrement() {
+        this.paramCount--;
     }
 }

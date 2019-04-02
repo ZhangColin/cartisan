@@ -24,10 +24,10 @@ public class BrandController {
     @Autowired
     private BrandService service;
 
-    @ApiOperation(value = "获取所有品牌列表")
+    @ApiOperation(value = "获取所有品牌")
     @GetMapping
-    public GenericResponse<List<BrandDto>> findAllBrands() {
-        return success(service.findAllBrands());
+    public GenericResponse<List<BrandDto>> getAllBrands() {
+        return success(service.getAllBrands());
     }
 
     @ApiOperation(value = "获取品牌")

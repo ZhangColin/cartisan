@@ -25,7 +25,7 @@ public class AccountService {
 
     @Cacheable(value = "cache:base:services:AccountService:findAccount", key = "#account")
     public AccountDto findAccount(Long accountId) {
-        return AccountDto.convertFrom(accountRepository.getOne(accountId));
+        return AccountDto.convertFrom(accountRepository.findById(accountId).get());
     }
 
     public void createAccount(AccountDto accountDto) {

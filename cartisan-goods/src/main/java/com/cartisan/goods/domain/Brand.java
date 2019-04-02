@@ -32,5 +32,5 @@ public class Brand extends AbstractEntity {
     @Column(name = "big_pic")
     private String bigPic;
     @Column(name = "sort")
-    private Long sort;
+    private Integer sort;
 }

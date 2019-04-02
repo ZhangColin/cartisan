@@ -1,3 +1,8 @@
+### 获取所有商品属性分类
+GET http://localhost:9002/productAttributeCategories
+Accept: application/json
+Content-Type: application/json;charset=UTF-8
+
 ### 获取商品属性分类
 GET http://localhost:9002/productAttributeCategories/1
 Accept: application/json

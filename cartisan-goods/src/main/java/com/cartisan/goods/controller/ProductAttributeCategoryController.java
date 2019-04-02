@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.cartisan.common.response.ResponseUtils.success;
 
 /**
@@ -21,6 +23,12 @@ import static com.cartisan.common.response.ResponseUtils.success;
 public class ProductAttributeCategoryController {
     @Autowired
     private ProductAttributeCategoryService service;
+
+    @ApiOperation(value = "获取所有商品属性分类")
+    @GetMapping
+    public GenericResponse<List<ProductAttributeCategoryDto>> getAllProductAttributeCategories() {
+        return success(service.getAllProductAttributeCategories());
+    }
 
     @ApiOperation(value = "获取商品属性分类")
     @GetMapping("/{id}")

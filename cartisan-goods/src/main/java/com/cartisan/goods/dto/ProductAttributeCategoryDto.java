@@ -15,11 +15,11 @@ public class ProductAttributeCategoryDto {
     private Long id;
 
     private String name;
-    private Integer attributeCount;
+    private Integer specificationCount;
     private Integer paramCount;
 
     public static ProductAttributeCategoryDto convertFrom(ProductAttributeCategory category) {
         return new ProductAttributeCategoryDto(category.getId(), category.getName(),
-                category.getAttributeCount(), category.getParamCount());
+                category.getSpecificationCount(), category.getParamCount());
     }
 }

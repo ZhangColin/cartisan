@@ -27,7 +27,7 @@ public class BrandService {
     @Autowired
     private BrandRepository repository;
 
-    public List<BrandDto> findAllBrands() {
+    public List<BrandDto> getAllBrands() {
         final List<Brand> brands = repository.findAll();
         return brands.stream().map(BrandDto::convertFrom).collect(Collectors.toList());
     }

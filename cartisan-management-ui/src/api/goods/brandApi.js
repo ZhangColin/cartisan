@@ -8,7 +8,7 @@ export function searchBrands(currentPage, pageSize, params) {
   });
 }
 
-export function findAllBrands() {
+export function getAllBrands() {
   return request({
     url: '/goods/brands',
     method: 'get'

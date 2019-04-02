@@ -30,7 +30,7 @@
           <el-button
             size="mini"
             type="text"
-            @click="toAttributeList(scope.$index, scope.row)">{{ scope.row.attributeCount }}
+            @click="toSpecificationList(scope.$index, scope.row)">{{ scope.row.specificationCount }}
           </el-button>
         </template>
       </el-table-column>
@@ -196,11 +196,13 @@ export default {
         }
       });
     },
-    toAttributeList(index, row) {
-
+    toSpecificationList(index, row) {
+      this.$router.push({ path: '/goods/attributes/productAttributes',
+        query: { categoryId: row.id, categoryName: row.name, type: 0 }});
     },
     toParamList(index, row) {
-
+      this.$router.push({ path: '/goods/attributes/productAttributes',
+        query: { categoryId: row.id, categoryName: row.name, type: 1 }});
     }
   }
 };

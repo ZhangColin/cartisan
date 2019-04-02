@@ -32,6 +32,7 @@
         <el-form-item>
           <el-button type="primary" @click="handleSubmit()">提交</el-button>
           <el-button @click="handleReset()">重置</el-button>
+          <el-button @click="handleBack()">返回</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -99,11 +100,10 @@ export default {
           }).then(() => {
             if (this.isEdit) {
               editBrand(this.$route.query.id, this.brand).then(response => {
-                this.$refs['brandForm'].resetFields();
                 this.$message({
                   message: '修改成功',
                   type: 'success',
-                  buration: 1000
+                  duration: 1000
                 });
                 this.$router.back();
               });
@@ -113,7 +113,7 @@ export default {
                 this.$message({
                   message: '提交成功',
                   type: 'success',
-                  buration: 1000
+                  duration: 1000
                 });
                 this.$router.back();
               });
@@ -131,6 +131,9 @@ export default {
     },
     handleReset() {
       this.init();
+    },
+    handleBack() {
+      this.$router.back();
     }
   }
 };

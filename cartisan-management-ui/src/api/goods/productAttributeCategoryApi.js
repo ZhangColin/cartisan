@@ -1,5 +1,12 @@
 import request from '@/utils/request';
 
+export function getAllProductAttributeCategories() {
+  return request({
+    url: '/goods/productAttributeCategories',
+    method: 'get'
+  });
+}
+
 export function searchProductAttributeCategories(currentPage, pageSize) {
   return request({
     url: `/goods/productAttributeCategories/search/${currentPage}/${pageSize}`,
