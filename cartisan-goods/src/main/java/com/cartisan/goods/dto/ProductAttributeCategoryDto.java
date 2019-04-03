@@ -3,14 +3,12 @@ package com.cartisan.goods.dto;
 import com.cartisan.goods.domain.ProductAttributeCategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * @author colin
  */
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class ProductAttributeCategoryDto {
     private Long id;
 

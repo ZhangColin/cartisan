@@ -3,11 +3,13 @@ package com.cartisan.goods.controller;
 import com.cartisan.common.dto.PageResult;
 import com.cartisan.common.response.GenericResponse;
 import com.cartisan.goods.dto.ProductAttributeDto;
+import com.cartisan.goods.param.ProductAttributeParam;
 import com.cartisan.goods.service.ProductAttributeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import static com.cartisan.common.response.ResponseUtils.success;
@@ -32,18 +34,18 @@ public class ProductAttributeController {
     @ApiOperation(value = "根据分类查询商品属性")
     @GetMapping("/search/{categoryId}/{type}/{currentPage}/{pageSize}")
     public GenericResponse<PageResult<ProductAttributeDto>> searchProductAttributes(
-            @PathVariable Long categoryId,
-            @PathVariable Integer type,
-            @PathVariable Integer currentPage,
-            @PathVariable Integer pageSize) {
+            @ApiParam(value = "属性分类Id", required = true) @PathVariable Long categoryId,
+            @ApiParam(value = "类型（规格、参数）", required = true) @PathVariable Integer type,
+            @ApiParam(value = "页码", required = true) @PathVariable Integer currentPage,
+            @ApiParam(value = "每页记录数", required = true) @PathVariable Integer pageSize) {
         return success(service.searchProductAttributes(categoryId, type, currentPage, pageSize));
     }
 
     @ApiOperation(value = "添加商品属性")
     @PostMapping
     public GenericResponse addProductAttribute(
-            @ApiParam(value = "商品属性信息", required = true) @RequestBody ProductAttributeDto productAttributeDto) {
-        service.addProductAttribute(productAttributeDto);
+            @ApiParam(value = "商品属性信息", required = true) @Validated @RequestBody ProductAttributeParam productAttributeParam) {
+        service.addProductAttribute(productAttributeParam);
 
         return success();
     }
@@ -52,8 +54,8 @@ public class ProductAttributeController {
     @PutMapping("/{id}")
     public GenericResponse editProductAttribute(
             @ApiParam(value = "商品属性Id", required = true) @PathVariable Long id,
-            @ApiParam(value = "商品属性信息", required = true) @RequestBody ProductAttributeDto productAttributeDto) {
-        service.editProductAttribute(id, productAttributeDto);
+            @ApiParam(value = "商品属性信息", required = true) @Validated @RequestBody ProductAttributeParam productAttributeParam) {
+        service.editProductAttribute(id, productAttributeParam);
 
         return success();
     }

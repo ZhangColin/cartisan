@@ -3,6 +3,7 @@ package com.cartisan.goods.service;
 import com.cartisan.common.dto.PageResult;
 import com.cartisan.goods.domain.Brand;
 import com.cartisan.goods.dto.BrandDto;
+import com.cartisan.goods.param.BrandParam;
 import com.cartisan.goods.repository.BrandRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -56,9 +57,9 @@ public class BrandService {
     }
 
     @Transactional(rollbackOn = Exception.class)
-    public void addBrand(BrandDto brandDto) {
+    public void addBrand(BrandParam brandParam) {
         final Brand brand = new Brand();
-        BeanUtils.copyProperties(brandDto, brand);
+        BeanUtils.copyProperties(brandParam, brand);
 
         if (StringUtils.isEmpty(brand.getFirstLetter())) {
             brand.setFirstLetter(brand.getName().substring(0, 1));
@@ -68,9 +69,9 @@ public class BrandService {
     }
 
     @Transactional(rollbackOn = Exception.class)
-    public void editBrand(Long id, BrandDto brandDto) {
+    public void editBrand(Long id, BrandParam brandParam) {
         final Brand brand = repository.findById(id).get();
-        BeanUtils.copyProperties(brandDto, brand);
+        BeanUtils.copyProperties(brandParam, brand);
         brand.setId(id);
 
         if (StringUtils.isEmpty(brand.getFirstLetter())) {

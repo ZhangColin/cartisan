@@ -45,8 +45,8 @@ import { getBrand, addBrand, editBrand } from '@/api/goods/brandApi';
 const defaultBrand = {
   name: '',
   firstLetter: '',
-  isManufacturer: 0,
-  isShow: 0,
+  isManufacturer: false,
+  isShow: false,
   logo: '',
   bigPic: '',
   sort: 0

@@ -15,4 +15,6 @@ public enum FilterType {
         this.code = code;
         this.description = description;
     }
+
+
 }

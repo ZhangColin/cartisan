@@ -7,6 +7,13 @@ export function getAllProductAttributeCategories() {
   });
 }
 
+export function findAllParams() {
+  return request({
+    url: '/goods/productAttributeCategories/params',
+    method: 'get'
+  });
+}
+
 export function searchProductAttributeCategories(currentPage, pageSize) {
   return request({
     url: `/goods/productAttributeCategories/search/${currentPage}/${pageSize}`,

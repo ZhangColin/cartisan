@@ -13,6 +13,33 @@ const goods = {
     icon: 'component'
   },
   children: [{
+    path: 'productCategories',
+    name: 'ProductCategories',
+    component: nested,
+    redirect: '/goods/productCategories/ProductCategoryList',
+    meta: { title: '商品分类', icon: 'nested' },
+    children: [{
+      path: 'productCategoryList',
+      name: 'ProductCategoryList',
+      component: () => import('@/views/goods/productCategory/productCategories'),
+      meta: { title: '商品分类', breadcrumb: false },
+      hidden: false
+    }, {
+      path: 'productCategoryAdd',
+      name: 'ProductCategoryAdd',
+      component: () => import('@/views/goods/productCategory/productCategoryAdd'),
+      meta: { title: '添加商品分类' },
+      hidden: true
+    },
+    {
+      path: 'productCategoryEdit',
+      name: 'ProductCategoryEdit',
+      component: () => import('@/views/goods/productCategory/productCategoryEdit'),
+      meta: { title: '编辑商品分类' },
+      hidden: true
+    }]
+  },
+  {
     path: 'attributes',
     name: 'Attributes',
     component: nested,
@@ -54,7 +81,7 @@ const goods = {
     meta: { title: '品牌管理', icon: 'nested' },
     children: [{
       path: 'brandList',
-      name: 'brandList',
+      name: 'BrandList',
       component: () => import('@/views/goods/brand/brands'),
       meta: { title: '品牌管理', breadcrumb: false },
       hidden: false

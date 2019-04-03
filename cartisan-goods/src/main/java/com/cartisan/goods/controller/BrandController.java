@@ -3,11 +3,13 @@ package com.cartisan.goods.controller;
 import com.cartisan.common.dto.PageResult;
 import com.cartisan.common.response.GenericResponse;
 import com.cartisan.goods.dto.BrandDto;
+import com.cartisan.goods.param.BrandParam;
 import com.cartisan.goods.service.BrandService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,17 +42,17 @@ public class BrandController {
     @ApiOperation(value = "搜索品牌")
     @GetMapping("/search/{currentPage}/{pageSize}")
     public GenericResponse<PageResult<BrandDto>> searchBrands(
-            @RequestParam(required = false) String name,
-            @PathVariable Integer currentPage,
-            @PathVariable Integer pageSize) {
+            @ApiParam(value = "查询品牌名") @RequestParam(required = false) String name,
+            @ApiParam(value = "页码", required = true) @PathVariable Integer currentPage,
+            @ApiParam(value = "每页记录数", required = true) @PathVariable Integer pageSize) {
         return success(service.searchBrands(name, currentPage, pageSize));
     }
 
     @ApiOperation(value = "添加品牌")
     @PostMapping
     public GenericResponse addBrand(
-            @ApiParam(value = "品牌信息", required = true) @RequestBody BrandDto brandDto) {
-        service.addBrand(brandDto);
+            @ApiParam(value = "品牌信息", required = true) @Validated @RequestBody BrandParam brandParam) {
+        service.addBrand(brandParam);
 
         return success();
     }
@@ -59,8 +61,8 @@ public class BrandController {
     @PutMapping("/{id}")
     public GenericResponse editBrand(
             @ApiParam(value = "品牌Id", required = true) @PathVariable Long id,
-            @ApiParam(value = "品牌信息", required = true) @RequestBody BrandDto brandDto) {
-        service.editBrand(id, brandDto);
+            @ApiParam(value = "品牌信息", required = true) @Validated @RequestBody BrandParam brandParam) {
+        service.editBrand(id, brandParam);
 
         return success();
     }

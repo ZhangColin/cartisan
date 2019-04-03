@@ -3,6 +3,8 @@ package com.cartisan.goods.controller;
 import com.cartisan.common.dto.PageResult;
 import com.cartisan.common.response.GenericResponse;
 import com.cartisan.goods.dto.ProductAttributeCategoryDto;
+import com.cartisan.goods.dto.ProductAttributeCategoryInfo;
+import com.cartisan.goods.query.ProductAttributeQuery;
 import com.cartisan.goods.service.ProductAttributeCategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,11 +25,19 @@ import static com.cartisan.common.response.ResponseUtils.success;
 public class ProductAttributeCategoryController {
     @Autowired
     private ProductAttributeCategoryService service;
+    @Autowired
+    private ProductAttributeQuery query;
 
     @ApiOperation(value = "获取所有商品属性分类")
     @GetMapping
     public GenericResponse<List<ProductAttributeCategoryDto>> getAllProductAttributeCategories() {
         return success(service.getAllProductAttributeCategories());
+    }
+
+    @ApiOperation(value = "获取所有商品属性分类的参数设置")
+    @GetMapping("/params")
+    public GenericResponse<List<ProductAttributeCategoryInfo>> findAllParams() {
+        return success(query.findAllParams());
     }
 
     @ApiOperation(value = "获取商品属性分类")
@@ -40,8 +50,8 @@ public class ProductAttributeCategoryController {
     @ApiOperation(value = "分页获取所有商品属性分类")
     @GetMapping("/search/{currentPage}/{pageSize}")
     public GenericResponse<PageResult<ProductAttributeCategoryDto>> searchProductAttributeCategories(
-            @PathVariable Integer currentPage,
-            @PathVariable Integer pageSize) {
+            @ApiParam(value = "页码", required = true) @PathVariable Integer currentPage,
+            @ApiParam(value = "每页记录数", required = true) @PathVariable Integer pageSize) {
         return success(service.searchProductAttributeCategories(currentPage, pageSize));
     }
 

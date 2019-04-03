@@ -1,3 +1,27 @@
+-- 产品分类
+DROP TABLE IF EXISTS `goods_product_categories`;
+CREATE TABLE `goods_product_categories` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `parent_id` bigint NOT NULL DEFAULT 0 COMMENT '上级分类',
+  `name` varchar(64) NOT NULL COMMENT '名称',
+  `level` int(1) NOT NULL DEFAULT 0 COMMENT '分类级别',
+  `product_count` int(11) NOT NULL DEFAULT 0 COMMENT '产品数量',
+  `product_unit` varchar(64) NOT NULL DEFAULT '' COMMENT '产品单位',
+  `show_navigation` tinyint NOT NULL DEFAULT 0 COMMENT '是否显示在导航栏：0->显示；1->不显示',
+  `is_show` tinyint NOT NULL DEFAULT 0 COMMENT '是否显示：0->显示；1->不显示',
+  `icon` varchar(255) NOT NULL DEFAULT '' COMMENT '图标',
+  `keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '关键字',
+  `description` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
+  `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `active` bit(1) NOT NULL DEFAULT b'1',
+  `deleted` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  INDEX (`parent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品分类';
+
+
 -- 产品属性分类（产品类型）
 DROP TABLE IF EXISTS `goods_product_attribute_categories`;
 CREATE TABLE `goods_product_attribute_categories` (
@@ -36,6 +60,20 @@ CREATE TABLE `goods_product_attributes` (
   INDEX (`category_id`, `type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品属性';
 
+
+-- 产品的分类和属性的关系表
+DROP TABLE IF EXISTS `goods_product_category_attribute_relations`;
+CREATE TABLE `goods_product_category_attribute_relations` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `category_id` bigint NOT NULL COMMENT '产品分类',
+  `attribute_id` bigint NOT NULL COMMENT '产品属性',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `active` bit(1) NOT NULL DEFAULT b'1',
+  `deleted` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品的分类和属性的关系表，用于设置分类筛选条件（只支持一级分类）';
+
 -- 品牌
 DROP TABLE IF EXISTS `goods_brands`;
 CREATE TABLE `goods_brands` (
@@ -45,7 +83,7 @@ CREATE TABLE `goods_brands` (
   `is_manufacturer` tinyint NOT NULL DEFAULT 0 COMMENT '是否为品牌制造商：0->不是；1->是',
   `is_show` tinyint NOT NULL DEFAULT 0 COMMENT '是否显示：0->显示；1->不显示',
   `logo` varchar(255) NOT NULL DEFAULT '' COMMENT 'logo',
-  `big_pic` varchar(255) NOT NULL DEFAULT '' COMMENT '专区大图',
+  `big_pic` varchar(255) NOT NULL DEFAULT '' COMMENT '品牌大图',
   `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
   `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,

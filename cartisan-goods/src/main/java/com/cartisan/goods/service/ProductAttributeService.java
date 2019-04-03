@@ -4,6 +4,7 @@ import com.cartisan.common.dto.PageResult;
 import com.cartisan.goods.domain.AttributeType;
 import com.cartisan.goods.domain.ProductAttribute;
 import com.cartisan.goods.dto.ProductAttributeDto;
+import com.cartisan.goods.param.ProductAttributeParam;
 import com.cartisan.goods.repository.ProductAttributeRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,9 +51,9 @@ public class ProductAttributeService {
     }
 
     @Transactional(rollbackOn = Exception.class)
-    public void addProductAttribute(ProductAttributeDto productAttributeDto) {
+    public void addProductAttribute(ProductAttributeParam productAttributeParam) {
         final ProductAttribute productAttribute = new ProductAttribute();
-        BeanUtils.copyProperties(productAttributeDto, productAttribute);
+        BeanUtils.copyProperties(productAttributeParam, productAttribute);
 
         repository.save(productAttribute);
 
@@ -62,9 +63,9 @@ public class ProductAttributeService {
     }
 
     @Transactional(rollbackOn = Exception.class)
-    public void editProductAttribute(Long id, ProductAttributeDto productAttributeDto) {
+    public void editProductAttribute(Long id, ProductAttributeParam productAttributeParam) {
         final ProductAttribute productAttribute = repository.findById(id).get();
-        BeanUtils.copyProperties(productAttributeDto, productAttribute);
+        BeanUtils.copyProperties(productAttributeParam, productAttribute);
         productAttribute.setId(id);
 
         repository.save(productAttribute);
