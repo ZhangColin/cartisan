@@ -4,7 +4,6 @@ import Router from 'vue-router';
 import Layout from '@/views/layout/Layout';
 
 /* Router Modules */
-import base from './modules/base';
 import goods from './modules/goods';
 import example from './modules/sample';
 
@@ -83,7 +82,6 @@ export default new Router({
 });
 
 export const asyncRouterMap = [
-  base,
   goods,
   example
 ];

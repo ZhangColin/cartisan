@@ -1,6 +1,7 @@
 package com.cartisan.base.domain;
 
 import com.cartisan.common.domains.AbstractEntity;
+import com.cartisan.common.domains.AggregateRoot;
 import lombok.Getter;
 import org.hibernate.annotations.Where;
 
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "bas_accounts")
 @Where(clause = "active=1 and deleted=0")
 @Getter
-public class Account extends AbstractEntity {
+public class Account extends AbstractEntity implements AggregateRoot {
     public Account(Long id, String username, String password, String email, String mobile) {
         this.id = id;
         Username = username;

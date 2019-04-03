@@ -24,7 +24,7 @@ Accept: application/json
 Content-Type: application/json;charset=UTF-8
 
 {
-  "name": "cartisan",
+  "name": "cartisan111",
   "firstLetter": "C",
   "isManufacturer": true,
   "isShow": true,
@@ -49,7 +49,7 @@ Content-Type: application/json;charset=UTF-8
 }
 
 ### 删除品牌
-DELETE http://localhost:9002/brands/11
+DELETE http://localhost:9002/brands/12
 Accept: application/json
 Content-Type: application/json;charset=UTF-8
 

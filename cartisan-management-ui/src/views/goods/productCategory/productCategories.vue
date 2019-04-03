@@ -14,7 +14,7 @@
       fit
       highlight-current-row
       size="small">
-      <el-table-column type="selection" width="60" align="center"/>
+      <el-table-column type="selection" align="center"/>
       <el-table-column align="left" label="ID">
         <template slot-scope="scope">
           {{ scope.row.id }}
@@ -74,7 +74,7 @@
           </el-button>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="left">
+      <el-table-column label="操作" align="center" width="200">
         <template slot-scope="scope">
           <el-button
             size="mini"

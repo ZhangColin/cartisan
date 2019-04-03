@@ -1,6 +1,7 @@
 package com.cartisan.common.repositories;
 
-import com.cartisan.common.domains.AbstractEntity;
+import com.cartisan.common.domains.AggregateRoot;
+import com.cartisan.common.domains.SoftDeleteEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.util.Assert;
@@ -14,7 +15,7 @@ import java.io.Serializable;
  */
 @Slf4j
 @Transactional(rollbackOn = Exception.class)
-public class BaseRepositoryImpl<T extends AbstractEntity, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseRepository<T, ID> {
+public class BaseRepositoryImpl<T extends AggregateRoot, ID extends Serializable> extends SimpleJpaRepository<T, ID> implements BaseRepository<T, ID> {
 //    private final JpaEntityInformation<T, ?> entityInformation;
 //    private final EntityManager entityManager;
 
@@ -46,11 +47,18 @@ public class BaseRepositoryImpl<T extends AbstractEntity, ID extends Serializabl
     public void delete(T entity) {
         Assert.notNull(entity, "The entity must not be null!");
 
-        entity.setActive(false);
-        entity.setDeleted(true);
+        if (SoftDeleteEntity.class.isAssignableFrom(entity.getClass())) {
+            SoftDeleteEntity softDeleteEntity = (SoftDeleteEntity) entity;
+            softDeleteEntity.setActive(false);
+            softDeleteEntity.setDeleted(true);
+            this.save(entity);
+        } else {
+            super.delete(entity);
+        }
+
 
 //        this.getEntityManager().merge(entity);
-        this.save(entity);
+
     }
 
 //    @Override

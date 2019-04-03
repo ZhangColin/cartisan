@@ -1,6 +1,6 @@
 package com.cartisan.common.repositories;
 
-import com.cartisan.common.domains.AbstractEntity;
+import com.cartisan.common.domains.AggregateRoot;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
 import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
@@ -14,7 +14,7 @@ import java.io.Serializable;
 /**
  * @author colin
  */
-public class CartisanRepositoryFactoryBean<R extends JpaRepository<T, Serializable>, T extends AbstractEntity>
+public class CartisanRepositoryFactoryBean<R extends JpaRepository<T, Serializable>, T extends AggregateRoot>
         extends JpaRepositoryFactoryBean<R, T, Serializable> {
     public CartisanRepositoryFactoryBean(Class<? extends R> repositoryInterface) {
         super(repositoryInterface);

@@ -29,10 +29,4 @@ public class AbstractEntity implements Serializable {
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Date updateDateTime;
 
-    @Column(name = "active", nullable = false)
-    private boolean isActive = true;
-
-    @Column(name = "deleted", nullable = false)
-    private boolean isDeleted;
-
 }

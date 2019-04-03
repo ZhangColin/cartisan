@@ -13,10 +13,8 @@ CREATE TABLE `goods_product_categories` (
   `keywords` varchar(255) NOT NULL DEFAULT '' COMMENT '关键字',
   `description` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
   `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `active` bit(1) NOT NULL DEFAULT b'1',
-  `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   INDEX (`parent_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品分类';
@@ -29,10 +27,8 @@ CREATE TABLE `goods_product_attribute_categories` (
   `name` varchar(64) NOT NULL COMMENT '名称',
   `specification_count` int(11) NOT NULL DEFAULT 0 COMMENT '规格数量',
   `param_count` int(11) NOT NULL DEFAULT 0 COMMENT '参数数量',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `active` bit(1) NOT NULL DEFAULT b'1',
-  `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   INDEX (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品属性分类（产品类型）';
@@ -52,10 +48,8 @@ CREATE TABLE `goods_product_attributes` (
   `hand_add` tinyint NOT NULL DEFAULT 0 COMMENT '是否支持手动新增；0->不支持；1->支持',
   `type` tinyint NOT NULL DEFAULT 0 COMMENT '属性的类型；0->规格；1->参数',
   `sort` int NOT NULL DEFAULT 0 COMMENT '排序字段：最高的可以单独上传图片',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `active` bit(1) NOT NULL DEFAULT b'1',
-  `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   INDEX (`category_id`, `type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品属性';
@@ -67,10 +61,8 @@ CREATE TABLE `goods_product_category_attribute_relations` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
   `category_id` bigint NOT NULL COMMENT '产品分类',
   `attribute_id` bigint NOT NULL COMMENT '产品属性',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `active` bit(1) NOT NULL DEFAULT b'1',
-  `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品的分类和属性的关系表，用于设置分类筛选条件（只支持一级分类）';
 
@@ -85,10 +77,8 @@ CREATE TABLE `goods_brands` (
   `logo` varchar(255) NOT NULL DEFAULT '' COMMENT 'logo',
   `big_pic` varchar(255) NOT NULL DEFAULT '' COMMENT '品牌大图',
   `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `active` bit(1) NOT NULL DEFAULT b'1',
-  `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   INDEX (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='品牌';
@@ -98,9 +88,7 @@ DROP TABLE IF EXISTS `goods_brand_stories`;
 CREATE TABLE `goods_brand_stories` (
   `brand_id` bigint NOT NULL COMMENT '品牌Id',
   `brand_story` text COMMENT '品牌故事',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `active` bit(1) NOT NULL DEFAULT b'1',
-  `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`brand_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='品牌故事';

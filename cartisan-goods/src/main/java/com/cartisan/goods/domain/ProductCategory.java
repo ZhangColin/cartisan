@@ -1,6 +1,7 @@
 package com.cartisan.goods.domain;
 
 import com.cartisan.common.domains.AbstractEntity;
+import com.cartisan.common.domains.AggregateRoot;
 import lombok.Data;
 import org.hibernate.annotations.Where;
 
@@ -11,9 +12,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "goods_product_categories")
-@Where(clause = "active=1 and deleted=0")
 @Data
-public class ProductCategory extends AbstractEntity {
+public class ProductCategory extends AbstractEntity implements AggregateRoot {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
