@@ -1,4 +1,4 @@
-//globl transition css
+//global transition css
 
 /*fade*/
 .fade-enter-active,
@@ -14,9 +14,7 @@
 /*fade-transform*/
 .fade-transform-leave-active,
 .fade-transform-enter-active {
-  // transition: all .5s;
-  // 主界面0.5秒的切换动画太慢，影响操作效率，所以改成0.05秒的切换动画
-  transition: all .05s;
+  transition: all .5s;
 }
 
 .fade-transform-enter {

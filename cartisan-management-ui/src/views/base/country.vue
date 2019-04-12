@@ -3,11 +3,11 @@
     <el-form :inline="true" :model="searchMap">
       <el-form-item label="大洲">
         <el-select v-model="searchMap.continentId" placeholder="大洲" clearable>
-          <el-option v-for="continent in continents" :key="continent.id" :value="continent.id" :label="continent.name"/>
+          <el-option v-for="continent in continents" :key="continent.id" :value="continent.id" :label="continent.name" />
         </el-select>
       </el-form-item>
       <el-form-item label="国家">
-        <el-input v-model="searchMap.name" placeholder="国家"/>
+        <el-input v-model="searchMap.name" placeholder="国家" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="fetchData">查询</el-button>
@@ -54,8 +54,8 @@
 </template>
 
 <script>
-import { findContinents } from '@/api/base/continent';
-import { searchCountries } from '@/api/base/country';
+import { findContinents } from '@/api/base/continent'
+import { searchCountries } from '@/api/base/country'
 export default {
   name: 'Country',
   data() {
@@ -64,22 +64,22 @@ export default {
       listLoading: true,
       searchMap: {},
       continents: []
-    };
+    }
   },
   created() {
     findContinents().then(response => {
-      this.continents = response.data;
-    });
-    this.fetchData();
+      this.continents = response.data
+    })
+    this.fetchData()
   },
   methods: {
     fetchData() {
-      this.listLoading = true;
+      this.listLoading = true
       searchCountries(this.searchMap).then(response => {
-        this.list = response.data;
-        this.listLoading = false;
-      });
+        this.list = response.data
+        this.listLoading = false
+      })
     }
   }
-};
+}
 </script>

@@ -13,8 +13,9 @@
       fit
       highlight-current-row
       size="small"
-      @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column type="selection" align="center" />
       <el-table-column align="left" label="ID">
         <template slot-scope="scope">
           {{ scope.row.id }}
@@ -30,7 +31,8 @@
           <el-button
             size="mini"
             type="text"
-            @click="toSpecificationList(scope.$index, scope.row)">{{ scope.row.specificationCount }}
+            @click="toSpecificationList(scope.$index, scope.row)"
+          >{{ scope.row.specificationCount }}
           </el-button>
         </template>
       </el-table-column>
@@ -39,7 +41,8 @@
           <el-button
             size="mini"
             type="text"
-            @click="toParamList(scope.$index, scope.row)">{{ scope.row.paramCount }}
+            @click="toParamList(scope.$index, scope.row)"
+          >{{ scope.row.paramCount }}
           </el-button>
         </template>
       </el-table-column>
@@ -47,12 +50,14 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑
+            @click="handleEdit(scope.$index, scope.row)"
+          >编辑
           </el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除
+            @click="handleDelete(scope.$index, scope.row)"
+          >删除
           </el-button>
         </template>
       </el-table-column>
@@ -67,13 +72,15 @@
       align="right"
       layout="total, sizes, prev, pager, next, jumper"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"/>
+      @current-change="handleCurrentChange"
+    />
     <el-dialog
       :title="dialogTitle"
-      :visible.sync="dialogVisible">
+      :visible.sync="dialogVisible"
+    >
       <el-form ref="productAttributeCategoryForm" :model="productAttributeCategory" :rules="rules" label-width="120px">
         <el-form-item label="类型名称">
-          <el-input v-model="productAttributeCategory.name" auto-complete="off"/>
+          <el-input v-model="productAttributeCategory.name" auto-complete="off" />
         </el-form-item>
       </el-form>
       <span slot="footer">
@@ -85,7 +92,7 @@
 </template>
 
 <script>
-import { searchProductAttributeCategories, addProductAttributeCategory, editProductAttributeCategory, removeProductAttributeCategory } from '@/api/goods/productAttributeCategoryApi';
+import { searchProductAttributeCategories, addProductAttributeCategory, editProductAttributeCategory, removeProductAttributeCategory } from '@/api/goods/productAttributeCategoryApi'
 
 export default {
   name: 'ProductAttributeCategory',
@@ -110,41 +117,41 @@ export default {
           { required: true, message: '请输入类型名称', trigger: 'blur' }
         ]
       }
-    };
+    }
   },
   created() {
-    this.fetchData();
+    this.fetchData()
   },
   methods: {
     fetchData() {
-      this.listLoading = true;
+      this.listLoading = true
       searchProductAttributeCategories(this.page.currentPage, this.page.pageSize).then(response => {
-        this.list = response.data.rows;
-        this.page.total = response.data.total;
-        this.listLoading = false;
-      });
+        this.list = response.data.rows
+        this.page.total = response.data.total
+        this.listLoading = false
+      })
     },
     handleSizeChange(pageSize) {
-      this.page.currentPage = 1;
-      this.page.pageSize = pageSize;
-      this.fetchData();
+      this.page.currentPage = 1
+      this.page.pageSize = pageSize
+      this.fetchData()
     },
     handleCurrentChange(currentPage) {
-      this.page.currentPage = currentPage;
-      this.fetchData();
+      this.page.currentPage = currentPage
+      this.fetchData()
     },
     handleSelectionChange(val) {
-      this.mu = val;
+      this.mu = val
     },
     handleAdd() {
-      this.productAttributeCategory = { id: 0, name: '' };
-      this.dialogTitle = '添加类型';
-      this.dialogVisible = true;
+      this.productAttributeCategory = { id: 0, name: '' }
+      this.dialogTitle = '添加类型'
+      this.dialogVisible = true
     },
     handleEdit(index, row) {
-      this.productAttributeCategory = { id: row.id, name: row.name };
-      this.dialogTitle = '编辑类型';
-      this.dialogVisible = true;
+      this.productAttributeCategory = { id: row.id, name: row.name }
+      this.dialogTitle = '编辑类型'
+      this.dialogVisible = true
     },
     handleDelete(index, row) {
       this.$confirm('是否要删除该类型', '提示', {
@@ -157,10 +164,10 @@ export default {
             message: '删除成功',
             type: 'success',
             duration: 1000
-          });
-          this.fetchData();
-        });
-      });
+          })
+          this.fetchData()
+        })
+      })
     },
     handleConfirm() {
       this.$refs['productAttributeCategoryForm'].validate((valid) => {
@@ -171,39 +178,39 @@ export default {
                 message: '添加成功',
                 type: 'success',
                 duration: 1000
-              });
-              this.dialogVisible = false;
-              this.fetchData();
-            });
+              })
+              this.dialogVisible = false
+              this.fetchData()
+            })
           } else {
             editProductAttributeCategory(this.productAttributeCategory.id, this.productAttributeCategory.name).then(response => {
               this.$message({
                 message: '修改成功',
                 type: 'success',
                 duration: 1000
-              });
-              this.dialogVisible = false;
-              this.fetchData();
-            });
+              })
+              this.dialogVisible = false
+              this.fetchData()
+            })
           }
         } else {
           this.$message({
             message: '验证失败',
             type: 'error',
             duration: 1000
-          });
-          return false;
+          })
+          return false
         }
-      });
+      })
     },
     toSpecificationList(index, row) {
       this.$router.push({ path: '/goods/attributes/productAttributes',
-        query: { categoryId: row.id, categoryName: row.name, type: 0 }});
+        query: { categoryId: row.id, categoryName: row.name, type: 0 }})
     },
     toParamList(index, row) {
       this.$router.push({ path: '/goods/attributes/productAttributes',
-        query: { categoryId: row.id, categoryName: row.name, type: 1 }});
+        query: { categoryId: row.id, categoryName: row.name, type: 1 }})
     }
   }
-};
+}
 </script>

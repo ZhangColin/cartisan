@@ -3,7 +3,7 @@
     <el-card class="filter-container" shadow="never">
       <el-form :inline="true" :model="searchParams" size="small">
         <el-form-item>
-          <el-input v-model="searchParams.name" placeholder="品牌名称/关键字"/>
+          <el-input v-model="searchParams.name" placeholder="品牌名称/关键字" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSearch">查询</el-button>
@@ -21,8 +21,9 @@
       fit
       highlight-current-row
       size="small"
-      @selection-change="handleSelectionChange">
-      <el-table-column type="selection" align="center"/>
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column type="selection" align="center" />
       <el-table-column align="left" label="ID">
         <template slot-scope="scope">
           {{ scope.row.id }}
@@ -41,19 +42,21 @@
       <el-table-column label="品牌制造商" align="left">
         <template slot-scope="scope">
           <el-switch
+            v-model="scope.row.isManufacturer"
             :active-value="true"
             :inactive-value="false"
-            v-model="scope.row.isManufacturer"
-            @change="handleManufacturerChange(scope.$index, scope.row)"/>
+            @change="handleManufacturerChange(scope.$index, scope.row)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="是否显示" align="left">
         <template slot-scope="scope">
           <el-switch
+            v-model="scope.row.isShow"
             :active-value="true"
             :inactive-value="false"
-            v-model="scope.row.isShow"
-            @change="handleShowStatusChange(scope.$index, scope.row)"/>
+            @change="handleShowStatusChange(scope.$index, scope.row)"
+          />
         </template>
       </el-table-column>
       <el-table-column label="排序" align="left">
@@ -65,12 +68,14 @@
         <template slot-scope="scope">
           <el-button
             size="mini"
-            @click="handleEdit(scope.$index, scope.row)">编辑
+            @click="handleEdit(scope.$index, scope.row)"
+          >编辑
           </el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除
+            @click="handleDelete(scope.$index, scope.row)"
+          >删除
           </el-button>
         </template>
       </el-table-column>
@@ -85,12 +90,13 @@
       align="right"
       layout="total, sizes, prev, pager, next, jumper"
       @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"/>
+      @current-change="handleCurrentChange"
+    />
   </div>
 </template>
 
 <script>
-import { searchBrands, removeBrand } from '@/api/goods/brandApi';
+import { searchBrands, removeBrand } from '@/api/goods/brandApi'
 
 export default {
   name: 'Brand',
@@ -107,41 +113,41 @@ export default {
         currentPage: 1,
         pageSize: 10
       }
-    };
+    }
   },
   created() {
-    this.fetchData();
+    this.fetchData()
   },
   methods: {
     fetchData() {
-      this.listLoading = true;
+      this.listLoading = true
       searchBrands(this.page.currentPage, this.page.pageSize, this.searchParams).then(response => {
-        this.list = response.data.rows;
-        this.page.total = response.data.total;
-        this.listLoading = false;
-      });
+        this.list = response.data.rows
+        this.page.total = response.data.total
+        this.listLoading = false
+      })
     },
     handleSearch() {
-      this.page.currentPage = 1;
-      this.fetchData();
+      this.page.currentPage = 1
+      this.fetchData()
     },
     handleSizeChange(pageSize) {
-      this.page.currentPage = 1;
-      this.page.pageSize = pageSize;
-      this.fetchData();
+      this.page.currentPage = 1
+      this.page.pageSize = pageSize
+      this.fetchData()
     },
     handleCurrentChange(currentPage) {
-      this.page.currentPage = currentPage;
-      this.fetchData();
+      this.page.currentPage = currentPage
+      this.fetchData()
     },
     handleSelectionChange(val) {
-      this.mu = val;
+      this.mu = val
     },
     handleAdd() {
-      this.$router.push({ path: '/goods/brands/brandAdd' });
+      this.$router.push({ path: '/goods/brands/brandAdd' })
     },
     handleEdit(index, row) {
-      this.$router.push({ path: '/goods/brands/brandEdit', query: { id: row.id }});
+      this.$router.push({ path: '/goods/brands/brandEdit', query: { id: row.id }})
     },
     handleDelete(index, row) {
       this.$confirm('是否要删除该品牌', '提示', {
@@ -154,10 +160,10 @@ export default {
             message: '删除成功',
             type: 'success',
             duration: 1000
-          });
-          this.fetchData();
-        });
-      });
+          })
+          this.fetchData()
+        })
+      })
     },
     handleManufacturerChange(index, row) {
 
@@ -166,5 +172,5 @@ export default {
 
     }
   }
-};
+}
 </script>

@@ -7,4 +7,5 @@ import com.cartisan.goods.domain.ProductAttributeCategory;
  * @author colin
  */
 public interface ProductAttributeCategoryRepository extends BaseRepository<ProductAttributeCategory, Long> {
+
 }

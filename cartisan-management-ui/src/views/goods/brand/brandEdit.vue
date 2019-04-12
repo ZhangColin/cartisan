@@ -1,12 +1,12 @@
 <template>
-  <brand-form :is-edit="true"/>
+  <brand-form :is-edit="true" />
 </template>
 
 <script>
-import brandForm from './brandForm';
+import brandForm from './brandForm'
 
 export default {
   name: 'EditBrand',
   components: { brandForm }
-};
+}
 </script>

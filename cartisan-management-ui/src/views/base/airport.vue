@@ -7,7 +7,8 @@
             v-for="continent in continents"
             :key="continent.id"
             :value="continent.id"
-            :label="continent.name"/>
+            :label="continent.name"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="国家">
@@ -16,7 +17,8 @@
             v-for="country in countries"
             :key="country.id"
             :value="country.id"
-            :label="country.name"/>
+            :label="country.name"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="城市">
@@ -25,7 +27,8 @@
             v-for="city in cities"
             :key="city.id"
             :value="city.id"
-            :label="city.name"/>
+            :label="city.name"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -82,16 +85,17 @@
       align="right"
       layout="total, sizes, prev, pager, next, jumper"
       @size-change="sizeChange"
-      @current-change="currentChange"/>
+      @current-change="currentChange"
+    />
 
   </div>
 </template>
 
 <script>
-import { searchAirports } from '@/api/base/airport';
-import { findCities } from '@/api/base/city';
-import { findCountries } from '@/api/base/country';
-import { findContinents } from '@/api/base/continent';
+import { searchAirports } from '@/api/base/airport'
+import { findCities } from '@/api/base/city'
+import { findCountries } from '@/api/base/country'
+import { findContinents } from '@/api/base/continent'
 export default {
   name: 'Airport',
   data() {
@@ -111,57 +115,57 @@ export default {
         currentPage: 1,
         pageSize: 10
       }
-    };
+    }
   },
   created() {
     findContinents().then(response => {
-      this.continents = response.data;
-    });
-    this.fetchData();
+      this.continents = response.data
+    })
+    this.fetchData()
   },
   methods: {
     fetchData() {
-      this.listLoading = true;
+      this.listLoading = true
       searchAirports(this.page.currentPage, this.page.pageSize, this.searchParams).then(response => {
-        this.list = response.data.rows;
-        this.page.total = response.data.total;
-        this.listLoading = false;
-      });
+        this.list = response.data.rows
+        this.page.total = response.data.total
+        this.listLoading = false
+      })
     },
     searchData() {
-      this.page.currentPage = 1;
-      this.fetchData();
+      this.page.currentPage = 1
+      this.fetchData()
     },
     sizeChange(pageSize) {
-      this.page.currentPage = 1;
-      this.searchParams.pageSize = pageSize;
-      this.fetchData();
+      this.page.currentPage = 1
+      this.searchParams.pageSize = pageSize
+      this.fetchData()
     },
     currentChange(currentPage) {
-      this.searchParams.currentPage = currentPage;
-      this.fetchData();
+      this.searchParams.currentPage = currentPage
+      this.fetchData()
     },
     continentSelectChange(continentId) {
-      this.searchParams.countryId = '';
-      this.searchParams.cityId = '';
+      this.searchParams.countryId = ''
+      this.searchParams.cityId = ''
       if (!continentId) {
-        this.countries = [];
+        this.countries = []
       } else {
         findCountries(continentId).then(response => {
-          this.countries = response.data;
-        });
+          this.countries = response.data
+        })
       }
     },
     countrySelectChange(countryId) {
-      this.searchParams.cityId = '';
+      this.searchParams.cityId = ''
       if (!countryId) {
-        this.cities = [];
+        this.cities = []
       } else {
         findCities(countryId).then(response => {
-          this.cities = response.data;
-        });
+          this.cities = response.data
+        })
       }
     }
   }
-};
+}
 </script>

@@ -2,8 +2,8 @@
   <div class="app-container">
     <el-card shadow="never">
       <el-form ref="productAttributeForm" :model="productAttribute" :rules="rules" label-width="150px">
-        <el-form-item label="属性名称：" >
-          <el-input v-model="productAttribute.name"/>
+        <el-form-item label="属性名称：">
+          <el-input v-model="productAttribute.name" />
         </el-form-item>
         <el-form-item label="商品类型：">
           <el-select v-model="productAttribute.categoryId" placeholder="请选择">
@@ -11,7 +11,8 @@
               v-for="item in productAttributeCategories"
               :key="item.id"
               :label="item.name"
-              :value="item.id"/>
+              :value="item.id"
+            />
           </el-select>
         </el-form-item>
         <el-form-item label="属性是否可选：">
@@ -28,7 +29,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="属性值可选值列表：">
-          <el-input :autosize="true" v-model="inputListFormat" type="textarea"/>
+          <el-input v-model="inputListFormat" :autosize="true" type="textarea" />
         </el-form-item>
         <el-form-item label="分类筛选样式：">
           <el-radio-group v-model="productAttribute.filterType">
@@ -56,7 +57,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="排序：">
-          <el-input v-model.number="productAttribute.sort"/>
+          <el-input v-model.number="productAttribute.sort" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSubmit()">提交</el-button>
@@ -69,8 +70,8 @@
 </template>
 
 <script>
-import { getProductAttribute, addProductAttribute, editProductAttribute } from '@/api/goods/productAttributeApi';
-import { getAllProductAttributeCategories } from '@/api/goods/productAttributeCategoryApi';
+import { getProductAttribute, addProductAttribute, editProductAttribute } from '@/api/goods/productAttributeApi'
+import { getAllProductAttributeCategories } from '@/api/goods/productAttributeCategoryApi'
 
 const defaultProductAttribute = {
   name: '',
@@ -84,7 +85,7 @@ const defaultProductAttribute = {
   handAdd: false,
   type: 0,
   sort: 0
-};
+}
 
 export default {
   name: 'ProductAttributeFrom',
@@ -105,35 +106,35 @@ export default {
       },
       productAttributeCategories: null,
       inputListFormat: null
-    };
+    }
   },
   watch: {
     inputListFormat: function(newValue, oldValue) {
-      newValue = newValue.replace(/\n/g, ',');
-      this.productAttribute.inputList = newValue;
+      newValue = newValue.replace(/\n/g, ',')
+      this.productAttribute.inputList = newValue
     }
   },
   created() {
-    this.init();
-    this.fetchCategories();
+    this.init()
+    this.fetchCategories()
   },
   methods: {
     init() {
       if (this.isEdit) {
         getProductAttribute(this.$route.query.id).then(response => {
-          this.productAttribute = response.data;
-          this.inputListFormat = this.productAttribute.inputList.replace(/,/g, '\n');
-        });
+          this.productAttribute = response.data
+          this.inputListFormat = this.productAttribute.inputList.replace(/,/g, '\n')
+        })
       } else {
-        this.productAttribute = Object.assign({}, defaultProductAttribute);
+        this.productAttribute = Object.assign({}, defaultProductAttribute)
       }
-      this.productAttribute.categoryId = Number(this.$route.query.categoryId);
-      this.productAttribute.type = Number(this.$route.query.type);
+      this.productAttribute.categoryId = Number(this.$route.query.categoryId)
+      this.productAttribute.type = Number(this.$route.query.type)
     },
     fetchCategories() {
       getAllProductAttributeCategories().then(response => {
-        this.productAttributeCategories = response.data;
-      });
+        this.productAttributeCategories = response.data
+      })
     },
     handleSubmit() {
       this.$refs['productAttributeForm'].validate(valid => {
@@ -149,37 +150,37 @@ export default {
                   message: '修改成功',
                   type: 'success',
                   duration: 1000
-                });
-                this.$router.back();
-              });
+                })
+                this.$router.back()
+              })
             } else {
               addProductAttribute(this.productAttribute).then(response => {
-                this.init();
+                this.init()
                 this.$message({
                   message: '提交成功',
                   type: 'success',
                   duration: 1000
-                });
-                this.$router.back();
-              });
+                })
+                this.$router.back()
+              })
             }
-          });
+          })
         } else {
           this.$message({
             message: '验证失败',
             type: 'error',
             duration: 1000
-          });
-          return false;
+          })
+          return false
         }
-      });
+      })
     },
     handleReset() {
-      this.init();
+      this.init()
     },
     handleBack() {
-      this.$router.back();
+      this.$router.back()
     }
   }
-};
+}
 </script>

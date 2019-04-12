@@ -7,15 +7,18 @@
       :on-success="handleImageSuccess"
       class="image-uploader"
       drag
-      action="https://httpbin.org/post">
-      <i class="el-icon-upload"/>
-      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+      action="https://httpbin.org/post"
+    >
+      <i class="el-icon-upload" />
+      <div class="el-upload__text">
+        将文件拖到此处，或<em>点击上传</em>
+      </div>
     </el-upload>
     <div class="image-preview">
       <div v-show="imageUrl.length>1" class="image-preview-wrapper">
         <img :src="imageUrl+'?imageView2/1/w/200/h/200'">
         <div class="image-preview-action">
-          <i class="el-icon-delete" @click="rmImage"/>
+          <i class="el-icon-delete" @click="rmImage" />
         </div>
       </div>
     </div>
@@ -24,7 +27,7 @@
 
 <script>
 // 预览效果见付费文章
-import { getToken } from '@/api/qiniu';
+import { getToken } from '@/api/qiniu'
 
 export default {
   name: 'SingleImageUpload',
@@ -38,45 +41,45 @@ export default {
     return {
       tempUrl: '',
       dataObj: { token: '', key: '' }
-    };
+    }
   },
   computed: {
     imageUrl() {
-      return this.value;
+      return this.value
     }
   },
   methods: {
     rmImage() {
-      this.emitInput('');
+      this.emitInput('')
     },
     emitInput(val) {
-      this.$emit('input', val);
+      this.$emit('input', val)
     },
     handleImageSuccess() {
-      this.emitInput(this.tempUrl);
+      this.emitInput(this.tempUrl)
     },
     beforeUpload() {
-      const _self = this;
+      const _self = this
       return new Promise((resolve, reject) => {
         getToken().then(response => {
-          const key = response.qiniu_key;
-          const token = response.qiniu_token;
-          _self._data.dataObj.token = token;
-          _self._data.dataObj.key = key;
-          this.tempUrl = response.qiniu_url;
-          resolve(true);
+          const key = response.data.qiniu_key
+          const token = response.data.qiniu_token
+          _self._data.dataObj.token = token
+          _self._data.dataObj.key = key
+          this.tempUrl = response.data.qiniu_url
+          resolve(true)
         }).catch(err => {
-          console.log(err);
-          reject(false);
-        });
-      });
+          console.log(err)
+          reject(false)
+        })
+      })
     }
   }
-};
+}
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-    @import "src/styles/mixin.scss";
+<style lang="scss" scoped>
+    @import "~@/styles/mixin.scss";
     .upload-container {
         width: 100%;
         position: relative;

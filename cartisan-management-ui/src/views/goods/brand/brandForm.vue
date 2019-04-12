@@ -2,11 +2,11 @@
   <div class="app-container">
     <el-card shadow="never">
       <el-form ref="brandForm" :model="brand" :rules="rules" label-width="150px">
-        <el-form-item label="名称：" >
-          <el-input v-model="brand.name"/>
+        <el-form-item label="名称：">
+          <el-input v-model="brand.name" />
         </el-form-item>
         <el-form-item label="首字母：">
-          <el-input v-model="brand.firstLetter"/>
+          <el-input v-model="brand.firstLetter" />
         </el-form-item>
         <el-form-item label="制造商：">
           <el-radio-group v-model="brand.isManufacturer">
@@ -21,13 +21,13 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="logo：">
-          <el-input v-model="brand.logo"/>
+          <el-input v-model="brand.logo" />
         </el-form-item>
         <el-form-item label="专区大图：">
-          <el-input v-model="brand.bigPic"/>
+          <el-input v-model="brand.bigPic" />
         </el-form-item>
         <el-form-item label="排序：">
-          <el-input v-model.number="brand.sort"/>
+          <el-input v-model.number="brand.sort" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleSubmit()">提交</el-button>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { getBrand, addBrand, editBrand } from '@/api/goods/brandApi';
+import { getBrand, addBrand, editBrand } from '@/api/goods/brandApi'
 
 const defaultBrand = {
   name: '',
@@ -50,7 +50,7 @@ const defaultBrand = {
   logo: '',
   bigPic: '',
   sort: 0
-};
+}
 
 export default {
   name: 'BrandFrom',
@@ -75,19 +75,19 @@ export default {
           { type: 'number', message: '排序必须为数字' }
         ]
       }
-    };
+    }
   },
   created() {
-    this.init();
+    this.init()
   },
   methods: {
     init() {
       if (this.isEdit) {
         getBrand(this.$route.query.id).then(response => {
-          this.brand = response.data;
-        });
+          this.brand = response.data
+        })
       } else {
-        this.brand = Object.assign({}, defaultBrand);
+        this.brand = Object.assign({}, defaultBrand)
       }
     },
     handleSubmit() {
@@ -104,37 +104,37 @@ export default {
                   message: '修改成功',
                   type: 'success',
                   duration: 1000
-                });
-                this.$router.back();
-              });
+                })
+                this.$router.back()
+              })
             } else {
               addBrand(this.brand).then(response => {
-                this.init();
+                this.init()
                 this.$message({
                   message: '提交成功',
                   type: 'success',
                   duration: 1000
-                });
-                this.$router.back();
-              });
+                })
+                this.$router.back()
+              })
             }
-          });
+          })
         } else {
           this.$message({
             message: '验证失败',
             type: 'error',
             duration: 1000
-          });
-          return false;
+          })
+          return false
         }
-      });
+      })
     },
     handleReset() {
-      this.init();
+      this.init()
     },
     handleBack() {
-      this.$router.back();
+      this.$router.back()
     }
   }
-};
+}
 </script>

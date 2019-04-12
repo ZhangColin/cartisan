@@ -7,7 +7,8 @@
             v-for="continent in searchFillData.continents"
             :key="continent.id"
             :value="continent.id"
-            :label="continent.name"/>
+            :label="continent.name"
+          />
         </el-select>
       </el-form-item>
       <el-form-item label="国家">
@@ -16,7 +17,8 @@
             v-for="country in searchFillData.countries"
             :key="country.id"
             :value="country.id"
-            :label="country.name"/>
+            :label="country.name"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -71,42 +73,42 @@
         <input v-model="editData.id" type="hidden">
         <el-form-item label="编码">
           <el-col :span="12">
-            <el-input v-model="editData.code"/>
+            <el-input v-model="editData.code" />
           </el-col>
         </el-form-item>
         <el-form-item label="车型">
           <el-col :span="12">
-            <el-input v-model="editData.name"/>
+            <el-input v-model="editData.name" />
           </el-col>
         </el-form-item>
         <el-form-item label="乘坐人数">
           <el-col :span="12">
-            <el-input v-model="editData.passengers" type="number"/>
+            <el-input v-model="editData.passengers" type="number" />
           </el-col>
         </el-form-item>
         <el-form-item label="大件行李数">
           <el-col :span="12">
-            <el-input v-model="editData.bigLuggage" type="number"/>
+            <el-input v-model="editData.bigLuggage" type="number" />
           </el-col>
         </el-form-item>
         <el-form-item label="小件行李数">
           <el-col :span="12">
-            <el-input v-model="editData.smallLuggage" type="number"/>
+            <el-input v-model="editData.smallLuggage" type="number" />
           </el-col>
         </el-form-item>
         <el-form-item label="国内同款车型">
           <el-col :span="22">
-            <el-input v-model="editData.description"/>
+            <el-input v-model="editData.description" />
           </el-col>
         </el-form-item>
         <el-form-item label="空间描述">
           <el-col :span="22">
-            <el-input v-model="editData.passengersDescription"/>
+            <el-input v-model="editData.passengersDescription" />
           </el-col>
         </el-form-item>
         <el-form-item label="图片地址">
           <el-col :span="22">
-            <el-input v-model="editData.pictureUrl"/>
+            <el-input v-model="editData.pictureUrl" />
           </el-col>
         </el-form-item>
         <el-form-item label="国家">
@@ -115,14 +117,16 @@
               v-for="continent in editFillData.continents"
               :key="continent.id"
               :value="continent.id"
-              :label="continent.name"/>
+              :label="continent.name"
+            />
           </el-select>
           <el-select v-model="editData.countryId" placeholder="国家" clearable filterable>
             <el-option
               v-for="country in editFillData.countries"
               :key="country.id"
               :value="country.id"
-              :label="country.name"/>
+              :label="country.name"
+            />
           </el-select>
           <input v-model="editData.countryName" type="hidden">
         </el-form-item>
@@ -136,9 +140,9 @@
 </template>
 
 <script>
-import { saveVehicle, searchVehicles } from '@/api/base/vehicle';
-import { findCountries } from '@/api/base/country';
-import { findContinents } from '@/api/base/continent';
+import { saveVehicle, searchVehicles } from '@/api/base/vehicle'
+import { findCountries } from '@/api/base/country'
+import { findContinents } from '@/api/base/continent'
 export default {
   name: 'Vechile',
   data() {
@@ -172,44 +176,44 @@ export default {
         continents: [],
         countries: []
       }
-    };
+    }
   },
   created() {
     findContinents().then(response => {
-      this.searchFillData.continents = response.data;
-      this.editFillData.continents = response.data;
-    });
-    this.fetchData();
+      this.searchFillData.continents = response.data
+      this.editFillData.continents = response.data
+    })
+    this.fetchData()
   },
   methods: {
     fetchData() {
-      this.listLoading = true;
+      this.listLoading = true
       searchVehicles(this.searchParams).then(response => {
-        this.list = response.data;
-        this.listLoading = false;
-      });
+        this.list = response.data
+        this.listLoading = false
+      })
     },
     searchData() {
-      this.fetchData();
+      this.fetchData()
     },
     searchContinentChange(continentId) {
-      this.searchParams.countryId = '';
+      this.searchParams.countryId = ''
       if (!continentId) {
-        this.searchFillData.countries = [];
+        this.searchFillData.countries = []
       } else {
         findCountries(continentId).then(response => {
-          this.searchFillData.countries = response.data;
-        });
+          this.searchFillData.countries = response.data
+        })
       }
     },
     editContinentChange(continentId) {
-      this.editData.countryId = '';
+      this.editData.countryId = ''
       if (!continentId) {
-        this.editFillData.countries = [];
+        this.editFillData.countries = []
       } else {
         findCountries(continentId).then(response => {
-          this.editFillData.countries = response.data;
-        });
+          this.editFillData.countries = response.data
+        })
       }
     },
     submitVehicle() {
@@ -227,11 +231,11 @@ export default {
           continentId: '',
           countryId: '',
           countryName: ''
-        };
-        this.dialogFormVisible = false;
-        this.searchData();
-      });
+        }
+        this.dialogFormVisible = false
+        this.searchData()
+      })
     }
   }
-};
+}
 </script>

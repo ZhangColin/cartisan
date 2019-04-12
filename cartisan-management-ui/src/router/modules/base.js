@@ -1,6 +1,6 @@
 /** When your routing table is too long, you can split it into small modules**/
 
-import Layout from '@/views/layout/Layout';
+import Layout from '@/views/layout/Layout'
 
 const base = {
   path: '/base',
@@ -43,6 +43,6 @@ const base = {
       meta: { title: '车型' }
     }
   ]
-};
+}
 
-export default base;
+export default base

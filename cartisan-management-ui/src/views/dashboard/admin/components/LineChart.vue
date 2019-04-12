@@ -1,11 +1,11 @@
 <template>
-  <div :class="className" :style="{height:height,width:width}"/>
+  <div :class="className" :style="{height:height,width:width}" />
 </template>
 
 <script>
-import echarts from 'echarts';
-require('echarts/theme/macarons'); // echarts theme
-import { debounce } from '@/utils';
+import echarts from 'echarts'
+require('echarts/theme/macarons') // echarts theme
+import { debounce } from '@/utils'
 
 export default {
   props: {
@@ -34,48 +34,48 @@ export default {
     return {
       chart: null,
       sidebarElm: null
-    };
+    }
   },
   watch: {
     chartData: {
       deep: true,
       handler(val) {
-        this.setOptions(val);
+        this.setOptions(val)
       }
     }
   },
   mounted() {
-    this.initChart();
+    this.initChart()
     if (this.autoResize) {
       this.__resizeHandler = debounce(() => {
         if (this.chart) {
-          this.chart.resize();
+          this.chart.resize()
         }
-      }, 100);
-      window.addEventListener('resize', this.__resizeHandler);
+      }, 100)
+      window.addEventListener('resize', this.__resizeHandler)
     }
 
     // 监听侧边栏的变化
-    this.sidebarElm = document.getElementsByClassName('sidebar-container')[0];
-    this.sidebarElm && this.sidebarElm.addEventListener('transitionend', this.sidebarResizeHandler);
+    this.sidebarElm = document.getElementsByClassName('sidebar-container')[0]
+    this.sidebarElm && this.sidebarElm.addEventListener('transitionend', this.sidebarResizeHandler)
   },
   beforeDestroy() {
     if (!this.chart) {
-      return;
+      return
     }
     if (this.autoResize) {
-      window.removeEventListener('resize', this.__resizeHandler);
+      window.removeEventListener('resize', this.__resizeHandler)
     }
 
-    this.sidebarElm && this.sidebarElm.removeEventListener('transitionend', this.sidebarResizeHandler);
+    this.sidebarElm && this.sidebarElm.removeEventListener('transitionend', this.sidebarResizeHandler)
 
-    this.chart.dispose();
-    this.chart = null;
+    this.chart.dispose()
+    this.chart = null
   },
   methods: {
     sidebarResizeHandler(e) {
       if (e.propertyName === 'width') {
-        this.__resizeHandler();
+        this.__resizeHandler()
       }
     },
     setOptions({ expectedData, actualData } = {}) {
@@ -145,12 +145,12 @@ export default {
           animationDuration: 2800,
           animationEasing: 'quadraticOut'
         }]
-      });
+      })
     },
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons');
-      this.setOptions(this.chartData);
+      this.chart = echarts.init(this.$el, 'macarons')
+      this.setOptions(this.chartData)
     }
   }
-};
+}
 </script>

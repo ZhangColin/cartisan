@@ -16,7 +16,7 @@ export default {
     items: {
       type: Array,
       default: function() {
-        return [];
+        return []
       }
     },
     title: {
@@ -27,17 +27,17 @@ export default {
   data() {
     return {
       isActive: false
-    };
+    }
   },
   methods: {
     clickTitle() {
-      this.isActive = !this.isActive;
+      this.isActive = !this.isActive
     }
   }
-};
+}
 </script>
 
-<style rel="stylesheet/scss" lang="scss" >
+<style lang="scss" >
 $n: 8; //和items.length 相同
 $t: .1s;
 .share-dropdown-menu {

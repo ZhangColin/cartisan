@@ -1,7 +1,7 @@
 /** When your routing table is too long, you can split it into small modules**/
 
-import Layout from '@/views/layout/Layout';
-import nested from '@/views/layout/nested';
+import Layout from '@/layout'
+import nested from '@/layout/nested'
 
 const goods = {
   path: '/goods',
@@ -76,7 +76,7 @@ const goods = {
   {
     path: 'brands',
     name: 'Brands',
-    component: nested,
+    // component: nested,
     redirect: '/goods/brands/brandList',
     meta: { title: '品牌管理', icon: 'nested' },
     children: [{
@@ -100,6 +100,6 @@ const goods = {
       hidden: true
     }]
   }]
-};
+}
 
-export default goods;
+export default goods

@@ -1,12 +1,12 @@
 <template>
-  <product-attribute-form :is-edit="false"/>
+  <product-attribute-form :is-edit="false" />
 </template>
 
 <script>
-import productAttributeForm from './productAttributeForm';
+import productAttributeForm from './productAttributeForm'
 
 export default {
   name: 'AddProductAttribute',
   components: { productAttributeForm }
-};
+}
 </script>
