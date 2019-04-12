@@ -76,7 +76,7 @@ const goods = {
   {
     path: 'brands',
     name: 'Brands',
-    // component: nested,
+    component: nested,
     redirect: '/goods/brands/brandList',
     meta: { title: '品牌管理', icon: 'nested' },
     children: [{
