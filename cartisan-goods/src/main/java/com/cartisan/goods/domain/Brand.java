@@ -3,6 +3,7 @@ package com.cartisan.goods.domain;
 import com.cartisan.common.domains.AbstractEntity;
 import com.cartisan.common.domains.AggregateRoot;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "goods_brands")
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Brand extends AbstractEntity implements AggregateRoot {
     @Id
     @Column(name = "id")

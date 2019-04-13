@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import static com.cartisan.common.response.ResponseUtils.success;
+import static com.cartisan.common.response.GenericResponse.success;
 
 /**
  * @author colin

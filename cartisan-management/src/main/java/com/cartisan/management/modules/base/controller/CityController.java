@@ -2,7 +2,6 @@ package com.cartisan.management.modules.base.controller;
 
 import com.cartisan.common.dto.PageResult;
 import com.cartisan.common.response.GenericResponse;
-import com.cartisan.common.response.StatusCode;
 import com.cartisan.management.modules.base.dto.CityDto;
 import com.cartisan.management.modules.base.dto.CountryDto;
 import com.cartisan.management.modules.base.gateway.CityClient;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.cartisan.common.response.ResponseUtils.success;
+import static com.cartisan.common.response.GenericResponse.success;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -29,8 +28,7 @@ public class CityController {
 
     @GetMapping
     public GenericResponse<List<CityDto>> findCities(@RequestParam Long countryId) {
-        return new GenericResponse<>(true, StatusCode.OK, "查询成功",
-                cityClient.findCities(countryId));
+        return success(cityClient.findCities(countryId));
     }
 
     @GetMapping("/search/{currentPage}/{pageSize}")

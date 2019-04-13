@@ -1,11 +1,14 @@
 package com.cartisan.management.modules.auth.controller;
 
 import com.cartisan.common.response.GenericResponse;
-import com.cartisan.common.response.StatusCode;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 
+import static com.cartisan.common.response.GenericResponse.success;
 import static java.util.Arrays.asList;
 
 /**
@@ -22,12 +25,12 @@ public class UserController {
         HashMap<String, Object> data = new HashMap<>();
         data.put("token", "colin");
 
-        return new GenericResponse(true, StatusCode.OK, "登录成功",data);
+        return success();
     }
 
     @PostMapping("logout")
     public GenericResponse logout() {
-        return new GenericResponse(true, StatusCode.OK, "退出成功");
+        return success();
     }
 
     @GetMapping("info")
@@ -38,6 +41,6 @@ public class UserController {
         info.put("name", "colin");
         info.put("avatar", "https://wpimg.wallstcn.com/f778738c‐e4f8‐4870‐b634‐56703 b4acafe.gif");
 
-        return new GenericResponse(true, StatusCode.OK, "获取信息成功", info);
+        return success(info);
     }
 }

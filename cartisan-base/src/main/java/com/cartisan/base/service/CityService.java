@@ -40,7 +40,7 @@ public class CityService {
             List<Predicate> predicateList = new ArrayList<>();
 
             if (countryIds != null) {
-                predicateList.add(root.<Long>get("countryId").in(countryIds));
+                predicateList.add(root.<Long>get("countryId").in((Object[])countryIds));
             }
 
             if (StringUtils.isNotBlank(name)) {

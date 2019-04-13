@@ -3,7 +3,7 @@ package com.cartisan.goods.domain;
 import com.cartisan.common.domains.AbstractEntity;
 import com.cartisan.common.domains.AggregateRoot;
 import lombok.Data;
-import org.hibernate.annotations.Where;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "goods_product_category_attribute_relations")
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class ProductCategoryAttributeRelation extends AbstractEntity implements AggregateRoot {
     @Id
     @Column(name = "id")

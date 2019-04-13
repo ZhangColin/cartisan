@@ -3,6 +3,7 @@ package com.cartisan.base.domain;
 import com.cartisan.common.domains.AbstractEntity;
 import com.cartisan.common.domains.AggregateRoot;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @Table(name = "bas_airports")
 @Where(clause = "active=1 and deleted=0")
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Airport extends AbstractEntity implements AggregateRoot {
     @Id
     @Column(name = "id")

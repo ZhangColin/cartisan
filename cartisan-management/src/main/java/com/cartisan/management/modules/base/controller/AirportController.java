@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.cartisan.common.response.ResponseUtils.success;
+import static com.cartisan.common.response.GenericResponse.success;
 import static java.util.stream.Collectors.toList;
 
 /**

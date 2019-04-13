@@ -4,13 +4,12 @@ import com.cartisan.base.dto.CityDto;
 import com.cartisan.base.service.CityService;
 import com.cartisan.common.dto.PageResult;
 import com.cartisan.common.response.GenericResponse;
-import com.cartisan.common.response.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.cartisan.common.response.ResponseUtils.success;
+import static com.cartisan.common.response.GenericResponse.success;
 
 /**
  * @author colin
@@ -24,7 +23,7 @@ public class CityController {
 
     @GetMapping
     public GenericResponse<List<CityDto>> findCities(@RequestParam Long countryId) {
-        return new GenericResponse<>(true, StatusCode.OK, "查询成功", cityService.findCities(countryId));
+        return success(cityService.findCities(countryId));
     }
 
     @GetMapping("/search/{currentPage}/{pageSize}")

@@ -2,7 +2,6 @@ package com.cartisan.common.interceptor;
 
 import com.cartisan.common.config.CartisanSignatureConfig;
 import com.cartisan.common.response.GenericResponse;
-import com.cartisan.common.response.StatusCode;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.cartisan.common.response.GenericResponse.fail;
 
 /**
  * 签名验证拦截器，现规则比较简单，可以使用 Json Web Token 或其它方式替代
@@ -49,7 +50,7 @@ public class SignatureInterceptor extends HandlerInterceptorAdapter {
             return true;
         }
 
-        GenericResponse result = new GenericResponse(false, StatusCode.ERROR, "签名认证失败");
+        GenericResponse result = fail(JwtCodeMessage.SIGNATURE_ERROR);
 
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-type", "application/json;charset=UTF-8");

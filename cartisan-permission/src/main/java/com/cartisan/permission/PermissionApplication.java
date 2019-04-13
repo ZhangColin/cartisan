@@ -1,4 +1,4 @@
-package com.cartisan.goods;
+package com.cartisan.permission;
 
 import com.cartisan.common.config.CartisanApplication;
 import com.cartisan.common.utils.IdWorker;
@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Bean;
 /**
  * @author colin
  */
-public class GoodsApplication extends CartisanApplication {
+public class PermissionApplication extends CartisanApplication {
     public static void main(String[] args) {
-        SpringApplication.run(GoodsApplication.class);
+        SpringApplication.run(PermissionApplication.class);
     }
 
     @Bean

@@ -1,7 +1,7 @@
 package com.cartisan.management.modules.base.controller;
 
+import com.cartisan.common.response.CodeMessage;
 import com.cartisan.common.response.GenericResponse;
-import com.cartisan.common.response.StatusCode;
 import com.cartisan.management.modules.base.dto.VehicleDto;
 import com.cartisan.management.modules.base.gateway.VehicleClient;
 import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.cartisan.common.response.ResponseUtils.fail;
-import static com.cartisan.common.response.ResponseUtils.success;
+import static com.cartisan.common.response.GenericResponse.fail;
+import static com.cartisan.common.response.GenericResponse.success;
 
 /**
  * @author colin
@@ -47,7 +47,7 @@ public class VehicleController {
     }
 
     private GenericResponse<List<VehicleDto>> fallback(Long countryId) {
-        return fail();
+        return fail(CodeMessage.SERVER_ERROR);
     }
 
     @ApiOperation(value = "添加车型", notes = "添加车型")
@@ -56,7 +56,7 @@ public class VehicleController {
             @ApiParam(value = "车型信息", required = true) @RequestBody VehicleDto vehicleDto) {
         vehicleClient.addVehicle(vehicleDto);
 
-        return new GenericResponse(true, StatusCode.OK, "添加成功");
+        return success();
     }
 
     @ApiOperation(value = "更新车型", notes = "更新车型")
@@ -66,7 +66,7 @@ public class VehicleController {
             @ApiParam(value = "车型信息", required = true) @RequestBody VehicleDto vehicleDto) {
         vehicleClient.editVehicle(id, vehicleDto);
 
-        return new GenericResponse(true, StatusCode.OK, "更新成功");
+        return success();
     }
 
     @ApiOperation(value = "删除车型", notes = "删除车型")
@@ -75,10 +75,10 @@ public class VehicleController {
             @ApiParam(value = "车型Id", required = true) @PathVariable long id) {
         vehicleClient.removeVehicle(id);
 
-        return new GenericResponse(true, StatusCode.OK, "删除成功");
+        return success();
     }
 
     private GenericResponse defaultFallback() {
-        return fail("服务异常");
+        return fail(CodeMessage.SERVER_ERROR);
     }
 }
