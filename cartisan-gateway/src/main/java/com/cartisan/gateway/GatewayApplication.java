@@ -1,6 +1,6 @@
 package com.cartisan.gateway;
 
-import com.cartisan.common.config.CartisanApplication;
+import com.cartisan.common.configs.CartisanApplication;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 

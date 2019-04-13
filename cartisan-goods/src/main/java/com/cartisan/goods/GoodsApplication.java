@@ -1,6 +1,6 @@
 package com.cartisan.goods;
 
-import com.cartisan.common.config.CartisanApplication;
+import com.cartisan.common.configs.CartisanApplication;
 import com.cartisan.common.utils.IdWorker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
