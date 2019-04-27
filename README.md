@@ -47,7 +47,7 @@ docker run -d -p 5601:5601 -v ~/docker/kibana/kibana.yml:/usr/share/kibana/confi
 | 名称 | 端口 |
 | --- | --- |
 | management | 8081 |
-| permission | 8082 |
+| system | 8082 |
 | base | 9001 |
 | goods | 9002 |
 

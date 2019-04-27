@@ -8,6 +8,7 @@ import Layout from '@/layout'
 
 /* Router Modules */
 import goods from './modules/goods'
+import system from './modules/system'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -16,7 +17,7 @@ import goods from './modules/goods'
  * alwaysShow: true               if set true, will always show the root menu
  *                                if not set alwaysShow, when item has more than one children route,
  *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noredirect           if `redirect:noredirect` will no redirect in the breadcrumb
+ * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
  * name:'router-name'             the name is used by <keep-alive> (must set!!!)
  * meta : {
     roles: ['admin','editor']    control the page roles (you can set multiple roles)
@@ -53,17 +54,17 @@ export const constantRoutes = [
   },
   {
     path: '/auth-redirect',
-    component: () => import('@/views/login/authRedirect'),
+    component: () => import('@/views/login/auth-redirect'),
     hidden: true
   },
   {
     path: '/404',
-    component: () => import('@/views/errorPage/404'),
+    component: () => import('@/views/error-page/404'),
     hidden: true
   },
   {
     path: '/401',
-    component: () => import('@/views/errorPage/401'),
+    component: () => import('@/views/error-page/401'),
     hidden: true
   },
   {
@@ -86,7 +87,8 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  goods
+  goods,
+  system
 ]
 
 const createRouter = () => new Router({

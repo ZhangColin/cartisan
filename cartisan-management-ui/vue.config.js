@@ -1,13 +1,12 @@
 'use strict'
 const path = require('path')
-const pkg = require('./package.json')
+const defaultSettings = require('./src/settings.js')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-// const name = pkg.name || 'vue-element-admin' // page title
-const name = pkg.name || 'Cartisan' // page title
+const name = defaultSettings.title || 'Cartisan' // page title
 const port = 8088 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
@@ -87,6 +86,7 @@ module.exports = {
       .end()
 
     config
+    // https://webpack.js.org/configuration/devtool/#development
       .when(process.env.NODE_ENV === 'development',
         config => config.devtool('cheap-source-map')
       )

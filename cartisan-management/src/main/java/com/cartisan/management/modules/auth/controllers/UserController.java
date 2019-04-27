@@ -25,7 +25,7 @@ public class UserController {
         HashMap<String, Object> data = new HashMap<>();
         data.put("token", "colin");
 
-        return success();
+        return success(data);
     }
 
     @PostMapping("logout")
@@ -39,7 +39,7 @@ public class UserController {
         info.put("roles", asList("admin"));
         info.put("role", asList("admin"));
         info.put("name", "colin");
-        info.put("avatar", "https://wpimg.wallstcn.com/f778738c‐e4f8‐4870‐b634‐56703 b4acafe.gif");
+        info.put("avatar", "");
 
         return success(info);
     }

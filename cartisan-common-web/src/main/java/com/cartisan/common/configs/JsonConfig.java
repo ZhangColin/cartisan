@@ -72,6 +72,12 @@ public class JsonConfig {
 
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
+//        SimpleModule simpleModule = new SimpleModule();
+//        simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
+//        simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
+//
+//        objectMapper.registerModule(simpleModule);
+
 //        objectMapper
 //                .registerModule(new SimpleModule().addSerializer(BigDecimal.class, new AmountJsonSerializer())
 //                        .addSerializer(LocalDateTime.class, new DateTimeSerializer())

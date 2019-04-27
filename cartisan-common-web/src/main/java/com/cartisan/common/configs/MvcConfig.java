@@ -1,7 +1,7 @@
 package com.cartisan.common.configs;
 
 import com.cartisan.common.filters.RequestLoggingFilter;
-import com.cartisan.common.interceptors.SignatureInterceptor;
+import com.cartisan.common.interceptors.HttpInterceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,8 +64,11 @@ public class MvcConfig implements WebMvcConfigurer {
 //    @Autowired
 //    private JwtFilter jwtFilter;
 
+//    @Autowired
+//    private SignatureInterceptor signatureInterceptor;
+
     @Autowired
-    private SignatureInterceptor signatureInterceptor;
+    private HttpInterceptor httpInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -81,6 +84,8 @@ public class MvcConfig implements WebMvcConfigurer {
 //        registry.addInterceptor(annotationInterceptor()).addPathPatterns("/**");
 //        registry.addInterceptor(jwtFilter).addPathPatterns("/**").excludePathPatterns("/**/login");
 
-        registry.addInterceptor(signatureInterceptor).addPathPatterns("/**");
+//        registry.addInterceptor(signatureInterceptor).addPathPatterns("/**");
+
+        registry.addInterceptor(httpInterceptor).addPathPatterns("/**");
     }
 }

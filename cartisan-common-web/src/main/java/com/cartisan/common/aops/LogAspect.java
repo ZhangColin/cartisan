@@ -47,7 +47,7 @@ public class LogAspect {
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         Object obj = proceedingJoinPoint.proceed();
-        log.info("耗时：{0}", System.currentTimeMillis()-startTime);
+        log.info("耗时：{}", System.currentTimeMillis()-startTime);
         return obj;
     }
 }

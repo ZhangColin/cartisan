@@ -1,7 +1,5 @@
-import variables from '@/styles/element-variables.scss'
-
-export default {
-  theme: variables.theme,
+module.exports = {
+  title: 'Cartisan',
 
   /**
    * @type {boolean} true | false

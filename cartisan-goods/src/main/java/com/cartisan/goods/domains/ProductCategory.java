@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "goods_product_categories")
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = true)
 public class ProductCategory extends AbstractEntity implements AggregateRoot {
     @Id
     @Column(name = "id")

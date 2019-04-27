@@ -15,7 +15,7 @@ export default {
     },
     text: {
       type: String,
-      default: 'Cartisan'
+      default: 'vue-element-admin'
     }
   }
 }
