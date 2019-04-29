@@ -14,7 +14,7 @@ import java.io.Serializable;
 @MappedSuperclass
 @Data
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class SoftDeleteEntity extends AbstractEntity implements Serializable {
     @Column(name = "active", nullable = false)
     private boolean isActive = true;

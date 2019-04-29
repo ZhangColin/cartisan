@@ -1,6 +1,6 @@
 package com.cartisan.common.interceptors;
 
-import com.cartisan.common.responses.CodeMessage;
+import com.cartisan.common.constants.CodeMessage;
 
 /**
  * @author colin

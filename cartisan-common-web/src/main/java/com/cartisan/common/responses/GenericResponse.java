@@ -1,5 +1,7 @@
 package com.cartisan.common.responses;
 
+import com.cartisan.common.constants.CodeMessage;
+import com.cartisan.common.constants.CommonCodeMessage;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
@@ -33,11 +35,11 @@ public class GenericResponse<T> {
     }
 
     public static <T> GenericResponse<T> success(T data) {
-        return new GenericResponse(true, CodeMessage.SUCCESS, data);
+        return new GenericResponse(true, CommonCodeMessage.SUCCESS, data);
     }
 
     public static <T> GenericResponse<T> success() {
-        return new GenericResponse(true, CodeMessage.SUCCESS);
+        return new GenericResponse(true, CommonCodeMessage.SUCCESS);
     }
 
     public static GenericResponse fail(CodeMessage codeMessage) {

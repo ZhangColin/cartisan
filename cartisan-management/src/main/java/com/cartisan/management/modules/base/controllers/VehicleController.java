@@ -1,9 +1,9 @@
 package com.cartisan.management.modules.base.controllers;
 
-import com.cartisan.common.responses.CodeMessage;
+import com.cartisan.common.constants.CommonCodeMessage;
 import com.cartisan.common.responses.GenericResponse;
-import com.cartisan.management.modules.base.dtos.VehicleDto;
 import com.cartisan.management.modules.base.clients.VehicleClient;
+import com.cartisan.management.modules.base.dtos.VehicleDto;
 import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import io.swagger.annotations.Api;
@@ -47,7 +47,7 @@ public class VehicleController {
     }
 
     private GenericResponse<List<VehicleDto>> fallback(Long countryId) {
-        return fail(CodeMessage.SERVER_ERROR);
+        return fail(CommonCodeMessage.SERVER_ERROR);
     }
 
     @ApiOperation(value = "添加车型", notes = "添加车型")
@@ -79,6 +79,6 @@ public class VehicleController {
     }
 
     private GenericResponse defaultFallback() {
-        return fail(CodeMessage.SERVER_ERROR);
+        return fail(CommonCodeMessage.SERVER_ERROR);
     }
 }

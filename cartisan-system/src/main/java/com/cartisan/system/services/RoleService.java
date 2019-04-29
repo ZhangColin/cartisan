@@ -3,6 +3,7 @@ package com.cartisan.system.services;
 import com.cartisan.common.dtos.PageResult;
 import com.cartisan.common.exceptions.CartisanException;
 import com.cartisan.common.utils.IdWorker;
+import com.cartisan.system.constants.SystemCodeMessage;
 import com.cartisan.system.domains.Role;
 import com.cartisan.system.dtos.RoleDto;
 import com.cartisan.system.dtos.RoleInfo;
@@ -52,10 +53,10 @@ public class RoleService {
     @Transactional(rollbackOn = Exception.class)
     public void addRole(RoleParam roleParam) {
         if (repository.existsByName(roleParam.getName())) {
-            throw new CartisanException("角色名称已经存在");
+            throw new CartisanException(SystemCodeMessage.SAME_ROlE_NAME);
         }
         final Role role = new Role(idWorker.nextId(), roleParam.getName(), roleParam.getCode());
-        role.getDescription();
+        role.setDescription(roleParam.getDescription());
 
         // TODO: operator info
         role.setOperator("system");
@@ -66,7 +67,7 @@ public class RoleService {
     @Transactional(rollbackOn = Exception.class)
     public void editRole(Long id, RoleParam roleParam) {
         if (repository.existsByNameAndIdNot(roleParam.getName(), id)) {
-            throw new CartisanException("角色名称已经存在");
+            throw new CartisanException(SystemCodeMessage.SAME_ROlE_NAME);
         }
         final Role role = repository.findById(id).get();
 

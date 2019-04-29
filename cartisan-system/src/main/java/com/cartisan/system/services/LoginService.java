@@ -3,6 +3,7 @@ package com.cartisan.system.services;
 import com.cartisan.common.exceptions.CartisanException;
 import com.cartisan.common.utils.JwtUtil;
 import com.cartisan.common.utils.RedisUtil;
+import com.cartisan.system.constants.SystemCodeMessage;
 import com.cartisan.system.domains.User;
 import com.cartisan.system.domains.UserRole;
 import com.cartisan.system.params.LoginParam;
@@ -33,13 +34,13 @@ public class LoginService {
         final Optional<User> userOptional = userService.findByUserName(loginParam.getUsername());
 
         if (!userOptional.isPresent()) {
-            throw new CartisanException("用户名或密码不正确");
+            throw new CartisanException(SystemCodeMessage.ERROR_USERNAME_OR_PASSWORD);
         }
 
         final User user = userOptional.get();
 
         if (!user.valid(loginParam.getPassword())) {
-            throw new CartisanException("用户名或密码不正确");
+            throw new CartisanException(SystemCodeMessage.ERROR_USERNAME_OR_PASSWORD);
         }
 
 

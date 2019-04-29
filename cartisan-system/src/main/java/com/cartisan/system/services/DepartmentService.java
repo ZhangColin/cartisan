@@ -2,6 +2,7 @@ package com.cartisan.system.services;
 
 import com.cartisan.common.exceptions.CartisanException;
 import com.cartisan.common.utils.IdWorker;
+import com.cartisan.system.constants.SystemCodeMessage;
 import com.cartisan.system.domains.Department;
 import com.cartisan.system.dtos.DepartmentDto;
 import com.cartisan.system.params.DepartmentParam;
@@ -39,7 +40,7 @@ public class DepartmentService {
     @Transactional(rollbackOn = Exception.class)
     public void addDepartment(DepartmentParam departmentParam) {
         if (repository.existsByParentIdAndName(departmentParam.getParentId(), departmentParam.getName())) {
-            throw new CartisanException("同一层级下存在相同名称的部门");
+            throw new CartisanException(SystemCodeMessage.SAME_DEPARTMENT_NAME);
         }
 
         final Department department = new Department(
@@ -59,12 +60,12 @@ public class DepartmentService {
     @Transactional(rollbackOn = Exception.class)
     public void editDepartment(Long id, DepartmentParam departmentParam) {
         if (repository.existsByParentIdAndNameAndIdNot(departmentParam.getParentId(), departmentParam.getName(), id)) {
-            throw new CartisanException("同一层级下存在相同名称的部门");
+            throw new CartisanException(SystemCodeMessage.SAME_DEPARTMENT_NAME);
         }
 
         final Optional<Department> departmentOptional = repository.findById(id);
         if (!departmentOptional.isPresent()) {
-            throw new CartisanException("待更新的部门不存在");
+            throw new CartisanException(SystemCodeMessage.DEPARTMENT_NOT_EXIST);
         }
 
         final Department department = departmentOptional.get();
@@ -82,15 +83,15 @@ public class DepartmentService {
     public void removeDepartment(long id) {
         final Optional<Department> departmentOptional = repository.findById(id);
         if (!departmentOptional.isPresent()) {
-            throw new CartisanException("待删除的部门不存在");
+            throw new CartisanException(SystemCodeMessage.DEPARTMENT_NOT_EXIST);
         }
 
         if (repository.existsByParentId(id)) {
-            throw new CartisanException("当前部门下面有子部门，无法删除");
+            throw new CartisanException(SystemCodeMessage.HAS_CHILD_DEPARTMENT);
         }
 
         if (userQuery.existsUserInDepartment(id)) {
-            throw new CartisanException("当前部门下面有用户，无法删除");
+            throw new CartisanException(SystemCodeMessage.HAS_USER_IN_DEPARTMENT);
         }
 
         repository.deleteById(id);

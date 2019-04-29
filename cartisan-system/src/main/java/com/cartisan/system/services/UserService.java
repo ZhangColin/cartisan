@@ -3,6 +3,7 @@ package com.cartisan.system.services;
 import com.cartisan.common.dtos.PageResult;
 import com.cartisan.common.exceptions.CartisanException;
 import com.cartisan.common.utils.IdWorker;
+import com.cartisan.system.constants.SystemCodeMessage;
 import com.cartisan.system.domains.User;
 import com.cartisan.system.dtos.UserDto;
 import com.cartisan.system.params.UserParam;
@@ -55,11 +56,11 @@ public class UserService {
     @Transactional(rollbackOn = Exception.class)
     public void addUser(UserParam userParam) {
         if (repository.existsByEmail(userParam.getEmail())) {
-            throw new CartisanException("邮箱已被占用");
+            throw new CartisanException(SystemCodeMessage.EMAIL_EXIST);
         }
 
         if (repository.existsByPhone(userParam.getPhone())) {
-            throw new CartisanException("电话已被占用");
+            throw new CartisanException(SystemCodeMessage.PHONE_EXIST);
         }
 
         final User user = new User(idWorker.nextId(), userParam.getUsername(), userParam.getPassword());
@@ -79,17 +80,17 @@ public class UserService {
     @Transactional(rollbackOn = Exception.class)
     public void editUser(Long id, UserParam userParam) {
         if (repository.existsByEmailAndIdNot(userParam.getEmail(), id)) {
-            throw new CartisanException("邮箱已被占用");
+            throw new CartisanException(SystemCodeMessage.EMAIL_EXIST);
         }
 
         if (repository.existsByPhoneAndIdNot(userParam.getPhone(), id)) {
-            throw new CartisanException("电话已被占用");
+            throw new CartisanException(SystemCodeMessage.PHONE_EXIST);
         }
 
         final Optional<User> userOptional = repository.findById(id);
 
         if (!userOptional.isPresent()) {
-            throw new CartisanException("待更新的用户不存在");
+            throw new CartisanException(SystemCodeMessage.USER_NOT_EXIST);
         }
 
         final User user = userOptional.get();
@@ -116,7 +117,7 @@ public class UserService {
         final Optional<User> userOptional = repository.findById(id);
 
         if (!userOptional.isPresent()) {
-            throw new CartisanException("待更新的用户不存在");
+            throw new CartisanException(SystemCodeMessage.USER_NOT_EXIST);
         }
 
         final User user = userOptional.get();
@@ -135,7 +136,7 @@ public class UserService {
         final Optional<User> userOptional = repository.findById(id);
 
         if (!userOptional.isPresent()) {
-            throw new CartisanException("待更新的用户不存在");
+            throw new CartisanException(SystemCodeMessage.USER_NOT_EXIST);
         }
 
         final User user = userOptional.get();
@@ -154,7 +155,7 @@ public class UserService {
         final Optional<User> userOptional = repository.findById(id);
 
         if (!userOptional.isPresent()) {
-            throw new CartisanException("待更新的用户不存在");
+            throw new CartisanException(SystemCodeMessage.USER_NOT_EXIST);
         }
 
         final User user = userOptional.get();

@@ -2,6 +2,7 @@ package com.cartisan.system.services;
 
 import com.cartisan.common.exceptions.CartisanException;
 import com.cartisan.common.utils.IdWorker;
+import com.cartisan.system.constants.SystemCodeMessage;
 import com.cartisan.system.domains.Permission;
 import com.cartisan.system.dtos.PermissionDto;
 import com.cartisan.system.params.PermissionParam;
@@ -35,7 +36,7 @@ public class PermissionService {
     @Transactional(rollbackOn = Exception.class)
     public void addPermission(PermissionParam permissionParam) {
         if (repository.existsByParentIdAndName(permissionParam.getParentId(), permissionParam.getName())) {
-            throw new CartisanException("同一层级下存在相同名称的权限");
+            throw new CartisanException(SystemCodeMessage.SAME_PERMISSION_NAME);
         }
 
         final Permission permission = new Permission(idWorker.nextId(), permissionParam.getParentId(),
@@ -54,12 +55,12 @@ public class PermissionService {
     @Transactional(rollbackOn = Exception.class)
     public void editPermission(Long id, PermissionParam permissionParam) {
         if (repository.existsByParentIdAndNameAndIdNot(permissionParam.getParentId(), permissionParam.getName(), id)) {
-            throw new CartisanException("同一层级下存在相同名称的权限");
+            throw new CartisanException(SystemCodeMessage.SAME_PERMISSION_NAME);
         }
 
         final Optional<Permission> permissionOptional = repository.findById(id);
         if (!permissionOptional.isPresent()) {
-            throw new CartisanException("待更新的权限不存在");
+            throw new CartisanException(SystemCodeMessage.PERMISSION_NOT_EXIST);
         }
 
         final Permission permission = permissionOptional.get();
@@ -77,11 +78,11 @@ public class PermissionService {
     public void removePermission(long id) {
         final Optional<Permission> permissionOptional = repository.findById(id);
         if (!permissionOptional.isPresent()) {
-            throw new CartisanException("待删除的权限不存在");
+            throw new CartisanException(SystemCodeMessage.PERMISSION_NOT_EXIST);
         }
 
         if (repository.existsByParentId(id)) {
-            throw new CartisanException("当前权限下面有子权限，无法删除");
+            throw new CartisanException(SystemCodeMessage.HAS_CHILD_PERMISSION);
         }
 
 //        if (userService.existsUserInDepartment(id)) {
