@@ -1,6 +1,7 @@
 package com.cartisan.common.interceptors;
 
 import com.alibaba.fastjson.JSON;
+import com.cartisan.common.CartisanContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,6 +40,7 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 //        long end = System.currentTimeMillis();
 //
 //        log.info("request finished. url:{}, cost: {}", url, end - start);
+        CartisanContext.cleanCurrentUser();
     }
 
     @Override
@@ -49,5 +51,7 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
         long end = System.currentTimeMillis();
 
         log.info("request complete. url:{}, cost: {}", url, end - start);
+
+        CartisanContext.cleanCurrentUser();
     }
 }

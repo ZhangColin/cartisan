@@ -10,8 +10,6 @@ spring:
 
 
 cartisan:
-  redis:
-    root: base
   info:
     title: 基础服务
     serviceUrl: http://www.cartisan.com

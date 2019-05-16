@@ -29,6 +29,9 @@ public class UserDto {
     private List<String> departmentIds;
     private List<String> roleCodes;
 
+    private UserDto() {
+    }
+
     public static UserDto convertFrom(User user) {
         return new UserDto(user.getId().toString(), user.getUsername(), user.getRealName(), user.getAvatar(),
                 user.getBirthday(), user.getSex(), user.getPhone(), user.getEmail(), user.getStatus(),

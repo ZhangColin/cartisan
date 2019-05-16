@@ -32,4 +32,19 @@ public class CartisanContext implements ApplicationContextAware {
         }
         return applicationContext.getBean(name, clazz);
     }
+
+
+    private static final ThreadLocal<CurrentUser> userHolder = new ThreadLocal<>();
+
+    public static void setCurrentUser(CurrentUser currentUser) {
+        userHolder.set(currentUser);
+    }
+
+    public static CurrentUser getCurrentUser(CurrentUser currentUser) {
+        return userHolder.get();
+    }
+
+    public static void cleanCurrentUser() {
+        userHolder.remove();
+    }
 }

@@ -11,7 +11,7 @@ import lombok.Getter;
 @Getter
 public class GenericResponse<T> {
     @ApiModelProperty(value = "执行状态", required = true)
-    private Boolean flag;
+    private Boolean success;
     @ApiModelProperty(value = "执行结果编码", required = true , example = "200000")
     private Integer code;
     @ApiModelProperty(value = "提示信息", required = true)
@@ -19,13 +19,13 @@ public class GenericResponse<T> {
     @ApiModelProperty(value = "返回结果", required = true)
     private T data;
 
-    private GenericResponse(Boolean flag, CodeMessage codeMessage, T data) {
-        this(flag, codeMessage);
+    private GenericResponse(Boolean success, CodeMessage codeMessage, T data) {
+        this(success, codeMessage);
         this.data = data;
     }
 
-    private GenericResponse(Boolean flag, CodeMessage codeMessage) {
-        this.flag = flag;
+    private GenericResponse(Boolean success, CodeMessage codeMessage) {
+        this.success = success;
         this.code = codeMessage.getCode();
         this.message = codeMessage.getMessage();
     }

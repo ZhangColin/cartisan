@@ -9,8 +9,6 @@ spring:
     active: dev
 
 cartisan:
-  redis:
-    root: management
   info:
     title: 管理后台服务
     serviceUrl: http://www.cartisan.com

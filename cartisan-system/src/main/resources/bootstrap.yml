@@ -13,8 +13,6 @@ cartisan:
   jwt:
     key: cartisan-jwt
     ttl: 1800000
-  redis:
-    root: base
   info:
     title: 权限认证服务
     serviceUrl: http://www.cartisan.com

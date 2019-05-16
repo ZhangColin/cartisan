@@ -1,11 +1,10 @@
 package com.cartisan.system.controllers;
 
 import com.cartisan.common.responses.GenericResponse;
-import com.cartisan.common.utils.JwtUtil;
+import com.cartisan.system.dtos.UserDto;
 import com.cartisan.system.params.LoginParam;
 import com.cartisan.system.queries.PermissionQuery;
 import com.cartisan.system.services.LoginService;
-import io.jsonwebtoken.Claims;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.cartisan.common.responses.GenericResponse.success;
 
@@ -27,9 +27,6 @@ public class LoginController {
     @Autowired
     private PermissionQuery permissionQuery;
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
     @PostMapping("login")
     public GenericResponse login(
             @ApiParam(value = "登录信息", required = true) @Validated @RequestBody LoginParam loginParam) {
@@ -41,21 +38,22 @@ public class LoginController {
     }
 
     @PostMapping("logout")
-    public GenericResponse logout() {
+    public GenericResponse logout(@RequestHeader(name = "X-Token") String token) {
+        loginService.logout(token);
         return success();
     }
 
     @GetMapping("user/info")
-    public GenericResponse info(@ApiParam(value = "用户登录token", required = true) @RequestParam String token) {
-        final Claims claims = jwtUtil.parseJWt(token);
-        HashMap<String, Object> info = new HashMap<>(3);
-        final List<String> roles = (List<String>)claims.get("roles");
+    public GenericResponse info(@RequestHeader(name = "X-Token") String token) {
+        final UserDto user = loginService.getUserByToken(token);
+        final List<String> roles = user.getRoleCodes();
         final List<String> permissions = permissionQuery.getPermissionCodesByRoleCodes(roles);
 
+        Map<String, Object> info = new HashMap<>();
         info.put("roles", roles);
         info.put("permissions", permissions);
-        info.put("name", claims.get("name"));
-        info.put("avatar", claims.get("avatar"));
+        info.put("name", user.getUsername());
+        info.put("avatar", user.getAvatar());
 
         return success(info);
     }

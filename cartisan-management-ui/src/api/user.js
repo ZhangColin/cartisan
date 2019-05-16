@@ -13,8 +13,7 @@ export function getInfo(token) {
   return request({
     url: '/system/user/info',
     // url: '/management/user/info',
-    method: 'get',
-    params: { token }
+    method: 'get'
   })
 }
 

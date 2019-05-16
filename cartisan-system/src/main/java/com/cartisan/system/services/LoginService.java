@@ -1,20 +1,17 @@
 package com.cartisan.system.services;
 
 import com.cartisan.common.exceptions.CartisanException;
-import com.cartisan.common.utils.JwtUtil;
 import com.cartisan.common.utils.RedisUtil;
+import com.cartisan.system.constants.LoginKey;
 import com.cartisan.system.constants.SystemCodeMessage;
 import com.cartisan.system.domains.User;
-import com.cartisan.system.domains.UserRole;
+import com.cartisan.system.dtos.UserDto;
 import com.cartisan.system.params.LoginParam;
-import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-
-import static java.util.stream.Collectors.toList;
+import java.util.UUID;
 
 /**
  * @author colin
@@ -26,9 +23,6 @@ public class LoginService {
 
     @Autowired
     private RedisUtil redisUtil;
-
-    @Autowired
-    private JwtUtil jwtUtil;
 
     public String login(LoginParam loginParam) {
         final Optional<User> userOptional = userService.findByUserName(loginParam.getUsername());
@@ -44,16 +38,22 @@ public class LoginService {
         }
 
 
-        final String token = jwtUtil.createJwt(user.getId().toString(),
-                ImmutableMap.<String, Object>builder()
-                        .put("name", user.getUsername())
-                        .put("avatar", user.getAvatar())
-                        .put("roles", user.getRoles().stream().map(UserRole::getRoleCode).collect(toList()))
-                        .build());
+        final String token = UUID.randomUUID().toString().replace("-", "");
 
-        redisUtil.getValueOperator().set("PREFIX_USER_TOKEN_" + token, token, 1800, TimeUnit.SECONDS);
+        redisUtil.set(LoginKey.token, token, UserDto.convertFrom(user));
 
         return token;
 
+    }
+
+    public void logout(String token) {
+        // 清除 token 缓存
+        redisUtil.delete(LoginKey.token, token);
+
+        // 清除角色缓存
+    }
+
+    public UserDto getUserByToken(String token) {
+        return redisUtil.get(LoginKey.token, token);
     }
 }
