@@ -1,0 +1,20 @@
+server:
+  port: 9003
+
+spring:
+  application:
+    name: joey-coupon
+  profiles:
+    include: web, mysql
+    active: dev
+
+
+cartisan:
+  info:
+    title: 金优惠
+    serviceUrl: http://www.cartisan.com
+    version: 1.0
+    contact:
+      name: colin
+      url: zhang_colin.github.com
+      email: zhang_colin@163.com

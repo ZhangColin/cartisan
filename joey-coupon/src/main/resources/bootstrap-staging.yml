@@ -12,5 +12,5 @@ eureka:
       defaultZone: http://cartisan-eureka1:8761/eureka,http://cartisan-eureka2:8762/eureka
 
 logging:
-  path: /var/log/cartisan/system/
-  file: cartisan-system
+  path: /var/log/cartisan/joey-coupon/
+  file: joey-coupon
