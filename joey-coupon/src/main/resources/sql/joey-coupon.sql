@@ -1,22 +1,17 @@
--- 组织机构表
-DROP TABLE IF EXISTS `sys_departments`;
-CREATE TABLE `sys_departments` (
+-- 分类表
+DROP TABLE IF EXISTS `cpn_categories`;
+CREATE TABLE `cpn_categories` (
   `id` bigint NOT NULL COMMENT '部门Id',
-  `parent_id` bigint NOT NULL DEFAULT 0 COMMENT '父机构ID',
-  `name` varchar(32) NOT NULL COMMENT '机构/部门名称',
-  `type` tinyint NOT NULL DEFAULT 1 COMMENT '机构类型',
-  `code` varchar(32) NOT NULL DEFAULT '' COMMENT '机构编码',
-  `description` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
+  `name` varchar(32) NOT NULL COMMENT '名称',
+  `icon` varchar(255) NOT NULL DEFAULT '' COMMENT '图标',
   `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
   `operator` varchar(64) NOT NULL COMMENT '操作人',
   `operate_ip` varchar(20) NOT NULL COMMENT '操作IP',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  INDEX `index_department_parent_id` (`parent_id`),
-  INDEX `index_department_code` (`code`),
-  INDEX `index_department_sort` (`sort`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组织机构表';
+  INDEX `index_cpn_category_sort` (`sort`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分类表';
 
 -- 用户表
 DROP TABLE IF EXISTS `sys_users`;
@@ -43,7 +38,7 @@ CREATE TABLE `sys_users` (
   INDEX `index_user_name`(`username`),
   INDEX `index_user_status`(`status`),
   INDEX `index_user_soft_deleted`(`active`, `deleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 
 -- 用户组织机构关联表
 DROP TABLE IF EXISTS `sys_user_departments`;
@@ -57,7 +52,7 @@ CREATE TABLE `sys_user_departments` (
   INDEX `index_user_department_user_id`(`user_id`),
   INDEX `index_user_department_department_id`(`department_id`),
   INDEX `index_user_department_user_id_department_id`(`user_id`, `department_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户组织机构关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户组织机构关联表';
 
 -- 权限表
 DROP TABLE IF EXISTS `sys_permissions`;
@@ -75,7 +70,7 @@ CREATE TABLE `sys_permissions` (
   PRIMARY KEY (`id`),
   INDEX `index_permission_parent_id`(`parent_id`),
   INDEX `index_permission_sort`(`sort`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
 
 
 -- 角色表
@@ -91,7 +86,7 @@ CREATE TABLE `sys_roles` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE key `index_role_code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
 
 
 -- 用户角色关联表
@@ -106,7 +101,7 @@ CREATE TABLE `sys_user_roles` (
   INDEX `index_user_role_user_id`(`user_id`),
   INDEX `index_user_role_role_code`(`role_code`),
   INDEX `index_user_role_user_id_role_code`(`user_id`, `role_code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户角色关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户角色关联表';
 
 
 -- 角色权限关联表
@@ -121,4 +116,4 @@ CREATE TABLE `sys_role_permissions` (
   INDEX `index_role_permission_role_id`(`role_id`),
   INDEX `index_role_permission_permission_id`(`permission_id`),
   INDEX `index_role_permission_role_id_permission_id`(`role_id`, `permission_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限关联表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';

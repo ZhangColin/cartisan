@@ -12,7 +12,7 @@ CREATE TABLE `bas_accounts` (
   `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   UNIQUE INDEX (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='账户';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='账户';
 
 
 

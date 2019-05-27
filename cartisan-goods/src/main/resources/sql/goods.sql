@@ -17,7 +17,7 @@ CREATE TABLE `goods_product_categories` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX (`parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品分类';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品分类';
 
 
 -- 产品属性分类（产品类型）
@@ -31,7 +31,7 @@ CREATE TABLE `goods_product_attribute_categories` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品属性分类（产品类型）';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品属性分类（产品类型）';
 
 -- 产品属性
 DROP TABLE IF EXISTS `goods_product_attributes`;
@@ -52,7 +52,7 @@ CREATE TABLE `goods_product_attributes` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX (`category_id`, `type`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品属性';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品属性';
 
 
 -- 产品的分类和属性的关系表
@@ -64,7 +64,7 @@ CREATE TABLE `goods_product_category_attribute_relations` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='产品的分类和属性的关系表，用于设置分类筛选条件（只支持一级分类）';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='产品的分类和属性的关系表，用于设置分类筛选条件（只支持一级分类）';
 
 -- 品牌
 DROP TABLE IF EXISTS `goods_brands`;
@@ -81,7 +81,7 @@ CREATE TABLE `goods_brands` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='品牌';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='品牌';
 
 -- 品牌故事
 DROP TABLE IF EXISTS `goods_brand_stories`;
@@ -91,4 +91,4 @@ CREATE TABLE `goods_brand_stories` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`brand_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='品牌故事';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='品牌故事';

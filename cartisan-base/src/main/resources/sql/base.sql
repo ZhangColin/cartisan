@@ -7,7 +7,7 @@ CREATE TABLE `bas_continents` (
   `active` bit(1) NOT NULL DEFAULT b'1',
   `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 insert into `bas_continents` ( `id`, `code`, `name`) values ( '1', 'AS', '亚洲');
 insert into `bas_continents` ( `id`, `code`, `name`) values ( '2', 'EU', '欧洲');
@@ -32,7 +32,7 @@ CREATE TABLE `bas_countries` (
   `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `continent_id_idx` (`continent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 insert into `bas_countries` ( `id`, `code`, `name`, `english_name`, `full_pin_yin`, `simple_pin_yin`, `continent_id`, `continent_name`) values ( '1', 'CN', '中国', 'China', 'zhongguo', 'zg', '1', '亚洲');
 insert into `bas_countries` ( `id`, `code`, `name`, `english_name`, `full_pin_yin`, `simple_pin_yin`, `continent_id`, `continent_name`) values ( '2', 'MY', '马来西亚', 'Malaysia', 'malaixiya', 'mlxy', '1', '亚洲');
@@ -278,7 +278,7 @@ CREATE TABLE `bas_cities` (
   `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `country_id_idx` (`country_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 CREATE TABLE `bas_airports` (
@@ -298,7 +298,7 @@ CREATE TABLE `bas_airports` (
   `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `city_id_idx` (`city_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 
@@ -320,7 +320,7 @@ CREATE TABLE `bas_vehicles` (
   `deleted` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `country_id_idx` (`country_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 
 insert into `bas_vehicles` ( `name`, `description`, `passengers`, `big_luggage`, `small_luggage`) values ( '经济型5座', '类似卡罗拉', '4', '0', '2');
