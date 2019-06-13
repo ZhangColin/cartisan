@@ -5,12 +5,9 @@ import { asyncRoutes, constantRoutes } from '@/router'
  * @param roles
  * @param route
  */
-function hasPermission(roles, permissions, route) {
+function hasPermission(roles, route) {
   if (route.meta && route.meta.roles) {
     return roles.some(role => route.meta.roles.includes(role))
-  } else if (route.meta && route.meta.permissions) {
-    return permissions.some(permission =>
-      route.meta.permissions.some(permissionDefine => permission.startsWith(permissionDefine)))
   } else {
     return true
   }
@@ -21,14 +18,14 @@ function hasPermission(roles, permissions, route) {
  * @param routes asyncRoutes
  * @param roles
  */
-export function filterAsyncRoutes(routes, roles, permissions) {
+export function filterAsyncRoutes(routes, roles) {
   const res = []
 
   routes.forEach(route => {
     const tmp = { ...route }
-    if (hasPermission(roles, permissions, tmp)) {
+    if (hasPermission(roles, tmp)) {
       if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles, permissions)
+        tmp.children = filterAsyncRoutes(tmp.children, roles)
       }
       res.push(tmp)
     }
@@ -50,14 +47,13 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, permissionSetting) {
-    const { roles, permissions } = permissionSetting
+  generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes
       if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes
+        accessedRoutes = asyncRoutes || []
       } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles, permissions)
+        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       }
       commit('SET_ROUTES', accessedRoutes)
       resolve(accessedRoutes)

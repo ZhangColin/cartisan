@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       errGif: errGif + '?' + +new Date(),
-      ewizardClap: '',
+      ewizardClap: 'https://wpimg.wallstcn.com/007ef517-bafd-4066-aae4-6883632d9646',
       dialogVisible: false
     }
   },

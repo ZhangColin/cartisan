@@ -34,6 +34,13 @@ docker pull kibana:6.7.0
 docker run -d -p 5601:5601 -v ~/docker/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml --name cartisan-kibana kibana:6.7.0
 ```
 
+### nginx
+
+```bash
+docker pull nginx
+docker run -d -p 80:80 -v /Users/colin/Workspace/cartisan/cartisan-management-ui/dist:/usr/share/nginx/html --name cartisanNginx nginx
+```
+
 ## 端口规划
 
 ### Web 应用
