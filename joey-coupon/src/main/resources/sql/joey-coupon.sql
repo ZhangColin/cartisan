@@ -50,7 +50,7 @@ CREATE TABLE `cpn_weixin_users` (
   `province` varchar(32) NOT NULL COMMENT '省',
   `city` varchar(64) NOT NULL COMMENT '城市',
   `gender` tinyint NOT NULL COMMENT '性别',
-  `avatarUrl` varchar(255) NOT NULL DEFAULT '' COMMENT '头像',
+  `avatar_url` varchar(255) NOT NULL DEFAULT '' COMMENT '头像',
   `referrer_id` bigint NOT NULL DEFAULT 0 COMMENT '推荐人Id',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -108,7 +108,7 @@ CREATE TABLE `cpn_coupon_schemas` (
 -- 优惠券门店使用指南表
 DROP TABLE IF EXISTS `cpn_store_guides`;
 CREATE TABLE `cpn_store_guides` (
-  `id` bigint NOT NULL COMMENT '主键Id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键Id',
   `coupon_schema_id` bigint NOT NULL COMMENT '优惠券schemaId',
   `store_id` bigint NOT NULL COMMENT '门店Id',
   `guide` varchar(255) NOT NULL DEFAULT '' COMMENT '使用指南',
@@ -120,7 +120,7 @@ CREATE TABLE `cpn_store_guides` (
 -- 热门优惠券表
 DROP TABLE IF EXISTS `cpn_coupon_hots`;
 CREATE TABLE `cpn_coupon_hots` (
-  `id` bigint NOT NULL COMMENT '主键Id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键Id',
   `coupon_schema_id` bigint NOT NULL COMMENT '优惠券schemaId',
   `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,

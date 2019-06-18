@@ -1,7 +1,6 @@
 package com.cartisan.system.domains;
 
 import com.cartisan.common.domains.AbstractEntity;
-import com.cartisan.common.domains.AggregateRoot;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
@@ -14,7 +13,7 @@ import javax.persistence.*;
 @Table(name = "sys_role_permissions")
 @Getter
 @EqualsAndHashCode(callSuper = true)
-public class RolePermission extends AbstractEntity implements AggregateRoot {
+public class RolePermission extends AbstractEntity {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

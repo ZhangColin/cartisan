@@ -20,12 +20,12 @@ import java.util.Date;
 @EqualsAndHashCode
 public class AbstractEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "created_at", insertable= false, nullable = false, length = 19, updatable = false,
+    @Column(name = "created", insertable= false, nullable = false, length = 19, updatable = false,
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     private Date createDateTime;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at", insertable= false, nullable = false, length = 19, updatable = false,
+    @Column(name = "updated", insertable= false, nullable = false, length = 19, updatable = false,
             columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     private Date updateDateTime;
 
