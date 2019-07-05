@@ -41,6 +41,13 @@ docker pull nginx
 docker run -d -p 80:80 -v /Users/colin/Workspace/cartisan/cartisan-management-ui/dist:/usr/share/nginx/html --name cartisanNginx nginx
 ```
 
+### mysql
+
+```bash
+docker pull docker
+docker run --name cartisan-mysql -p 3306:3306 --restart=always -e MYSQL_ROOT_PASSWORD=truth -v /usr/local/docker/mysql/data:/var/lib/mysql/ -d mysql
+```
+
 ## 端口规划
 
 ### Web 应用
@@ -57,6 +64,7 @@ docker run -d -p 80:80 -v /Users/colin/Workspace/cartisan/cartisan-management-ui
 | system | 8082 |
 | base | 9001 |
 | goods | 9002 |
+| huiduoduo | 9003 |
 
 ### 基础框架
 
