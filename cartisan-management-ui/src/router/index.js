@@ -9,6 +9,7 @@ import Layout from '@/layout'
 /* Router Modules */
 import goods from './modules/goods'
 import system from './modules/system'
+import huiduoduo from './modules/huiduoduo'
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -100,7 +101,8 @@ export const asyncRoutes = [
     ]
   },
   goods,
-  system
+  system,
+  huiduoduo
 ]
 
 const createRouter = () => new Router({

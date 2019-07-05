@@ -2,7 +2,7 @@ package com.cartisan.huiduoduo.controllers;
 
 import com.cartisan.common.responses.GenericResponse;
 import com.cartisan.huiduoduo.dtos.CategoryDto;
-import com.cartisan.huiduoduo.params.MerchantParam;
+import com.cartisan.huiduoduo.params.CategoryParam;
 import com.cartisan.huiduoduo.services.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,7 +34,7 @@ public class CategoryController {
     @ApiOperation(value = "添加分类")
     @PostMapping
     public GenericResponse addCategory(
-            @ApiParam(value = "分类信息", required = true) @Validated @RequestBody MerchantParam categoryParam) {
+            @ApiParam(value = "分类信息", required = true) @Validated @RequestBody CategoryParam categoryParam) {
         service.addCategory(categoryParam);
 
         return success();
@@ -44,7 +44,7 @@ public class CategoryController {
     @PutMapping("/{id}")
     public GenericResponse editCategory(
             @ApiParam(value = "分类Id", required = true) @PathVariable Long id,
-            @ApiParam(value = "分类信息", required = true) @Validated @RequestBody MerchantParam categoryParam) {
+            @ApiParam(value = "分类信息", required = true) @Validated @RequestBody CategoryParam categoryParam) {
         service.editCategory(id, categoryParam);
 
         return success();
