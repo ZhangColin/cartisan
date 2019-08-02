@@ -1,20 +1,31 @@
 package com.cartisan.huiduoduo.dtos;
 
+import com.cartisan.common.CartisanContext;
 import com.cartisan.huiduoduo.domains.StoreGuide;
-import lombok.AllArgsConstructor;
+import com.cartisan.huiduoduo.services.StoreService;
 import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * @author colin
  */
 @Data
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class StoreGuideDto {
+    @NonNull
     private String storeId;
+    private String storeName;
+    @NonNull
     private String guide;
 
     public static StoreGuideDto convertFrom(StoreGuide storeGuide) {
-        return new StoreGuideDto(
+        final StoreGuideDto storeGuideDto = new StoreGuideDto(
                 storeGuide.getStoreId().toString(), storeGuide.getGuide());
+
+        storeGuideDto.setStoreName(
+                CartisanContext.getBean(StoreService.class).getStore(storeGuide.getStoreId()).getName());
+
+        return storeGuideDto;
     }
 }

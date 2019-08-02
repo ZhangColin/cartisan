@@ -34,17 +34,52 @@ public class StoreService {
         return categories.stream().map(StoreDto::convertFrom).collect(toList());
     }
 
+    public Store getStore(Long id) {
+        return findStoreById(id);
+    }
 
     @Transactional(rollbackOn = Exception.class)
-    public void addStore(StoreParam storeParam) {
-        if (repository.existsByMerchantIdAndName(storeParam.getMerchantId(), storeParam.getName())) {
+    public StoreDto addStore(Long merchantId, StoreParam storeParam) {
+        if (repository.existsByMerchantIdAndName(merchantId, storeParam.getName())) {
             throw new CartisanException(CouponCodeMessage.SAME_STORE_NAME);
         }
 
-        final Store store = new Store(idWorker.nextId(), storeParam.getMerchantId(), storeParam.getName());
+        final Store store = new Store(idWorker.nextId(), merchantId, storeParam.getName());
         changeInfo(storeParam, store);
 
         repository.save(store);
+
+        return StoreDto.convertFrom(store);
+    }
+
+    @Transactional(rollbackOn = Exception.class)
+    public StoreDto editStore(Long merchantId, Long id, StoreParam storeParam) {
+        if (repository.existsByMerchantIdAndNameAndIdNot(merchantId, storeParam.getName(), id)) {
+            throw new CartisanException(CouponCodeMessage.SAME_STORE_NAME);
+        }
+
+        final Store store = findStoreById(id);
+        store.setName(storeParam.getName());
+
+        changeInfo(storeParam, store);
+
+        repository.save(store);
+
+        return StoreDto.convertFrom(store);
+    }
+
+    @Transactional(rollbackOn = Exception.class)
+    public void removeStore(Long merchantId, Long id) {
+        repository.delete(findStoreById(id));
+    }
+
+    private Store findStoreById(Long id) {
+        final Optional<Store> storeOptional = repository.findById(id);
+        if (!storeOptional.isPresent()) {
+            throw new CartisanException(CouponCodeMessage.STORE_NOT_EXIST);
+        }
+
+        return storeOptional.get();
     }
 
     private void changeInfo(StoreParam storeParam, Store store) {
@@ -53,34 +88,5 @@ public class StoreService {
         store.setAddress(storeParam.getAddress());
         store.setDescription(storeParam.getDescription());
         store.setSort(storeParam.getSort());
-    }
-
-    @Transactional(rollbackOn = Exception.class)
-    public void editStore(Long id, StoreParam storeParam) {
-        if (repository.existsByMerchantIdAndNameAndIdNot(storeParam.getMerchantId(), storeParam.getName(), id)) {
-            throw new CartisanException(CouponCodeMessage.SAME_STORE_NAME);
-        }
-
-        final Optional<Store> storeOptional = repository.findById(id);
-        if (!storeOptional.isPresent()) {
-            throw new CartisanException(CouponCodeMessage.STORE_NOT_EXIST);
-        }
-
-        final Store store = storeOptional.get();
-        store.setName(storeParam.getName());
-
-        changeInfo(storeParam, store);
-
-        repository.save(store);
-    }
-
-    @Transactional(rollbackOn = Exception.class)
-    public void removeStore(long id) {
-        final Optional<Store> storeOptional = repository.findById(id);
-        if (!storeOptional.isPresent()) {
-            throw new CartisanException(CouponCodeMessage.MERCHANT_NOT_EXIST);
-        }
-
-        repository.deleteById(id);
     }
 }

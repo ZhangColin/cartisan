@@ -11,22 +11,22 @@ CREATE TABLE `cpn_categories` (
   INDEX `index_cpn_category_sort` (`sort`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='分类表';
 
--- 商家表
+-- 商户表
 DROP TABLE IF EXISTS `cpn_merchants`;
 CREATE TABLE `cpn_merchants` (
-  `id` bigint NOT NULL COMMENT '商家Id',
+  `id` bigint NOT NULL COMMENT '商户Id',
   `name` varchar(64) NOT NULL COMMENT '名称',
   `logo` varchar(255) NOT NULL DEFAULT '' COMMENT 'logo',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TuIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商家表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商户表';
 
 -- 门店表
 DROP TABLE IF EXISTS `cpn_stores`;
 CREATE TABLE `cpn_stores` (
   `id` bigint NOT NULL COMMENT '门店Id',
-  `merchant_id` bigint NULL COMMENT '商家Id',
+  `merchant_id` bigint NULL COMMENT '商户Id',
   `name` varchar(64) NOT NULL COMMENT '名称',
   `phone` varchar(64) NOT NULL DEFAULT '' COMMENT '电话',
   `area` varchar(255) NOT NULL DEFAULT '' COMMENT '所属区域',
@@ -83,14 +83,15 @@ CREATE TABLE `cpn_referrers` (
 DROP TABLE IF EXISTS `cpn_coupon_schemas`;
 CREATE TABLE `cpn_coupon_schemas` (
   `id` bigint NOT NULL COMMENT '优惠券schemaId',
-  `merchant_id` bigint NULL COMMENT '商家Id',
+  `merchant_id` bigint NULL COMMENT '商户Id',
+  `category_id` bigint NULL COMMENT '分类Id',
   `name` varchar(64) NOT NULL COMMENT '名称',
   `title` varchar(64) NOT NULL COMMENT '标题',
   `image` varchar(255) NOT NULL DEFAULT '' COMMENT '图片',
   `introduction` varchar(255) NOT NULL DEFAULT '' COMMENT '基本介绍',
   `commission` int NOT NULL DEFAULT 0 COMMENT '佣金',
-  `get_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '开始领取时间',
-  `get_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束领取时间',
+  `get_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '领取开始时间',
+  `get_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '领取结束时间',
   `valid_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '有效开始时间',
   `valid_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '有效结束时间',
   `type` tinyint NOT NULL COMMENT '类型（1、公码；2、私码）',
@@ -109,7 +110,7 @@ CREATE TABLE `cpn_coupon_schemas` (
 DROP TABLE IF EXISTS `cpn_store_guides`;
 CREATE TABLE `cpn_store_guides` (
   `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键Id',
-  `coupon_schema_id` bigint NOT NULL COMMENT '优惠券schemaId',
+  `coupon_schema_id` bigint COMMENT '优惠券schemaId',
   `store_id` bigint NOT NULL COMMENT '门店Id',
   `guide` varchar(255) NOT NULL DEFAULT '' COMMENT '使用指南',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -142,7 +143,7 @@ CREATE TABLE `cpn_coupons` (
   `amount` int NULL COMMENT '使用金额',
   `valid_start` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '有效开始时间',
   `valid_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '有效结束时间',
-  `bill_id` bigint NULL COMMENT '商家结佣账单Id',
+  `bill_id` bigint NULL COMMENT '商户结佣账单Id',
   `status` tinyint NOT NULL DEFAULT 0 COMMENT '状态（0、未使用；1、已使用；2、已过期）',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -204,7 +205,7 @@ CREATE TABLE `cpn_referrer_commission_bills` (
   INDEX `index_cpn_referrer_commission_bill_referrer_id`(`referrer_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='推荐人佣金表';
 
--- 商家佣金账单表
+-- 商户佣金账单表
 DROP TABLE IF EXISTS `cpn_merchant_commission_bills`;
 CREATE TABLE `cpn_merchant_commission_bills` (
   `id` bigint NOT NULL COMMENT '佣金账单Id',
@@ -217,6 +218,6 @@ CREATE TABLE `cpn_merchant_commission_bills` (
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   INDEX `index_cpn_merchant_commission_bill_merchant_id`(`merchant_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商家佣金账单表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='商户佣金账单表';
 
 

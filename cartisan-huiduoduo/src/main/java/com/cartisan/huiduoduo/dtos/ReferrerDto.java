@@ -2,16 +2,24 @@ package com.cartisan.huiduoduo.dtos;
 
 import com.cartisan.huiduoduo.domains.Referrer;
 import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
 /**
  * @author colin
  */
 @Data
+@RequiredArgsConstructor
 public class ReferrerDto {
-    private Long id;
+    @NonNull
+    private String id;
 
-    private Long userId;
+    @NonNull
+    private String userId;
+
+    @NonNull
+    private String name;
 
     private String phone;
 
@@ -24,7 +32,7 @@ public class ReferrerDto {
     private Integer level;
 
     public static ReferrerDto convertFrom(Referrer referrer) {
-        ReferrerDto referrerDto = new ReferrerDto();
+        ReferrerDto referrerDto = new ReferrerDto(referrer.getId().toString(), referrer.getUserId().toString(), referrer.getName());
         BeanUtils.copyProperties(referrer, referrerDto);
 
         return referrerDto;

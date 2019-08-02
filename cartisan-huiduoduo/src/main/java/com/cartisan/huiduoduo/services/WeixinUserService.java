@@ -1,5 +1,6 @@
 package com.cartisan.huiduoduo.services;
 
+import com.cartisan.common.dtos.PageResult;
 import com.cartisan.common.exceptions.CartisanException;
 import com.cartisan.common.utils.IdWorker;
 import com.cartisan.huiduoduo.constants.CouponCodeMessage;
@@ -7,14 +8,14 @@ import com.cartisan.huiduoduo.domains.WeixinUser;
 import com.cartisan.huiduoduo.dtos.WeixinUserDto;
 import com.cartisan.huiduoduo.params.WeixinUserParam;
 import com.cartisan.huiduoduo.repositories.WeixinUserRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
-
-import static java.util.stream.Collectors.toList;
 
 /**
  * @author colin
@@ -27,10 +28,15 @@ public class WeixinUserService {
     @Autowired
     private IdWorker idWorker;
 
-    public List<WeixinUserDto> getWeixinUsers() {
-        final List<WeixinUser> categories = repository.findAll();
+    public PageResult<WeixinUserDto> searchWeixinUsers(String nickName, Integer currentPage, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(currentPage - 1, pageSize);
 
-        return categories.stream().map(WeixinUserDto::convertFrom).collect(toList());
+        final Page<WeixinUser> searchResult = StringUtils.isBlank(nickName) ?
+                repository.findAll(pageRequest) :
+                repository.findByNickNameLike("%"+nickName+"%", pageRequest);
+
+        return new PageResult<>(searchResult.getTotalElements(), searchResult.getTotalPages(),
+                searchResult.map(WeixinUserDto::convertFrom).getContent());
     }
 
 

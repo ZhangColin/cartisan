@@ -33,21 +33,17 @@ public class CategoryController {
 
     @ApiOperation(value = "添加分类")
     @PostMapping
-    public GenericResponse addCategory(
+    public GenericResponse<CategoryDto> addCategory(
             @ApiParam(value = "分类信息", required = true) @Validated @RequestBody CategoryParam categoryParam) {
-        service.addCategory(categoryParam);
-
-        return success();
+        return success(service.addCategory(categoryParam));
     }
 
     @ApiOperation(value = "更新分类")
     @PutMapping("/{id}")
-    public GenericResponse editCategory(
+    public GenericResponse<CategoryDto> editCategory(
             @ApiParam(value = "分类Id", required = true) @PathVariable Long id,
             @ApiParam(value = "分类信息", required = true) @Validated @RequestBody CategoryParam categoryParam) {
-        service.editCategory(id, categoryParam);
-
-        return success();
+        return success(service.editCategory(id, categoryParam));
     }
 
     @ApiOperation(value = "删除分类")

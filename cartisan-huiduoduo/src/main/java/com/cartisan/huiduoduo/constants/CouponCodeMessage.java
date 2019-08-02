@@ -17,15 +17,15 @@ public class CouponCodeMessage extends CodeMessage {
     public static CodeMessage SAME_CATEGORY_NAME = new CouponCodeMessage(51002, "存在相同名称的分类");
 
     /**
-     * 商家
+     * 商户
      */
     public static CodeMessage MERCHANT_NOT_EXIST = new CouponCodeMessage(52001, "分类不存在");
-    public static CodeMessage SAME_MERCHANT_NAME = new CouponCodeMessage(52002, "存在相同名称的商家");
+    public static CodeMessage SAME_MERCHANT_NAME = new CouponCodeMessage(52002, "存在相同名称的商户");
 
     /**
      * 门店
      */
     public static CodeMessage STORE_NOT_EXIST = new CouponCodeMessage(53001, "门店不存在");
-    public static CodeMessage SAME_STORE_NAME = new CouponCodeMessage(53002, "商家下存在相同名称的门店");
+    public static CodeMessage SAME_STORE_NAME = new CouponCodeMessage(53002, "商户下存在相同名称的门店");
 
 }

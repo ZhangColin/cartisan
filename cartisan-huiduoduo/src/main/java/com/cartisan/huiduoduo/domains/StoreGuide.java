@@ -3,6 +3,7 @@ package com.cartisan.huiduoduo.domains;
 import com.cartisan.common.domains.AbstractEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -23,6 +24,7 @@ public class StoreGuide extends AbstractEntity {
     private Long storeId;
 
     @Column(name = "guide")
+    @Setter
     private String guide;
 
     private StoreGuide() {

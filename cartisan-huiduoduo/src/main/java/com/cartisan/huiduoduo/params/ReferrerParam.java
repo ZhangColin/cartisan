@@ -14,6 +14,10 @@ public class ReferrerParam {
     @NotBlank(message = "用户Id不能为空")
     private Long userId;
 
+    @ApiModelProperty(value = "姓名")
+    @NotBlank(message = "用户Id不能为空")
+    private String name;
+
     @ApiModelProperty(value = "手机")
     private String phone;
 

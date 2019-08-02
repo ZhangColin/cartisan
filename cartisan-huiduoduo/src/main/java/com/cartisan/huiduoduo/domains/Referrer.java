@@ -25,6 +25,9 @@ public class Referrer extends AbstractEntity implements AggregateRoot {
     @Column(name = "user_id")
     private Long userId;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "phone")
     private String phone;
 
@@ -43,9 +46,10 @@ public class Referrer extends AbstractEntity implements AggregateRoot {
     private Referrer() {
     }
 
-    public Referrer(Long id, Long userId, String phone, String profession, String debitCart, String bank) {
+    public Referrer(Long id, Long userId, String name, String phone, String profession, String debitCart, String bank) {
         this.id = id;
         this.userId = userId;
+        this.name = name;
         this.phone = phone;
         this.profession = profession;
         this.debitCart = debitCart;
@@ -58,7 +62,8 @@ public class Referrer extends AbstractEntity implements AggregateRoot {
         this.level++;
     }
 
-    public void changeInfo(String phone, String profession, String debitCart, String bank) {
+    public void changeInfo(String name, String phone, String profession, String debitCart, String bank) {
+        this.name = name;
         this.phone = phone;
         this.profession = profession;
         this.debitCart = debitCart;

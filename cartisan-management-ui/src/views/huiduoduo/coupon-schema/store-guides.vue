@@ -16,14 +16,10 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="分类ID" prop="id" />
-      <el-table-column align="center" label="分类名称" prop="name" />
-      <el-table-column align="center" label="分类图标" prop="icon">
-        <template slot-scope="scope">
-          <div><img :src="scope.row.icon" style="width:50px; height:50px"></div>
-          <div>{{ scope.row.icon }}</div>
-        </template>
-      </el-table-column>
+      <el-table-column align="center" label="门店ID" prop="id" />
+      <el-table-column align="center" label="名称" prop="name" />
+      <el-table-column align="center" label="电话" prop="phone" />
+      <el-table-column align="center" label="区域" prop="area" />
       <el-table-column align="center" label="排序" prop="sort" />
       <el-table-column align="center" label="操作" width="120">
         <template slot-scope="scope">
@@ -41,15 +37,24 @@
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
     >
-      <el-form ref="categoryForm" :model="category" :rules="rules" label-width="120px">
-        <el-form-item label="分类名称" prop="name">
-          <el-input v-model="category.name" placeholder="请输入分类名称" />
+      <el-form ref="storeForm" :model="store" :rules="rules" label-width="120px">
+        <el-form-item label="名称" prop="name">
+          <el-input v-model="store.name" placeholder="请输入名称" />
         </el-form-item>
-        <el-form-item label="分类图标" prop="icon">
-          <el-input v-model="category.icon" placeholder="请输入分类图标" />
+        <el-form-item label="电话" prop="phone">
+          <el-input v-model="store.phone" placeholder="请输入电话" />
+        </el-form-item>
+        <el-form-item label="所属区域" prop="area">
+          <el-input v-model="store.area" placeholder="请输入所属区域" />
+        </el-form-item>
+        <el-form-item label="地址" prop="address">
+          <el-input v-model="store.addreaa" placeholder="请输入地址" />
+        </el-form-item>
+        <el-form-item label="门店指引" prop="description">
+          <el-input v-model="store.description" type="textarea" placeholder="请输入门店指引" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
-          <el-input-number v-model="category.sort" placeholder="请设置分类排序" />
+          <el-input-number v-model="store.sort" />
         </el-form-item>
       </el-form>
       <span slot="footer">
@@ -61,29 +66,30 @@
 </template>
 
 <script>
-import { getAllCategories, addCategory, editCategory, removeCategory } from '@/api/huiduoduo/category-api'
+import { getAllStores, addStore, editStore, removeStore } from '@/api/huiduoduo/store-guide-api'
 
-const defaultCategory = {
+const defaultStore = {
+  merchantId: '',
   name: '',
-  icon: '',
+  phone: '',
+  area: '',
+  address: '',
+  description: '',
   sort: 0
 }
 
 export default {
-  name: 'Categories',
+  name: 'Stores',
   data() {
     return {
       list: null,
       listLoading: true,
       dialogVisible: false,
       dialogTitle: '',
-      category: Object.assign({}, defaultCategory),
+      store: Object.assign({ }, defaultStore),
       rules: {
         name: [
-          { required: true, message: '请输入分类名称', trigger: 'blur' }
-        ],
-        icon: [
-          { required: true, message: '请输入分类图标', trigger: 'blur' }
+          { required: true, message: '请输入门店名称', trigger: 'blur' }
         ]
       }
     }
@@ -94,28 +100,29 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getAllCategories().then(response => {
+      getAllStores(this.$route.query.merchantId).then(response => {
         this.list = response.data
         this.listLoading = false
       })
     },
     handleAdd() {
-      this.category = Object.assign({}, defaultCategory)
-      this.dialogTitle = '添加分类'
+      this.store = Object.assign({}, defaultStore)
+      this.store.merchantId = this.$route.query.merchantId
+      this.dialogTitle = '添加门店'
       this.dialogVisible = true
     },
     handleEdit(index, row) {
-      this.category = row
-      this.dialogTitle = '编辑分类'
+      this.store = row
+      this.dialogTitle = '编辑门店'
       this.dialogVisible = true
     },
     handleDelete(index, row) {
-      this.$confirm('是否要删除该分类', '提示', {
+      this.$confirm('是否要删除该门店', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        removeCategory(row.id).then(response => {
+        removeStore(row.id).then(response => {
           this.$message({
             message: '删除成功',
             type: 'success',
@@ -126,10 +133,10 @@ export default {
       })
     },
     handleConfirm() {
-      this.$refs['categoryForm'].validate((valid) => {
+      this.$refs['storeForm'].validate((valid) => {
         if (valid) {
-          if (this.dialogTitle === '添加分类') {
-            addCategory(this.category).then(response => {
+          if (this.dialogTitle === '添加门店') {
+            addStore(this.store).then(response => {
               this.$message({
                 message: '添加成功',
                 type: 'success',
@@ -139,7 +146,7 @@ export default {
               this.fetchData()
             })
           } else {
-            editCategory(this.category.id, this.category).then(response => {
+            editStore(this.store.id, this.store).then(response => {
               this.$message({
                 message: '修改成功',
                 type: 'success',

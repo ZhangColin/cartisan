@@ -44,8 +44,17 @@ docker run -d -p 80:80 -v /Users/colin/Workspace/cartisan/cartisan-management-ui
 ### mysql
 
 ```bash
-docker pull docker
+docker pull mysql:8.0
 docker run --name cartisan-mysql -p 3306:3306 --restart=always -e MYSQL_ROOT_PASSWORD=truth -v /usr/local/docker/mysql/data:/var/lib/mysql/ -d mysql
+```
+
+### jenkins
+
+```bash
+sudo chown -R 1000 /usr/local/jenkins
+docker pull jenkins/jenkins
+docker run -d -p 80:8080 -p 50000:50000 -v /usr/local/docker/jenkins:/var/jenkins_home -v /etc/localtime:/etc/localtime --name jenkins docker.io/jenkins/jenkins
+docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
 ## 端口规划

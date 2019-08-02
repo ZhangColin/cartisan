@@ -34,9 +34,13 @@ public class CategoryService {
         return categories.stream().map(CategoryDto::convertFrom).collect(toList());
     }
 
+    public CategoryDto getCategory(Long categoryId) {
+        return CategoryDto.convertFrom(findCategoryById(categoryId));
+    }
+
 
     @Transactional(rollbackOn = Exception.class)
-    public void addCategory(CategoryParam categoryParam) {
+    public CategoryDto addCategory(CategoryParam categoryParam) {
         if (repository.existsByName(categoryParam.getName())) {
             throw new CartisanException(CouponCodeMessage.SAME_CATEGORY_NAME);
         }
@@ -47,33 +51,35 @@ public class CategoryService {
         category.setSort(categoryParam.getSort());
 
         repository.save(category);
+
+        return CategoryDto.convertFrom(category);
     }
 
     @Transactional(rollbackOn = Exception.class)
-    public void editCategory(Long id, CategoryParam categoryParam) {
+    public CategoryDto editCategory(Long id, CategoryParam categoryParam) {
         if (repository.existsByNameAndIdNot(categoryParam.getName(), id)) {
             throw new CartisanException(CouponCodeMessage.SAME_CATEGORY_NAME);
         }
 
-        final Optional<Category> categoryOptional = repository.findById(id);
-        if (!categoryOptional.isPresent()) {
-            throw new CartisanException(CouponCodeMessage.CATEGORY_NOT_EXIST);
-        }
-
-        final Category category = categoryOptional.get();
+        final Category category = findCategoryById(id);
         category.changeInfo(categoryParam.getName(), categoryParam.getIcon());
         category.setSort(categoryParam.getSort());
 
         repository.save(category);
+
+        return CategoryDto.convertFrom(category);
     }
 
     @Transactional(rollbackOn = Exception.class)
     public void removeCategory(long id) {
-        final Optional<Category> categoryOptional = repository.findById(id);
+        repository.delete(findCategoryById(id));
+    }
+
+    private Category findCategoryById(Long categoryId) {
+        final Optional<Category> categoryOptional = repository.findById(categoryId);
         if (!categoryOptional.isPresent()) {
             throw new CartisanException(CouponCodeMessage.CATEGORY_NOT_EXIST);
         }
-
-        repository.deleteById(id);
+        return categoryOptional.get();
     }
 }

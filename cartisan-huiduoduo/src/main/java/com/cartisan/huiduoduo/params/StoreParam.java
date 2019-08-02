@@ -11,10 +11,6 @@ import javax.validation.constraints.NotBlank;
  */
 @Data
 public class StoreParam {
-    @ApiModelProperty(value = "商家", required = true)
-    @NotBlank(message = "商家不能为空")
-    private Long merchantId;
-
     @ApiModelProperty(value = "门店名称", required = true)
     @NotBlank(message = "门店名称不能为空")
     @Length(min = 2, max = 32, message = "门店名称必须在 2 至 32 之间")

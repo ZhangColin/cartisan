@@ -1,10 +1,13 @@
 package com.cartisan.common;
 
+import com.cartisan.common.exceptions.CartisanException;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+
+import java.util.Objects;
 
 /**
  * @author colin
@@ -21,16 +24,16 @@ public class CartisanContext implements ApplicationContextAware {
 
     public static <T> T getBean(Class<T> clazz) {
         if (applicationContext == null) {
-            return null;
+            throw new CartisanException(ContextCodeMessage.APPLICATION_CONTEXT_IS_NULL);
         }
-        return applicationContext.getBean(clazz);
+        return Objects.requireNonNull(applicationContext.getBean(clazz));
     }
 
     public static <T> T getBean(String name, Class<T> clazz) {
         if (applicationContext == null) {
             return null;
         }
-        return applicationContext.getBean(name, clazz);
+        return Objects.requireNonNull(applicationContext.getBean(name, clazz));
     }
 
 
@@ -47,4 +50,5 @@ public class CartisanContext implements ApplicationContextAware {
     public static void cleanCurrentUser() {
         userHolder.remove();
     }
+
 }
