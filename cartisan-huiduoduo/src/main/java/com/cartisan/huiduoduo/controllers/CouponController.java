@@ -1,14 +1,15 @@
 package com.cartisan.huiduoduo.controllers;
 
 import com.cartisan.common.responses.GenericResponse;
-import com.cartisan.huiduoduo.dtos.MerchantCoupon;
+import com.cartisan.huiduoduo.dtos.CouponInfo;
+import com.cartisan.huiduoduo.dtos.CouponSummaryInfo;
+import com.cartisan.huiduoduo.params.ReceiveCouponParam;
 import com.cartisan.huiduoduo.services.CouponService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,8 +39,32 @@ public class CouponController {
 
     @ApiOperation(value = "获取可领取优惠券")
     @GetMapping("/canGet")
-    public GenericResponse<List<MerchantCoupon>> getCouponSchemas(){
-        return success(service.getCanGetCoupons());
+    public GenericResponse<List<CouponSummaryInfo>> getCouponSchemas(
+            @ApiParam(value = "用户Id", required = true) @RequestParam Long userId){
+        return success(service.getCanGetCoupons(userId));
+    }
+
+    @ApiOperation(value = "获取我的优惠券")
+    @GetMapping("/myCoupons")
+    public GenericResponse<List<CouponSummaryInfo>> getMyCoupons(
+            @ApiParam(value = "用户Id", required = true) @RequestParam Long userId){
+        return success(service.getMyCoupons(userId));
+    }
+
+    @ApiOperation(value = "用户的优惠券详情")
+    @GetMapping("/myCoupon")
+    public GenericResponse<CouponInfo> getMyCoupon(
+            @ApiParam(value = "用户Id", required = true) @RequestParam Long userId,
+            @ApiParam(value = "优惠券Id", required = true) @RequestParam Long couponSchemaId){
+        return success(service.getMyCoupon(userId, couponSchemaId));
+    }
+
+    @ApiOperation(value = "领取优惠券")
+    @PostMapping("/receive")
+    public GenericResponse<List<CouponSummaryInfo>> receive(
+            @ApiParam(value = "用户Id与优惠券模板Id", required = true) @RequestBody ReceiveCouponParam receiveCouponParam){
+        service.receive(receiveCouponParam.getUserId(), receiveCouponParam.getCouponSchemaId());
+        return success();
     }
 
 

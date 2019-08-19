@@ -1,6 +1,6 @@
 package com.cartisan.huiduoduo.dtos;
 
-import com.cartisan.huiduoduo.domains.WeixinUser;
+import com.cartisan.huiduoduo.domains.WeiXinUser;
 import lombok.Data;
 import org.springframework.beans.BeanUtils;
 
@@ -8,7 +8,7 @@ import org.springframework.beans.BeanUtils;
  * @author colin
  */
 @Data
-public class WeixinUserDto {
+public class WeiXinUserDto {
     private String id;
 
     private String nickName;
@@ -17,7 +17,11 @@ public class WeixinUserDto {
 
     private String unionId;
 
+    private String language;
+
     private String country;
+
+    private String province;
 
     private String city;
 
@@ -27,10 +31,11 @@ public class WeixinUserDto {
 
     private String referrerId;
 
-    public static WeixinUserDto convertFrom(WeixinUser weixinUser) {
-        WeixinUserDto weixinUserDto = new WeixinUserDto();
+    public static WeiXinUserDto convertFrom(WeiXinUser weixinUser) {
+        WeiXinUserDto weixinUserDto = new WeiXinUserDto();
         BeanUtils.copyProperties(weixinUser, weixinUserDto);
 
+        weixinUserDto.setId(weixinUser.getId().toString());
         return weixinUserDto;
     }
 }

@@ -11,14 +11,14 @@ export function getStoreGuide(couponSchemaId, id) {
 export function addStoreGuide(couponSchemaId, params) {
   return request({
     url: `/huiduoduo/couponSchemas/${couponSchemaId}/storeGuides`,
-    method: 'post',
+    method: 'put',
     data: params
   })
 }
 
-export function editStoreGuide(couponSchemaId, id, params) {
+export function editStoreGuide(couponSchemaId, params) {
   return request({
-    url: `/huiduoduo/couponSchemas/${couponSchemaId}/storeGuides/${id}`,
+    url: `/huiduoduo/couponSchemas/${couponSchemaId}/storeGuides/`,
     method: 'put',
     data: params
   })

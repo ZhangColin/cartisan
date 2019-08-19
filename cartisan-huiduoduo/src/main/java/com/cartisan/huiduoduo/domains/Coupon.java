@@ -58,4 +58,22 @@ public class Coupon extends AbstractEntity implements AggregateRoot {
 
     private Coupon() {
     }
+
+    public Coupon(Long id, Long userId, CouponSchema couponSchema) {
+        this.id = id;
+        this.userId = userId;
+
+        this.couponSchemaId = couponSchema.getId();
+
+        // 优惠券码以后应改成通过 schema 指定的规则生成或由 schema 提供
+        this.couponCode = id.toString();
+
+        this.codeImage = couponSchema.getCodeImage();
+        this.getDate = new Date();
+
+        this.validStart = couponSchema.getValidStart();
+        this.validEnd = couponSchema.getValidEnd();
+
+        this.status = 0;
+    }
 }

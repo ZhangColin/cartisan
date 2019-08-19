@@ -31,5 +31,7 @@ management:
       exposure:
         include: "*"
 
-
+ribbon:
+  ReadTimeout: 60000  # 单位毫秒数
+  SocketTimeout: 60000
 

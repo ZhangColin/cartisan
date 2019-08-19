@@ -16,11 +16,8 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="门店ID" prop="id" />
-      <el-table-column align="center" label="名称" prop="name" />
-      <el-table-column align="center" label="电话" prop="phone" />
-      <el-table-column align="center" label="区域" prop="area" />
-      <el-table-column align="center" label="排序" prop="sort" />
+      <el-table-column align="center" label="门店ID" prop="storeId" />
+      <el-table-column align="center" label="门店名称" prop="storeName" />
       <el-table-column align="center" label="操作" width="120">
         <template slot-scope="scope">
           <el-dropdown split-button @click="handleEdit(scope.$index, scope.row)">
@@ -37,24 +34,12 @@
       :visible.sync="dialogVisible"
       :close-on-click-modal="false"
     >
-      <el-form ref="storeForm" :model="store" :rules="rules" label-width="120px">
-        <el-form-item label="名称" prop="name">
-          <el-input v-model="store.name" placeholder="请输入名称" />
+      <el-form ref="storeGuideForm" :model="storeGuide" :rules="rules" label-width="120px">
+        <el-form-item label="门店Id" prop="storeId">
+          <el-input v-model="storeGuide.storeId" placeholder="请输入门店Id" />
         </el-form-item>
-        <el-form-item label="电话" prop="phone">
-          <el-input v-model="store.phone" placeholder="请输入电话" />
-        </el-form-item>
-        <el-form-item label="所属区域" prop="area">
-          <el-input v-model="store.area" placeholder="请输入所属区域" />
-        </el-form-item>
-        <el-form-item label="地址" prop="address">
-          <el-input v-model="store.addreaa" placeholder="请输入地址" />
-        </el-form-item>
-        <el-form-item label="门店指引" prop="description">
-          <el-input v-model="store.description" type="textarea" placeholder="请输入门店指引" />
-        </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input-number v-model="store.sort" />
+        <el-form-item label="门店指南" prop="guide">
+          <el-input v-model="storeGuide.guide" type="textarea" placeholder="请输入门店指南" />
         </el-form-item>
       </el-form>
       <span slot="footer">
@@ -66,30 +51,25 @@
 </template>
 
 <script>
-import { getAllStores, addStore, editStore, removeStore } from '@/api/huiduoduo/store-guide-api'
+import { getAllStoreGuides, addStoreGuide, editStoreGuide, removeStoreGuide } from '@/api/huiduoduo/store-guide-api'
 
-const defaultStore = {
-  merchantId: '',
-  name: '',
-  phone: '',
-  area: '',
-  address: '',
-  description: '',
-  sort: 0
+const defaultStoreGuide = {
+  storeId: '',
+  guide: ''
 }
 
 export default {
-  name: 'Stores',
+  name: 'StoreGuides',
   data() {
     return {
       list: null,
       listLoading: true,
       dialogVisible: false,
       dialogTitle: '',
-      store: Object.assign({ }, defaultStore),
+      storeGuide: Object.assign({ }, defaultStoreGuide),
       rules: {
-        name: [
-          { required: true, message: '请输入门店名称', trigger: 'blur' }
+        storeId: [
+          { required: true, message: '请输入门店Id', trigger: 'blur' }
         ]
       }
     }
@@ -100,29 +80,29 @@ export default {
   methods: {
     fetchData() {
       this.listLoading = true
-      getAllStores(this.$route.query.merchantId).then(response => {
+      getAllStoreGuides(this.$route.query.couponSchemaId).then(response => {
         this.list = response.data
         this.listLoading = false
       })
     },
     handleAdd() {
-      this.store = Object.assign({}, defaultStore)
-      this.store.merchantId = this.$route.query.merchantId
-      this.dialogTitle = '添加门店'
+      this.storeGuide = Object.assign({}, defaultStoreGuide)
+      this.storeGuide.couponSchemaId = this.$route.query.couponSchemaId
+      this.dialogTitle = '添加门店指南'
       this.dialogVisible = true
     },
     handleEdit(index, row) {
-      this.store = row
-      this.dialogTitle = '编辑门店'
+      this.storeGuide = row
+      this.dialogTitle = '编辑门店指南'
       this.dialogVisible = true
     },
     handleDelete(index, row) {
-      this.$confirm('是否要删除该门店', '提示', {
+      this.$confirm('是否要删除该门店指南', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        removeStore(row.id).then(response => {
+        removeStoreGuide(this.$route.query.couponSchemaId, row.id).then(response => {
           this.$message({
             message: '删除成功',
             type: 'success',
@@ -133,10 +113,10 @@ export default {
       })
     },
     handleConfirm() {
-      this.$refs['storeForm'].validate((valid) => {
+      this.$refs['storeGuideForm'].validate((valid) => {
         if (valid) {
-          if (this.dialogTitle === '添加门店') {
-            addStore(this.store).then(response => {
+          if (this.dialogTitle === '添加门店指南') {
+            addStoreGuide(this.$route.query.couponSchemaId, this.storeGuide).then(response => {
               this.$message({
                 message: '添加成功',
                 type: 'success',
@@ -146,7 +126,7 @@ export default {
               this.fetchData()
             })
           } else {
-            editStore(this.store.id, this.store).then(response => {
+            editStoreGuide(this.$route.query.couponSchemaId, this.storeGuide).then(response => {
               this.$message({
                 message: '修改成功',
                 type: 'success',

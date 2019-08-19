@@ -79,19 +79,19 @@ public class CouponSchemaController {
         return success();
     }
 
-    @ApiOperation(value = "获取门店指引")
-    @GetMapping("/{id}/storeGuides")
+    @ApiOperation(value = "获取门店指南")
+    @GetMapping("/{couponSchemaId}/storeGuides")
     public GenericResponse<List<StoreGuideDto>> getStoreGuides(
-            @ApiParam(value = "优惠券模板Id", required = true) @PathVariable Long id) {
-        return success(service.getStoreGuides(id));
+            @ApiParam(value = "优惠券模板Id", required = true) @PathVariable Long couponSchemaId) {
+        return success(service.getStoreGuides(couponSchemaId));
     }
 
     @ApiOperation(value = "保存门店指引")
-    @PutMapping("/{id}/storeGuides")
+    @PutMapping("/{couponSchemaId}/storeGuides")
     public GenericResponse saveStoreGuides(
-            @ApiParam(value = "优惠券模板Id", required = true) @PathVariable Long id,
+            @ApiParam(value = "优惠券模板Id", required = true) @PathVariable Long couponSchemaId,
             @ApiParam(value = "优惠券模板信息", required = true) @Validated @RequestBody StoreGuideParam storeGuideParam) {
-        service.saveStoreGuid(id, storeGuideParam.getStoreId(), storeGuideParam.getGuide());
+        service.saveStoreGuid(couponSchemaId, storeGuideParam.getStoreId(), storeGuideParam.getGuide());
 
         return success();
     }

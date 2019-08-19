@@ -14,13 +14,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StoreGuideDto {
     @NonNull
+    private String couponSchemaId;
+    @NonNull
     private String storeId;
     private String storeName;
     @NonNull
     private String guide;
 
-    public static StoreGuideDto convertFrom(StoreGuide storeGuide) {
-        final StoreGuideDto storeGuideDto = new StoreGuideDto(
+    public static StoreGuideDto convertFrom(StoreGuide storeGuide, Long couponSchemaId) {
+        final StoreGuideDto storeGuideDto = new StoreGuideDto(couponSchemaId.toString(),
                 storeGuide.getStoreId().toString(), storeGuide.getGuide());
 
         storeGuideDto.setStoreName(

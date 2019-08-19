@@ -4,9 +4,8 @@ import com.cartisan.common.dtos.PageResult;
 import com.cartisan.common.exceptions.CartisanException;
 import com.cartisan.common.utils.IdWorker;
 import com.cartisan.huiduoduo.constants.CouponCodeMessage;
-import com.cartisan.huiduoduo.domains.WeixinUser;
-import com.cartisan.huiduoduo.dtos.WeixinUserDto;
-import com.cartisan.huiduoduo.params.WeixinUserParam;
+import com.cartisan.huiduoduo.domains.WeiXinUser;
+import com.cartisan.huiduoduo.dtos.WeiXinUserDto;
 import com.cartisan.huiduoduo.repositories.WeixinUserRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,59 +27,51 @@ public class WeixinUserService {
     @Autowired
     private IdWorker idWorker;
 
-    public PageResult<WeixinUserDto> searchWeixinUsers(String nickName, Integer currentPage, Integer pageSize) {
+    public PageResult<WeiXinUserDto> searchWeiXinUsers(String nickName, Integer currentPage, Integer pageSize) {
         PageRequest pageRequest = PageRequest.of(currentPage - 1, pageSize);
 
-        final Page<WeixinUser> searchResult = StringUtils.isBlank(nickName) ?
+        final Page<WeiXinUser> searchResult = StringUtils.isBlank(nickName) ?
                 repository.findAll(pageRequest) :
                 repository.findByNickNameLike("%"+nickName+"%", pageRequest);
 
         return new PageResult<>(searchResult.getTotalElements(), searchResult.getTotalPages(),
-                searchResult.map(WeixinUserDto::convertFrom).getContent());
+                searchResult.map(WeiXinUserDto::convertFrom).getContent());
     }
 
 
     @Transactional(rollbackOn = Exception.class)
-    public void addWeixinUser(WeixinUserParam weixinUserParam) {
-        if (repository.existsByNickName(weixinUserParam.getNickName())) {
-            throw new CartisanException(CouponCodeMessage.SAME_MERCHANT_NAME);
+    public WeiXinUserDto login(String openId) {
+        if (StringUtils.isBlank(openId)) {
+            throw new CartisanException(CouponCodeMessage.OPEN_ID_IS_NULL);
+        }
+        final Optional<WeiXinUser> weixinUserOptional = repository.findByOpenId(openId);
+
+        if (weixinUserOptional.isPresent()) {
+            return WeiXinUserDto.convertFrom(weixinUserOptional.get());
         }
 
-        final WeixinUser weixinUser = new WeixinUser(idWorker.nextId(),
-                weixinUserParam.getNickName(), weixinUserParam.getOpenId(), weixinUserParam.getUnionId(),
-                weixinUserParam.getCountry(), weixinUserParam.getCity(), weixinUserParam.getGender(),
-                weixinUserParam.getAvatarUrl(), weixinUserParam.getReferrerId());
+        final WeiXinUser weiXinUser = new WeiXinUser(idWorker.nextId(), openId);
 
+        repository.save(weiXinUser);
 
-        repository.save(weixinUser);
+        return WeiXinUserDto.convertFrom(weiXinUser);
     }
 
     @Transactional(rollbackOn = Exception.class)
-    public void editWeixinUser(Long id, WeixinUserParam weixinUserParam) {
-        if (repository.existsByNickNameAndIdNot(weixinUserParam.getNickName(), id)) {
-            throw new CartisanException(CouponCodeMessage.SAME_MERCHANT_NAME);
-        }
+    public WeiXinUserDto fillWeiXinUserInfo(String openId, String nickName, Integer gender,
+                                            String language, String country, String province, String city,
+                                            String avatarUrl){
+        final Optional<WeiXinUser> weixinUserOptional = repository.findByOpenId(openId);
 
-        final Optional<WeixinUser> weixinUserOptional = repository.findById(id);
         if (!weixinUserOptional.isPresent()) {
-            throw new CartisanException(CouponCodeMessage.MERCHANT_NOT_EXIST);
+            throw new CartisanException(CouponCodeMessage.USER_NOT_EXIST);
         }
 
-        final WeixinUser weixinUser = weixinUserOptional.get();
-        weixinUser.changeInfo(weixinUserParam.getNickName(), weixinUserParam.getOpenId(), weixinUserParam.getUnionId(),
-                weixinUserParam.getCountry(), weixinUserParam.getCity(), weixinUserParam.getGender(),
-                weixinUserParam.getAvatarUrl(), weixinUserParam.getReferrerId());
+        final WeiXinUser weiXinUser = weixinUserOptional.get();
+        weiXinUser.fillWeiXinUserData(nickName, gender, language, country, province, city, avatarUrl);
 
-        repository.save(weixinUser);
-    }
+        repository.save(weiXinUser);
 
-    @Transactional(rollbackOn = Exception.class)
-    public void removeWeixinUser(long id) {
-        final Optional<WeixinUser> weixinUserOptional = repository.findById(id);
-        if (!weixinUserOptional.isPresent()) {
-            throw new CartisanException(CouponCodeMessage.MERCHANT_NOT_EXIST);
-        }
-
-        repository.deleteById(id);
+        return WeiXinUserDto.convertFrom(weiXinUser);
     }
 }

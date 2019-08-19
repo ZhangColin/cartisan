@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Table(name = "cpn_weixin_users")
 @Getter
 @EqualsAndHashCode(callSuper = true)
-public class WeixinUser extends AbstractEntity implements AggregateRoot {
+public class WeiXinUser extends AbstractEntity implements AggregateRoot {
     @Id
     @Column(name = "id")
     private Long id;
@@ -30,6 +30,12 @@ public class WeixinUser extends AbstractEntity implements AggregateRoot {
 
     @Column(name = "union_id")
     private String unionId;
+
+    @Column(name = "language")
+    private String language;
+
+    @Column(name = "province")
+    private String province;
 
     @Column(name = "country")
     private String country;
@@ -46,31 +52,23 @@ public class WeixinUser extends AbstractEntity implements AggregateRoot {
     @Column(name = "referrer_id")
     private Long referrerId;
 
-    private WeixinUser() {
+    private WeiXinUser() {
     }
 
-    public WeixinUser(Long id, String nickName, String openId, String unionId, String country, String city,
-                      Integer gender, String avatarUrl, Long referrerId) {
+    public WeiXinUser(Long id, String openId) {
         this.id = id;
-        this.nickName = nickName;
         this.openId = openId;
-        this.unionId = unionId;
-        this.country = country;
-        this.city = city;
-        this.gender = gender;
-        this.avatarUrl = avatarUrl;
-        this.referrerId = referrerId;
     }
 
-    public void changeInfo(String nickName, String openId, String unionId, String country, String city,
-                      Integer gender, String avatarUrl, Long referrerId) {
+    public void fillWeiXinUserData(String nickName, Integer gender, String language,
+                                   String country, String province, String city,
+                                   String avatarUrl) {
         this.nickName = nickName;
-        this.openId = openId;
-        this.unionId = unionId;
-        this.country = country;
-        this.city = city;
         this.gender = gender;
+        this.language = language;
+        this.country = country;
+        this.province = province;
+        this.city = city;
         this.avatarUrl = avatarUrl;
-        this.referrerId = referrerId;
     }
 }

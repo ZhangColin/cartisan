@@ -17,4 +17,5 @@ public class HuiduoduoApplication extends CartisanApplication {
     public IdWorker idWorker() {
         return new IdWorker(1, 1);
     }
+
 }

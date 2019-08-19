@@ -123,7 +123,7 @@ public class CouponSchemaService {
 
     public List<StoreGuideDto> getStoreGuides(Long couponSchemaId) {
         return findByCouponSchemaId(couponSchemaId).getStoreGuides().stream()
-                .map(StoreGuideDto::convertFrom).collect(toList());
+                .map(storeGuide->StoreGuideDto.convertFrom(storeGuide, couponSchemaId)).collect(toList());
     }
 
     public StoreGuideDto saveStoreGuid(Long couponSchemaId, Long storeId, String guide){
@@ -145,7 +145,7 @@ public class CouponSchemaService {
 
         repository.save(couponSchema);
 
-        return StoreGuideDto.convertFrom(storeGuide);
+        return StoreGuideDto.convertFrom(storeGuide, couponSchemaId);
     }
 
     public void removeStoreGuid(Long couponSchemaId, Long storeId){

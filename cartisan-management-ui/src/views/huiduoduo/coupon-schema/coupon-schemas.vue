@@ -12,7 +12,6 @@
           <el-select v-model="searchParams.merchantId" placeholder="请选择商户" class="filter-item" clearable style="width: 100%">
             <el-option v-for="merchant in merchants" :key="merchant.id" :label="merchant.name" :value="merchant.id" />
           </el-select>
-          <!--        <el-input v-model="searchParams.merchantId" class="filter-item" placeholder="请输入商户Id" />-->
         </el-col>
         <el-col :span="6">
           <el-select v-model="searchParams.categoryId" placeholder="请选择分类" class="filter-item" clearable style="width: 100%">
