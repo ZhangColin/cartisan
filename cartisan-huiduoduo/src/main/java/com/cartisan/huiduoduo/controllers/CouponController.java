@@ -39,9 +39,18 @@ public class CouponController {
 
     @ApiOperation(value = "获取可领取优惠券")
     @GetMapping("/canGet")
-    public GenericResponse<List<CouponSummaryInfo>> getCouponSchemas(
+    public GenericResponse<List<CouponSummaryInfo>> getCanGetCoupons(
             @ApiParam(value = "用户Id", required = true) @RequestParam Long userId){
-        return success(service.getCanGetCoupons(userId));
+        return success(service.getCanGetCoupons(userId, null));
+    }
+
+
+    @ApiOperation(value = "获取分类下可领取优惠券")
+    @GetMapping("/canGetByCategory")
+    public GenericResponse<List<CouponSummaryInfo>> getCanGetCoupons(
+            @ApiParam(value = "用户Id", required = true) @RequestParam Long userId,
+            @ApiParam(value = "分类Id", required = true) @RequestParam Long categoryId){
+        return success(service.getCanGetCoupons(userId, categoryId));
     }
 
     @ApiOperation(value = "获取我的优惠券")

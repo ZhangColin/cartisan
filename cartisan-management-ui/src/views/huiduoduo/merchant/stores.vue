@@ -49,7 +49,7 @@
           <el-input v-model="store.area" placeholder="请输入所属区域" />
         </el-form-item>
         <el-form-item label="地址" prop="address">
-          <el-input v-model="store.addreaa" placeholder="请输入地址" />
+          <el-input v-model="store.address" placeholder="请输入地址" />
         </el-form-item>
         <el-form-item label="门店指引" prop="description">
           <el-input v-model="store.description" type="textarea" placeholder="请输入门店指引" />

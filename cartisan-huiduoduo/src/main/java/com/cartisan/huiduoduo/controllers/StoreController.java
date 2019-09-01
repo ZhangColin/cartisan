@@ -32,6 +32,14 @@ public class StoreController {
         return success(service.getStores(merchantId));
     }
 
+    @ApiOperation(value = "获取商户指定门店")
+    @GetMapping("/{id}")
+    public GenericResponse<StoreDto> getStore(
+            @ApiParam(value = "商户", required = true) @PathVariable Long merchantId,
+            @ApiParam(value = "门店Id", required = true) @PathVariable Long id){
+        return success(service.getStore(id));
+    }
+
     @ApiOperation(value = "添加门店")
     @PostMapping
     public GenericResponse<StoreDto> addStore(

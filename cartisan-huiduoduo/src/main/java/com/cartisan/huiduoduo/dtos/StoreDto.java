@@ -23,6 +23,8 @@ public class StoreDto {
 
     private String merchantName;
 
+    private String merchantLogo;
+
     private String name;
 
     private String phone;
@@ -39,7 +41,9 @@ public class StoreDto {
         StoreDto storeDto = new StoreDto(store.getId().toString(), store.getMerchantId().toString());
         BeanUtils.copyProperties(store, storeDto);
 
-        storeDto.setMerchantName(CartisanContext.getBean(MerchantService.class).getMerchant(store.getMerchantId()).getName());
+        final MerchantDto merchant = CartisanContext.getBean(MerchantService.class).getMerchant(store.getMerchantId());
+        storeDto.setMerchantName(merchant.getName());
+        storeDto.setMerchantLogo(merchant.getLogo());
 
         return storeDto;
     }

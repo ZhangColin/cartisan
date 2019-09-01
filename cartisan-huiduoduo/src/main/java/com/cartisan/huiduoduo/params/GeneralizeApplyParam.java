@@ -9,10 +9,10 @@ import javax.validation.constraints.NotBlank;
  * @author colin
  */
 @Data
-public class ReferrerParam {
+public class GeneralizeApplyParam {
     @ApiModelProperty(value = "用户Id", required = true)
     @NotBlank(message = "用户Id不能为空")
-    private Long userId;
+    private String userId;
 
     @ApiModelProperty(value = "姓名")
     @NotBlank(message = "用户Id不能为空")

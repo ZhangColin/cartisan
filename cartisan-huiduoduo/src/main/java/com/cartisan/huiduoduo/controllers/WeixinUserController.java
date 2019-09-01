@@ -5,6 +5,7 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import com.cartisan.common.dtos.PageResult;
 import com.cartisan.common.responses.GenericResponse;
 import com.cartisan.huiduoduo.dtos.WeiXinUserDto;
+import com.cartisan.huiduoduo.params.BindReferrerParam;
 import com.cartisan.huiduoduo.params.WeiXinEncryptedDataParam;
 import com.cartisan.huiduoduo.services.WeixinUserService;
 import io.swagger.annotations.Api;
@@ -46,12 +47,12 @@ public class WeixinUserController {
         log.info("SessionCode：" + sessionCode);
         final RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(new FastJsonHttpMessageConverter());
-        final String url = "https://api.weixin.qq.com/sns/jscode2session?appid=wxaa496b8f36ca4d99&secret=439b92a24603d95aaf23402a552be211&js_code="
+        final String url = "https://api.weixin.qq.com/sns/jscode2session?appid=wxaa496b8f36ca4d99&secret=30ec25053da7263619e521afb5a1f1f4&js_code="
                 + sessionCode + "&grant_type=authorization_code";
         final JSONObject loginResult = restTemplate.getForObject(
                 url, JSONObject.class);
 
-        log.info("WeiXin login return: "+loginResult.toJSONString());
+        log.info("WeiXin login return: " + loginResult.toJSONString());
         service.login(loginResult.getString("openid"));
 
         return success(loginResult);
@@ -76,6 +77,16 @@ public class WeixinUserController {
                 weiXinUserJson.getString("province"),
                 weiXinUserJson.getString("city"),
                 weiXinUserJson.getString("avatarUrl")));
+    }
+
+
+    @ApiOperation(value = "绑定推荐人")
+    @PutMapping("/{userId}/bindReferrer")
+    public GenericResponse<WeiXinUserDto> bindReferrer(
+            @ApiParam(value = "用户Id", required = true) @PathVariable Long userId,
+            @ApiParam(value = "推荐人", required = true) @RequestBody BindReferrerParam bindReferrerParam) {
+        log.info(bindReferrerParam.getReferrerId());
+        return success(service.bindReferrer(userId, Long.parseLong(bindReferrerParam.getReferrerId())));
     }
 
 

@@ -26,6 +26,14 @@
       <el-table-column align="center" label="银行卡号" prop="debitCart" />
       <el-table-column align="center" label="银行" prop="bank" />
       <el-table-column align="center" label="等级" prop="level" />
+      <el-table-column align="center" label="审核状态" prop="auditStatus" />
+      <el-table-column align="center" label="操作" width="120">
+        <template slot-scope="scope">
+          <el-dropdown v-if="scope.row.auditStatus==0" split-button @click="handleAudit(scope.$index, scope.row)">
+            通过审核
+          </el-dropdown>
+        </template>
+      </el-table-column>
     </el-table>
     <el-pagination
       :current-page.sync="page.currentPage"
@@ -43,7 +51,7 @@
 </template>
 
 <script>
-import { searchReferrers } from '@/api/huiduoduo/referrer-api'
+import { searchReferrers, audit } from '@/api/huiduoduo/referrer-api'
 
 export default {
   name: 'Referrer',
@@ -85,6 +93,9 @@ export default {
     handleCurrentChange(currentPage) {
       this.page.currentPage = currentPage
       this.fetchData()
+    },
+    handleAudit(index, row) {
+      audit(row.id).then(response => this.fetchData())
     }
   }
 }

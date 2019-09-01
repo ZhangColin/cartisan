@@ -3,7 +3,8 @@ package com.cartisan.huiduoduo.controllers;
 import com.cartisan.common.dtos.PageResult;
 import com.cartisan.common.responses.GenericResponse;
 import com.cartisan.huiduoduo.dtos.ReferrerDto;
-import com.cartisan.huiduoduo.params.ReferrerParam;
+import com.cartisan.huiduoduo.dtos.ReferrerInfo;
+import com.cartisan.huiduoduo.params.GeneralizeApplyParam;
 import com.cartisan.huiduoduo.services.ReferrerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,11 +34,28 @@ public class ReferrerController {
         return success(service.searchReferrers(nickName, currentPage, pageSize));
     }
 
-    @ApiOperation(value = "添加推荐人")
+    @ApiOperation(value = "根据用户获取推荐人信息")
+    @GetMapping("/getByUserId/{userId}")
+    public GenericResponse<ReferrerInfo> getReferrer(
+            @ApiParam(value = "用户Id", required = true) @PathVariable Long userId) {
+
+        return success(service.getReferrerInfoByUserId(userId));
+    }
+
+    @ApiOperation(value = "申请成为推荐人")
     @PostMapping
-    public GenericResponse addReferrer(
-            @ApiParam(value = "推荐人信息", required = true) @Validated @RequestBody ReferrerParam referrerParam) {
-        service.addReferrer(referrerParam);
+    public GenericResponse generalizeApply(
+            @ApiParam(value = "推荐人信息", required = true) @Validated @RequestBody GeneralizeApplyParam referrerParam) {
+        service.generalizeApply(referrerParam);
+
+        return success();
+    }
+
+    @ApiOperation(value = "推荐人审核通过")
+    @PutMapping("/{id}/audit")
+    public GenericResponse generalizeAudit(
+            @ApiParam(value = "推荐人Id", required = true) @PathVariable Long id) {
+        service.generalizeAudit(id);
 
         return success();
     }
@@ -46,7 +64,7 @@ public class ReferrerController {
     @PutMapping("/{id}")
     public GenericResponse editReferrer(
             @ApiParam(value = "推荐人Id", required = true) @PathVariable Long id,
-            @ApiParam(value = "推荐人信息", required = true) @Validated @RequestBody ReferrerParam referrerParam) {
+            @ApiParam(value = "推荐人信息", required = true) @Validated @RequestBody GeneralizeApplyParam referrerParam) {
         service.editReferrer(id, referrerParam);
 
         return success();

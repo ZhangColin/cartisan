@@ -43,6 +43,9 @@ public class Referrer extends AbstractEntity implements AggregateRoot {
     @Column(name = "level")
     private Integer level;
 
+    @Column(name = "audit_status")
+    private Integer auditStatus;
+
     private Referrer() {
     }
 
@@ -55,7 +58,8 @@ public class Referrer extends AbstractEntity implements AggregateRoot {
         this.debitCart = debitCart;
         this.bank = bank;
 
-        this.level=0;
+        this.level = 1;
+        this.auditStatus = 0;
     }
 
     public void upgrade() {
@@ -68,5 +72,9 @@ public class Referrer extends AbstractEntity implements AggregateRoot {
         this.profession = profession;
         this.debitCart = debitCart;
         this.bank = bank;
+    }
+
+    public void audit() {
+        this.auditStatus = 1;
     }
 }

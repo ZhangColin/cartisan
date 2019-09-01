@@ -73,6 +73,7 @@ CREATE TABLE `cpn_referrers` (
   `debit_cart` varchar(32) NOT NULL COMMENT '银行卡号',
   `bank` varchar(32) NOT NULL COMMENT '银行',
   `level` tinyint NOT NULL DEFAULT 1 COMMENT '级别',
+  `audit_status` tinyint NOT NULL DEFAULT 0 COMMENT '审核状态',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),

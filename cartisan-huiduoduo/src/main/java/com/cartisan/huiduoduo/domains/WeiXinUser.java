@@ -71,4 +71,8 @@ public class WeiXinUser extends AbstractEntity implements AggregateRoot {
         this.city = city;
         this.avatarUrl = avatarUrl;
     }
+
+    public void setReferrer(Long referrerId) {
+        this.referrerId = referrerId;
+    }
 }

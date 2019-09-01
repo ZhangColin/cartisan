@@ -13,5 +13,7 @@ public interface CouponRepository extends BaseRepository<Coupon, Long> {
     List<Coupon> findByUserId(Long userId);
     Optional<Coupon> findByUserIdAndCouponSchemaId(Long userId, Long schemaId);
 
+    Integer countByUserId(Long userId);
+
     Boolean existsByUserIdAndCouponSchemaId(Long userId, Long schemaId);
 }

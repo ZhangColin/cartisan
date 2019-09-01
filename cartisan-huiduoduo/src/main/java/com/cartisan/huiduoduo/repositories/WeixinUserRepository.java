@@ -14,6 +14,8 @@ import java.util.Optional;
 public interface WeixinUserRepository extends BaseRepository<WeiXinUser, Long> {
     Optional<WeiXinUser> findByOpenId(String openId);
 
+    Integer countByReferrerId(Long referrerId);
+
     Page<WeiXinUser> findByNickNameLike(String nickName, Pageable pageable);
     List<WeiXinUser> findByNickNameLike(String nickName);
 }

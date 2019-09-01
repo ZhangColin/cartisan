@@ -34,8 +34,8 @@ public class StoreService {
         return categories.stream().map(StoreDto::convertFrom).collect(toList());
     }
 
-    public Store getStore(Long id) {
-        return findStoreById(id);
+    public StoreDto getStore(Long id) {
+        return StoreDto.convertFrom(findStoreById(id));
     }
 
     @Transactional(rollbackOn = Exception.class)

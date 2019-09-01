@@ -16,6 +16,7 @@ public class CouponSummaryInfo {
     private String couponId;
     private String couponTitle;
     private String couponIntroduction;
+    private Integer commission;
 
     private Boolean alreadyGet;
 
@@ -28,6 +29,7 @@ public class CouponSummaryInfo {
         couponSummaryInfo.setCouponId(couponSchema.getId().toString());
         couponSummaryInfo.setCouponTitle(couponSchema.getTitle());
         couponSummaryInfo.setCouponIntroduction(couponSchema.getIntroduction());
+        couponSummaryInfo.setCommission(couponSchema.getCommission());
 
         couponSummaryInfo.setAlreadyGet(alreadyGet);
 

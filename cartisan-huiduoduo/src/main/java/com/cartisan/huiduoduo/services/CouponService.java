@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -38,12 +39,19 @@ public class CouponService {
     @Autowired
     private IdWorker idWorker;
 
-    public List<CouponSummaryInfo> getCanGetCoupons(Long userId) {
+    public List<CouponSummaryInfo> getCanGetCoupons(Long userId, Long categoryId) {
         final List<CouponSchema> schemas = couponSchemaRepository.findAll((Specification<CouponSchema>) (root, query, criteriaBuilder) ->
-                criteriaBuilder.and(new Predicate[]{
-                        criteriaBuilder.lessThanOrEqualTo(root.get("getStart"), new Date()),
-                        criteriaBuilder.greaterThanOrEqualTo(root.get("getEnd"), new Date())
-                }));
+        {
+            final List<Predicate> predicates = new ArrayList<>();
+            predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("getStart"), new Date()));
+            predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("getEnd"), new Date()));
+
+            if (categoryId != null) {
+                predicates.add(criteriaBuilder.equal(root.get("categoryId"), categoryId));
+            }
+
+            return criteriaBuilder.and(predicates.toArray(new Predicate[]{}));
+        });
 
         final List<Coupon> myCoupons = couponRepository.findByUserId(userId);
         final List<Long> alreadyGetCouponSchemaIds = myCoupons.stream().map(Coupon::getCouponSchemaId).collect(toList());

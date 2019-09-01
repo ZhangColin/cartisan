@@ -31,6 +31,8 @@ public class ReferrerDto {
 
     private Integer level;
 
+    private Integer auditStatus;
+
     public static ReferrerDto convertFrom(Referrer referrer) {
         ReferrerDto referrerDto = new ReferrerDto(referrer.getId().toString(), referrer.getUserId().toString(), referrer.getName());
         BeanUtils.copyProperties(referrer, referrerDto);

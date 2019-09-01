@@ -74,4 +74,21 @@ public class WeixinUserService {
 
         return WeiXinUserDto.convertFrom(weiXinUser);
     }
+
+    @Transactional(rollbackOn = Exception.class)
+    public WeiXinUserDto bindReferrer(Long userId, Long referrerId){
+        final Optional<WeiXinUser> weixinUserOptional = repository.findById(userId);
+
+        if (!weixinUserOptional.isPresent()) {
+            throw new CartisanException(CouponCodeMessage.USER_NOT_EXIST);
+        }
+
+        final WeiXinUser weiXinUser = weixinUserOptional.get();
+
+        weiXinUser.setReferrer(referrerId);
+
+        repository.save(weiXinUser);
+
+        return WeiXinUserDto.convertFrom(weiXinUser);
+    }
 }
