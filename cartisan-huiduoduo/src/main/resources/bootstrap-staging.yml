@@ -9,7 +9,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://cartisan-eureka1:8761/eureka,http://cartisan-eureka2:8762/eureka
+      defaultZone: http://49.234.49.112:8761/eureka
 
 logging:
   path: /var/log/cartisan/huiduoduo/
