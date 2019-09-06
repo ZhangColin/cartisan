@@ -5,13 +5,13 @@ spring:
       discovery:
         enabled: true
         service-id: config
-      profile: staging
+      profile: prod
 
 eureka:
   client:
     service-url:
-      defaultZone: http://49.234.49.112:8761/eureka
+      defaultZone: http://47.245.58.216:8761/eureka
 
 logging:
-  path: /var/log/cartisan/huiduoduo/
-  file: huiduoduo
+  path: /var/log/cartisan/gateway/
+  file: cartisan-gateway
