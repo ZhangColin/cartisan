@@ -1,11 +1,11 @@
-spring:
-  cloud:
-    config:
-      enabled: false
-      discovery:
-        enabled: true
-        service-id: config
-      profile: prod
+#spring:
+#  cloud:
+#    config:
+#      enabled: false
+#      discovery:
+#        enabled: true
+#        service-id: config
+#      profile: prod
 
 eureka:
   client:
