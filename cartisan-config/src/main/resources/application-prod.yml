@@ -16,7 +16,7 @@ eureka:
   client:
     service-url:
       # 这个注册是通过容器编排来查找的，所以名称是容器名称，不是注册中心应用的名称
-      defaultZone: http://47.245.58.216:8761/eureka
+      defaultZone: http://www.hsqjp.com:8761/eureka
   instance:
     prefer-ip-address: true
 management:

@@ -7,14 +7,14 @@ spring:
     show-sql: true
 
   rabbitmq:
-    host: 47.245.58.216
+    host: www.hsqjp.com
     port: 5672
     virtual-host: /cartisan
     username: rabbitmqadmin
     password: 123456
 
   redis:
-    host: 47.245.58.216 # Redis服务器地址
+    host: www.hsqjp.com # Redis服务器地址
     database: 0 # Redis数据库索引（默认为0）
     port: 6379 # Redis服务器连接端口
     password: # Redis服务器连接密码（默认为空）
@@ -27,7 +27,7 @@ spring:
     timeout: 200ms # 连接超时时间（毫秒）
 
   zipkin:
-    base-url: http://47.245.58.216:9411   # 指定zipkin的服务端的地址
+    base-url: http://www.hsqjp.com:9411   # 指定zipkin的服务端的地址
 
   sleuth:
     sampler:

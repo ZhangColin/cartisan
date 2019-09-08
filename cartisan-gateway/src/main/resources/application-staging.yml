@@ -36,3 +36,8 @@ ribbon:
   ReadTimeout: 60000  # 单位毫秒数
   SocketTimeout: 60000
 
+server:
+  ssl:
+    key-store: classpath:2786492_hsqjp.com.pfx
+    key-store-password: J9m6gzJ5
+    key-store-type: PKCS12
