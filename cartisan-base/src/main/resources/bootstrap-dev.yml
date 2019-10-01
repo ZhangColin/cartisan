@@ -10,6 +10,3 @@ eureka:
   instance:
     status-page-url: http://localhost:9001/swagger-ui.html
 
-#logging:
-#  path: /Users/colin/Workspace/cartisan/log/cartisan/base/
-#  file: cartisan-base

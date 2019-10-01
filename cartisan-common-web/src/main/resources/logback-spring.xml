@@ -11,14 +11,20 @@
     <springProfile name="test,staging,prod">
         <property name="LOG_FILE" value="${LOG_FILE:-spring.log}"/>
         <property name="LOG_PATH" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}"/>
-        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--获取比info级别高(包括info级别)但除error级别的日志-->
+        <appender name="INFO_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>DENY</onMatch>
+                <onMismatch>ACCEPT</onMismatch>
+            </filter>
             <encoder>
                 <pattern>${FILE_LOG_PATTERN}</pattern>
                 <charset>UTF-8</charset>
             </encoder>
-            <!--<file>${LOG_PATH}/${LOG_FILE}.log</file>-->
+            <!--滚动策略-->
             <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-                <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/${LOG_FILE}.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+                <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/${LOG_FILE}.info.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
                 <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                     <maxFileSize>30MB</maxFileSize>
                 </timeBasedFileNamingAndTriggeringPolicy>
@@ -26,8 +32,48 @@
             </rollingPolicy>
         </appender>
 
+        <!--获取比info级别高(包括info级别)但除error级别的日志-->
+        <appender name="ERROR_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <filter class="ch.qos.logback.classic.filter.LevelFilter">
+                <level>ERROR</level>
+                <onMatch>ACCEPT</onMatch>
+                <onMismatch>DENY</onMismatch>
+            </filter>
+            <encoder>
+                <pattern>${FILE_LOG_PATTERN}</pattern>
+                <charset>UTF-8</charset>
+            </encoder>
+            <!--滚动策略-->
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/${LOG_FILE}.error.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>30MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+        </appender>
+
+        <!-- 异步输出 -->
+        <appender name="ASYNC-INFO" class="ch.qos.logback.classic.AsyncAppender">
+            <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+            <discardingThreshold>0</discardingThreshold>
+            <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+            <queueSize>256</queueSize>
+            <!-- 添加附加的appender,最多只能添加一个 -->
+            <appender-ref ref="INFO_LOG"/>
+        </appender>
+        <appender name="ASYNC-ERROR" class="ch.qos.logback.classic.AsyncAppender">
+            <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+            <discardingThreshold>0</discardingThreshold>
+            <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+            <queueSize>256</queueSize>
+            <!-- 添加附加的appender,最多只能添加一个 -->
+            <appender-ref ref="ERROR_LOG"/>
+        </appender>
+
         <root level="INFO">
-            <appender-ref ref="FILE"/>
+            <appender-ref ref="INFO_LOG"/>
+            <appender-ref ref="ERROR_LOG"/>
             <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
