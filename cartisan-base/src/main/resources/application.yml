@@ -1,17 +1,17 @@
 server:
-  port: 9003
+  port: 9001
 
 spring:
   application:
-    name: huiduoduo
+    name: base
   profiles:
-    include: cloud, web, mysql
+    include: web, mysql
     active: dev
 
 
 cartisan:
   info:
-    title: 惠多多
+    title: 基础服务
     serviceUrl: http://www.cartisan.com
     version: 1.0
     contact:

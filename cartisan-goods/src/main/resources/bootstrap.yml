@@ -5,7 +5,7 @@ spring:
   application:
     name: goods
   profiles:
-    include: web, mysql
+    include: cloud, web, mysql
     active: dev
 
 

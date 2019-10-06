@@ -8,12 +8,12 @@ spring:
   jpa:
     show-sql: true
 
-  rabbitmq:
-    host: localhost
-    port: 5672
-    virtual-host: /cartisan
-    username: rabbitmqadmin
-    password: 123456
+#  rabbitmq:
+#    host: localhost
+#    port: 5672
+#    virtual-host: /cartisan
+#    username: rabbitmqadmin
+#    password: 123456
 
   redis:
     host: localhost # Redis服务器地址
@@ -28,14 +28,22 @@ spring:
         min-idle: 0 # 连接池中的最小空闲连接
     timeout: 0ms # 连接超时时间（毫秒）
 
-  zipkin:
-    base-url: http://localhost:9411   # 指定zipkin的服务端的地址
-
-  sleuth:
-    sampler:
-      probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
+#  zipkin:
+#    base-url: http://localhost:9411   # 指定zipkin的服务端的地址
+#
+#  sleuth:
+#    sampler:
+#      probability: 1.0 # 将采样比例设置为 1.0，也就是全部都需要。默认是 0.1
 
 cartisan:
   signature:
     enable: false
     secret: cartisan
+  info:
+    title: 基础服务
+    serviceUrl: http://www.cartisan.com
+    version: 1.0
+    contact:
+      name: colin
+      url: zhang_colin.github.com
+      email: zhang_colin@163.com

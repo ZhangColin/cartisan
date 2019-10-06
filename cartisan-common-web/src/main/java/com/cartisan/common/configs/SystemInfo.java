@@ -2,7 +2,6 @@ package com.cartisan.common.configs;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 @ConfigurationProperties("cartisan.info")
-@RefreshScope
+//@RefreshScope
 public class SystemInfo {
     private String title;
     private String serviceUrl;

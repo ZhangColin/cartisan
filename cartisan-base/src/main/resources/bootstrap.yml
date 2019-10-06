@@ -5,7 +5,7 @@ spring:
   application:
     name: base
   profiles:
-    include: web, mysql
+    include: clound, web, mysql
     active: dev
 
 

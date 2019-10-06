@@ -1,6 +1,6 @@
 package com.cartisan.huiduoduo;
 
-import com.cartisan.common.configs.CartisanApplication;
+import com.cartisan.common.CartisanCloudApplication;
 import com.cartisan.common.utils.IdWorker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 /**
  * @author colin
  */
-public class HuiduoduoApplication extends CartisanApplication {
+public class HuiduoduoApplication extends CartisanCloudApplication {
     public static void main(String[] args) {
         SpringApplication.run(HuiduoduoApplication.class);
     }
