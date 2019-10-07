@@ -7,10 +7,8 @@
         <artifactId>cartisan-parent</artifactId>
         <groupId>com.cartisan</groupId>
         <version>1.0-SNAPSHOT</version>
-        <relativePath>../cartisan-parent/pom.xml</relativePath>
     </parent>
 
-    <groupId>com.cartisan</groupId>
     <artifactId>cartisan-common-mysql</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>

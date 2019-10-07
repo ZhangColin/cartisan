@@ -6,10 +6,8 @@
 		<artifactId>cartisan-parent</artifactId>
 		<groupId>com.cartisan</groupId>
 		<version>1.0-SNAPSHOT</version>
-		<relativePath>../cartisan-parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>com.cartisan</groupId>
 	<artifactId>cartisan-management</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
