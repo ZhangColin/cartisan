@@ -3,13 +3,11 @@ package com.cartisan.common;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.SpringCloudApplication;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @author colin
  */
 @SpringCloudApplication
-@ComponentScan(value = "com.cartisan.common")
 public class CartisanCloudApplication extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
