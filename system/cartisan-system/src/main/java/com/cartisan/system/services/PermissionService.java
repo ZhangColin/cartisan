@@ -1,7 +1,7 @@
 package com.cartisan.system.services;
 
 import com.cartisan.common.exceptions.CartisanException;
-import com.cartisan.common.utils.IdWorker;
+import com.cartisan.common.utils.SnowflakeIdWorker;
 import com.cartisan.system.constants.SystemCodeMessage;
 import com.cartisan.system.domains.Permission;
 import com.cartisan.system.dtos.PermissionDto;
@@ -24,7 +24,7 @@ public class PermissionService {
     private PermissionRepository repository;
 
     @Autowired
-    private IdWorker idWorker;
+    private SnowflakeIdWorker idWorker;
 
     public List<PermissionDto> getPermissionList() {
         final List<Permission> permissions = repository.findAll(new Sort(Sort.Direction.ASC, "sort"));

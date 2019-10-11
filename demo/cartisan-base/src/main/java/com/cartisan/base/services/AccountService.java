@@ -3,7 +3,7 @@ package com.cartisan.base.services;
 import com.cartisan.base.domains.Account;
 import com.cartisan.base.dtos.AccountDto;
 import com.cartisan.base.repositories.AccountRepository;
-import com.cartisan.common.utils.IdWorker;
+import com.cartisan.common.utils.SnowflakeIdWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     @Autowired
-    private IdWorker idWorker;
+    private SnowflakeIdWorker idWorker;
 
 //    @Autowired
 //    private BCryptPasswordEncoder encoder;

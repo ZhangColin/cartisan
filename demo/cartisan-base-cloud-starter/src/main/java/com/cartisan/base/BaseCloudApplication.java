@@ -1,6 +1,6 @@
 package com.cartisan.base;
 
-import com.cartisan.common.utils.IdWorker;
+import com.cartisan.common.utils.SnowflakeIdWorker;
 import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +15,8 @@ public class BaseCloudApplication {
     }
 
     @Bean
-    public IdWorker idWorker() {
-        return new IdWorker(1, 1);
+    public SnowflakeIdWorker idWorker() {
+        return new SnowflakeIdWorker(1, 1);
     }
 
 //    @Bean

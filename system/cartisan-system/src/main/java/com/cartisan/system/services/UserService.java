@@ -2,7 +2,7 @@ package com.cartisan.system.services;
 
 import com.cartisan.common.dtos.PageResult;
 import com.cartisan.common.exceptions.CartisanException;
-import com.cartisan.common.utils.IdWorker;
+import com.cartisan.common.utils.SnowflakeIdWorker;
 import com.cartisan.system.constants.SystemCodeMessage;
 import com.cartisan.system.domains.User;
 import com.cartisan.system.dtos.UserDto;
@@ -34,7 +34,7 @@ public class UserService {
     private UserRepository repository;
 
     @Autowired
-    private IdWorker idWorker;
+    private SnowflakeIdWorker idWorker;
 
     public UserDto getUser(Long id) {
         return UserDto.convertFrom(repository.findById(id).get());

@@ -5,8 +5,8 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 
 /**
- * <p>Title: IdWorker</p>
- * <p>Description: 分布式自增长ID</p>
+ * <p>Title: SnowflakeIdWorker</p>
+ * <p>Description: 雪花算法分布式ID生成器</p>
  *
  * <pre>
  *     Twitter的 Snowflake　JAVA实现方案
@@ -30,53 +30,71 @@ import java.net.NetworkInterface;
  */
 
 
-public class IdWorker {
+public class SnowflakeIdWorker {
     /**
-     * 时间起始标记点，作为基准（一旦确定，不能变动）
+     * 开始时间截，作为基准（一旦确定，不能变动）
      */
     private final static long twepoch = 1254648300000L;
 
     /**
-     * 机器标识位数
+     * 机器id所占的位数
      */
     private final static long workerIdBits = 5L;
 
     /**
-     * 数据中心识位数
+     * 数据标识id所占的位数
      */
     private final static long dataCenterIdBits = 5L;
 
     /**
-     * 机器Id最大值
+     * 支持的最大机器id，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数)
      */
     private final static long maxWorkerId = -1L ^ (-1L << workerIdBits);
 
     /**
-     * 数据中心Id最大值
+     * 支持的最大数据标识id，结果是31
      */
     private final static long maxDataCenterId = -1L ^ (-1L << dataCenterIdBits);
 
     /**
-     * 毫秒内自增位
+     * 序列在id中占的位数
      */
     private final static long sequenceBits = 12L;
 
     /**
-     * 机器ID偏左移 12 位
+     * 机器ID向左移12位
      */
     private final static long workerIdLeftShift = sequenceBits;
 
     /**
-     * 数据中心ID左移 17 位
+     * 数据标识id向左移17位(12+5)
      */
     private final static long dataCenterIdLeftShift = sequenceBits + workerIdBits;
 
     /**
-     * 时间毫秒左移 22 位
+     * 时间截向左移22位(5+5+12)
      */
     private final static long timestampLeftShift = sequenceBits + workerIdBits + dataCenterIdBits;
 
+    /**
+     * 生成序列的掩码，这里为4095 (0b111111111111=0xfff=4095)
+     */
     private final static long sequenceMask = -1L ^ (-1L << sequenceBits);
+
+    /**
+     * 工作机器ID(0~31)
+     */
+    private final long workerId;
+
+    /**
+     * 数据中心ID(0~31)
+     */
+    private final long dataCenterId;
+
+    /**
+     * 并发控制，毫秒内序列(0~4095)
+     */
+    private long sequence = 0L;
 
     /**
      * 上次生产ID的时间戳
@@ -84,19 +102,19 @@ public class IdWorker {
     private static long lastTimestamp = -1L;
 
     /**
-     * 并发控制
+     * 构造函数
      */
-    private long sequence = 0L;
-
-    private final long workerId;
-    private final long dataCenterId;
-
-    public IdWorker() {
+    public SnowflakeIdWorker() {
         this.dataCenterId = getDataCenterId(maxDataCenterId);
         this.workerId = getWorkerId(dataCenterId, maxWorkerId);
     }
 
-    public IdWorker(long workerId, long dataCenterId) {
+    /**
+     * 构造函数
+     * @param workerId 工作ID (0~31)
+     * @param dataCenterId 数据中心ID (0~31)
+     */
+    public SnowflakeIdWorker(long workerId, long dataCenterId) {
         if (workerId > maxWorkerId || workerId < 0) {
             throw new IllegalArgumentException(String.format("workerId 不能大于 %d 或者小于 0。", maxWorkerId));
         }
@@ -108,28 +126,36 @@ public class IdWorker {
     }
 
     /**
-     * 获取下一个 ID
-     * @return
+     * 获得下一个ID (该方法是线程安全的)
+     * @return SnowflakeId
      */
     public synchronized long nextId() {
         long timestamp = timeGen();
+
+        //如果当前时间小于上一次ID生成的时间戳，说明系统时钟回退过这个时候应当抛出异常
         if (timestamp < lastTimestamp) {
             throw new RuntimeException(String.format("时钟倒退，拒绝在 %d 毫秒内生成 Id。", lastTimestamp - timestamp));
         }
 
+        //如果是同一时间生成的，则进行毫秒内序列
         if (lastTimestamp == timestamp) {
             // 当前毫秒内，则 +1
             sequence = (sequence + 1) & sequenceMask;
+            //毫秒内序列溢出
             if (sequence == 0) {
-                // 当前毫秒内满了，则等待下一秒
+                //阻塞到下一个毫秒,获得新的时间戳
                 timestamp = tilNextMillis(lastTimestamp);
             }
-        } else {
+        }
+        //时间戳改变，毫秒内序列重置
+        else {
             sequence = 0;
         }
+
+        //上次生成ID的时间截
         lastTimestamp = timestamp;
 
-        // ID 偏移组合生成最终的 ID
+        //移位并通过或运算拼到一起组成64位的ID
         long nextId = ((timestamp - twepoch) << timestampLeftShift)
                 | (dataCenterId << dataCenterIdLeftShift)
                 | (workerId << workerIdLeftShift)
@@ -138,6 +164,11 @@ public class IdWorker {
         return nextId;
     }
 
+    /**
+     * 阻塞到下一个毫秒，直到获得新的时间戳
+     * @param lastTimestamp 上次生成ID的时间截
+     * @return 当前时间戳
+     */
     private long tilNextMillis(long lastTimestamp) {
         long timestamp = this.timeGen();
         while (timestamp <= lastTimestamp) {
@@ -146,6 +177,10 @@ public class IdWorker {
         return timestamp;
     }
 
+    /**
+     * 返回以毫秒为单位的当前时间
+     * @return 当前时间(毫秒)
+     */
     private long timeGen() {
         return System.currentTimeMillis();
     }
@@ -193,7 +228,7 @@ public class IdWorker {
     }
 
     public static void main(String[] args) {
-        IdWorker idWorker = new IdWorker();
+        SnowflakeIdWorker idWorker = new SnowflakeIdWorker();
 
         for (int i = 0; i < 10000; i++) {
             System.out.println(idWorker.nextId());

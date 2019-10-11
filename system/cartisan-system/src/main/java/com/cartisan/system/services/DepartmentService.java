@@ -1,7 +1,7 @@
 package com.cartisan.system.services;
 
 import com.cartisan.common.exceptions.CartisanException;
-import com.cartisan.common.utils.IdWorker;
+import com.cartisan.common.utils.SnowflakeIdWorker;
 import com.cartisan.system.constants.SystemCodeMessage;
 import com.cartisan.system.domains.Department;
 import com.cartisan.system.dtos.DepartmentDto;
@@ -28,7 +28,7 @@ public class DepartmentService {
     private UserQuery userQuery;
 
     @Autowired
-    private IdWorker idWorker;
+    private SnowflakeIdWorker idWorker;
 
     public List<DepartmentDto> getDepartmentList() {
         final List<Department> departments = repository.findAll(new Sort(Sort.Direction.ASC, "sort"));

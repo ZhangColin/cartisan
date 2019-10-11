@@ -2,7 +2,7 @@ package com.cartisan.system.services;
 
 import com.cartisan.common.dtos.PageResult;
 import com.cartisan.common.exceptions.CartisanException;
-import com.cartisan.common.utils.IdWorker;
+import com.cartisan.common.utils.SnowflakeIdWorker;
 import com.cartisan.system.constants.SystemCodeMessage;
 import com.cartisan.system.domains.Role;
 import com.cartisan.system.dtos.RoleDto;
@@ -29,7 +29,7 @@ public class RoleService {
     private RoleRepository repository;
 
     @Autowired
-    private IdWorker idWorker;
+    private SnowflakeIdWorker idWorker;
 
     public PageResult<RoleDto> searchRoles(String name, Integer currentPage, Integer pageSize) {
         PageRequest pageRequest = PageRequest.of(currentPage - 1, pageSize);
