@@ -3,7 +3,7 @@ package com.cartisan.system.controllers;
 import com.cartisan.common.responses.GenericResponse;
 import com.cartisan.system.dtos.UserDto;
 import com.cartisan.system.params.LoginParam;
-import com.cartisan.system.queries.PermissionQuery;
+import com.cartisan.system.queries.PermissionQueryMapper;
 import com.cartisan.system.services.LoginService;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class LoginController {
     private LoginService loginService;
 
     @Autowired
-    private PermissionQuery permissionQuery;
+    private PermissionQueryMapper permissionQueryMapper;
 
     @PostMapping("login")
     public GenericResponse login(
@@ -47,7 +47,7 @@ public class LoginController {
     public GenericResponse info(@RequestHeader(name = "X-Token") String token) {
         final UserDto user = loginService.getUserByToken(token);
         final List<String> roles = user.getRoleCodes();
-        final List<String> permissions = permissionQuery.getPermissionCodesByRoleCodes(roles);
+        final List<String> permissions = permissionQueryMapper.getPermissionCodesByRoleCodes(roles);
 
         Map<String, Object> info = new HashMap<>();
         info.put("roles", roles);

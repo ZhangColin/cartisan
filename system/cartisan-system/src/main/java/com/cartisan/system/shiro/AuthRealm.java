@@ -3,7 +3,7 @@ package com.cartisan.system.shiro;
 import com.cartisan.common.utils.RedisUtil;
 import com.cartisan.system.constants.LoginKey;
 import com.cartisan.system.dtos.UserDto;
-import com.cartisan.system.queries.PermissionQuery;
+import com.cartisan.system.queries.PermissionQueryMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -30,7 +30,7 @@ public class AuthRealm extends AuthorizingRealm {
     private RedisUtil redisUtil;
 
     @Autowired
-    private PermissionQuery permissionQuery;
+    private PermissionQueryMapper permissionQueryMapper;
 
     @Override
     public boolean supports(AuthenticationToken token) {
@@ -53,7 +53,7 @@ public class AuthRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         info.setRoles(new HashSet<>(userDto.getRoleCodes()));
-        info.setStringPermissions(new HashSet<>(permissionQuery.getPermissionCodesByRoleCodes(userDto.getRoleCodes())));
+        info.setStringPermissions(new HashSet<>(permissionQueryMapper.getPermissionCodesByRoleCodes(userDto.getRoleCodes())));
 
         return null;
     }

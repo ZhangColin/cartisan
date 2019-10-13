@@ -81,3 +81,22 @@ logging:
     org.hibernate: info
     org.hibernate.type.descriptor.sql.BasicBinder: info
     org.hibernate.type.descriptor.sql.BasicExtractor: info
+
+mybatis:
+  # 指向实体类包路径
+  type-aliases-package: com.cartisan
+  # mapper xml 文件地址
+  mapper-locations: classpath:mapper/*.xml
+  # 检查 mybatis 配置是否存在，一般命名为 mybatis-config.xml
+  check-config-location: true
+  # 执行模式。默认是 SIMPLE
+  executor-type: simple
+
+
+
+#pagehelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

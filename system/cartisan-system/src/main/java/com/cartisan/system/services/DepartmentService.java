@@ -6,7 +6,7 @@ import com.cartisan.system.constants.SystemCodeMessage;
 import com.cartisan.system.domains.Department;
 import com.cartisan.system.dtos.DepartmentDto;
 import com.cartisan.system.params.DepartmentParam;
-import com.cartisan.system.queries.UserQuery;
+import com.cartisan.system.queries.UserQueryMapper;
 import com.cartisan.system.repositories.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -25,7 +25,7 @@ public class DepartmentService {
     private DepartmentRepository repository;
 
     @Autowired
-    private UserQuery userQuery;
+    private UserQueryMapper userQueryMapper;
 
     @Autowired
     private SnowflakeIdWorker idWorker;
@@ -90,7 +90,7 @@ public class DepartmentService {
             throw new CartisanException(SystemCodeMessage.HAS_CHILD_DEPARTMENT);
         }
 
-        if (userQuery.existsUserInDepartment(id)) {
+        if (userQueryMapper.existsUserInDepartment(id)) {
             throw new CartisanException(SystemCodeMessage.HAS_USER_IN_DEPARTMENT);
         }
 

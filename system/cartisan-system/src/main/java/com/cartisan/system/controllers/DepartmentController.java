@@ -4,7 +4,7 @@ import com.cartisan.common.responses.GenericResponse;
 import com.cartisan.system.dtos.DepartmentDto;
 import com.cartisan.system.dtos.TreeNode;
 import com.cartisan.system.params.DepartmentParam;
-import com.cartisan.system.queries.DepartmentQuery;
+import com.cartisan.system.queries.DepartmentQueryMapper;
 import com.cartisan.system.services.DepartmentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +28,7 @@ public class DepartmentController {
     private DepartmentService service;
 
     @Autowired
-    private DepartmentQuery query;
+    private DepartmentQueryMapper mapper;
 
     @ApiOperation(value = "获取部门列表")
     @GetMapping
@@ -39,7 +39,7 @@ public class DepartmentController {
     @ApiOperation(value = "获取部门树")
     @GetMapping("/tree")
     public GenericResponse<List<TreeNode>> getDepartmentTree() {
-        return success(query.getDepartmentTree());
+        return success(TreeNode.buildTree(mapper.getDepartmentTreeNodes()));
     }
 
     @ApiOperation(value = "添加部门")

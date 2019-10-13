@@ -4,7 +4,7 @@ import com.cartisan.common.responses.GenericResponse;
 import com.cartisan.system.dtos.PermissionDto;
 import com.cartisan.system.dtos.TreeNode;
 import com.cartisan.system.params.PermissionParam;
-import com.cartisan.system.queries.PermissionQuery;
+import com.cartisan.system.queries.PermissionQueryMapper;
 import com.cartisan.system.services.PermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,7 +28,7 @@ public class PermissionController {
     private PermissionService service;
 
     @Autowired
-    private PermissionQuery query;
+    private PermissionQueryMapper permissionQueryMapper;
 
     @ApiOperation(value = "获取菜单/权限列表")
     @GetMapping
@@ -38,8 +38,8 @@ public class PermissionController {
 
     @ApiOperation(value = "获取菜单/权限树")
     @GetMapping("/tree")
-    public GenericResponse<List<TreeNode>> getDepartmentTree() {
-        return success(query.getPermissionTree());
+    public GenericResponse<List<TreeNode>> getPermissionTree() {
+        return success(TreeNode.buildTree(permissionQueryMapper.getPermissionTree()));
     }
 
     @ApiOperation(value = "添加菜单/权限")
