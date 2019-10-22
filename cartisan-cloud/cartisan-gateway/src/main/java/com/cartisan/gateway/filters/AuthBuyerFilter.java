@@ -1,6 +1,6 @@
 package com.cartisan.gateway.filters;
 
-import com.cartisan.common.utils.CookieUtils;
+import com.cartisan.common.utils.CookieUtil;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.apache.commons.lang.StringUtils;
@@ -37,7 +37,7 @@ public class AuthBuyerFilter extends ZuulFilter {
         final HttpServletRequest request = requestContext.getRequest();
 
         if ("/cartisan-example-order/example-order/order/create".equals(request.getRequestURI())) {
-            String cookie = CookieUtils.getCookieValue(request, "openid");
+            String cookie = CookieUtil.getCookieValue(request, "openid");
             if (StringUtils.isEmpty(cookie)) {
                 return true;
             }
@@ -53,7 +53,7 @@ public class AuthBuyerFilter extends ZuulFilter {
         /**
          * /order/create 只能买家访问
          */
-        String cookie = CookieUtils.getCookieValue(request, "openid");
+        String cookie = CookieUtil.getCookieValue(request, "openid");
         if (StringUtils.isEmpty(cookie)) {
             requestContext.setSendZuulResponse(false);
             requestContext.setResponseStatusCode(HttpStatus.UNAUTHORIZED.value());

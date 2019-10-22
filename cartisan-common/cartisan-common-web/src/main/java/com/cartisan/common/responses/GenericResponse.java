@@ -5,6 +5,8 @@ import com.cartisan.common.constants.CommonCodeMessage;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
+import java.sql.Timestamp;
+
 /**
  * @author colin
  */
@@ -18,6 +20,8 @@ public class GenericResponse<T> {
     private String message;
     @ApiModelProperty(value = "返回结果", required = true)
     private T data;
+    @ApiModelProperty(value = "运行时间截", required = true)
+    private Timestamp timestamp;
 
     private GenericResponse(Boolean success, CodeMessage codeMessage, T data) {
         this(success, codeMessage);
@@ -28,18 +32,19 @@ public class GenericResponse<T> {
         this.success = success;
         this.code = codeMessage.getCode();
         this.message = codeMessage.getMessage();
+        this.timestamp = new Timestamp(System.currentTimeMillis());
     }
 
     public static <T> GenericResponse<T> success(CodeMessage codeMessage, T data) {
-        return new GenericResponse(true, codeMessage, data);
+        return new GenericResponse<>(true, codeMessage, data);
     }
 
     public static <T> GenericResponse<T> success(T data) {
-        return new GenericResponse(true, CommonCodeMessage.SUCCESS, data);
+        return new GenericResponse<>(true, CommonCodeMessage.SUCCESS, data);
     }
 
     public static <T> GenericResponse<T> success() {
-        return new GenericResponse(true, CommonCodeMessage.SUCCESS);
+        return new GenericResponse<>(true, CommonCodeMessage.SUCCESS);
     }
 
     public static GenericResponse fail(CodeMessage codeMessage) {

@@ -13,7 +13,7 @@ import java.net.URLEncoder;
  * @author colin
  */
 @Slf4j
-public class CookieUtils {
+public class CookieUtil {
     /**
      * 得到Cookie的值, 不编码
      */

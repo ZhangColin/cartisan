@@ -23,17 +23,19 @@ public class CartisanContext implements ApplicationContextAware {
     }
 
     public static <T> T getBean(Class<T> clazz) {
-        if (applicationContext == null) {
-            throw new CartisanException(ContextCodeMessage.APPLICATION_CONTEXT_IS_NULL);
-        }
+        assertApplicationContext();
         return Objects.requireNonNull(applicationContext.getBean(clazz));
     }
 
     public static <T> T getBean(String name, Class<T> clazz) {
-        if (applicationContext == null) {
-            return null;
-        }
+        assertApplicationContext();
         return Objects.requireNonNull(applicationContext.getBean(name, clazz));
+    }
+
+    private static void assertApplicationContext() {
+        if (null == applicationContext) {
+            throw new CartisanException(ContextCodeMessage.APPLICATION_CONTEXT_IS_NULL);
+        }
     }
 
 

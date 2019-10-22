@@ -10,5 +10,5 @@ class ContextCodeMessage extends CodeMessage {
         super(code, message);
     }
 
-    public static CodeMessage APPLICATION_CONTEXT_IS_NULL = new ContextCodeMessage(51001, "ApplicationContext is null");
+    public static CodeMessage APPLICATION_CONTEXT_IS_NULL = new ContextCodeMessage(51001, "applicationContext为空,请检查是否注入springContextHolder");
 }

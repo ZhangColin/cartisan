@@ -1,6 +1,6 @@
 package com.cartisan.gateway.filters;
 
-import com.cartisan.common.utils.CookieUtils;
+import com.cartisan.common.utils.CookieUtil;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.apache.commons.lang.StringUtils;
@@ -37,7 +37,7 @@ public class AuthSellerFilter extends ZuulFilter {
         final HttpServletRequest request = requestContext.getRequest();
 
         if ("/order/finish".equals(request.getRequestURI())) {
-            String cookie = CookieUtils.getCookieValue(request, "token");
+            String cookie = CookieUtil.getCookieValue(request, "token");
             if (StringUtils.isEmpty(cookie)
                     || StringUtils.isEmpty(stringRedisTemplate.opsForValue().get(String.format("token_%s", cookie)))) {
                 return true;
@@ -55,7 +55,7 @@ public class AuthSellerFilter extends ZuulFilter {
          * /order/finish 只能卖家访问
          */
 
-        String cookie = CookieUtils.getCookieValue(request, "token");
+        String cookie = CookieUtil.getCookieValue(request, "token");
         if (StringUtils.isEmpty(cookie)
                 || StringUtils.isEmpty(stringRedisTemplate.opsForValue().get(String.format("token_%s", cookie)))) {
             requestContext.setSendZuulResponse(false);
