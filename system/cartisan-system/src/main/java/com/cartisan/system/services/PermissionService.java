@@ -46,8 +46,6 @@ public class PermissionService {
         permission.setSort(permissionParam.getSort());
 
 
-        permission.setOperator("system");
-        permission.setOperateIp("127.0.0.1");
 
         repository.save(permission);
     }

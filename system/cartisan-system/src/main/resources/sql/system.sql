@@ -8,8 +8,6 @@ CREATE TABLE `sys_departments` (
   `code` varchar(32) NOT NULL DEFAULT '' COMMENT '机构编码',
   `description` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
   `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
-  `operator` varchar(64) NOT NULL COMMENT '操作人',
-  `operate_ip` varchar(20) NOT NULL COMMENT '操作IP',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -32,8 +30,6 @@ CREATE TABLE `sys_users` (
   `email` varchar(64) NOT NULL COMMENT '邮箱',
   `phone` varchar(32) NOT NULL COMMENT '电话',
   `status` tinyint NOT NULL DEFAULT 1 COMMENT '状态(1：正常  2：冻结 ）',
-  `operator` varchar(64) NOT NULL COMMENT '操作人',
-  `operate_ip` varchar(20) NOT NULL COMMENT '操作IP',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `active` bit(1) NOT NULL DEFAULT b'1',
@@ -68,8 +64,6 @@ CREATE TABLE `sys_permissions` (
   `code` varchar(255) NOT NULL DEFAULT '' COMMENT '权限编码',
   `description` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
   `sort` int NOT NULL DEFAULT 0 COMMENT '排序',
-  `operator` varchar(64) NOT NULL COMMENT '操作人',
-  `operate_ip` varchar(20) NOT NULL COMMENT '操作IP',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -85,8 +79,6 @@ CREATE TABLE `sys_roles` (
   `name` varchar(32) NOT NULL COMMENT '角色名称',
   `code` varchar(32) NOT NULL COMMENT '角色编码',
   `description` varchar(255) NOT NULL DEFAULT '' COMMENT '描述',
-  `operator` varchar(64) NOT NULL COMMENT '操作人',
-  `operate_ip` varchar(20) NOT NULL COMMENT '操作IP',
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -122,3 +114,23 @@ CREATE TABLE `sys_role_permissions` (
   INDEX `index_role_permission_permission_id`(`permission_id`),
   INDEX `index_role_permission_role_id_permission_id`(`role_id`, `permission_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
+
+-- 用户操作日志表
+DROP TABLE IF EXISTS `sys_operation_logs`;
+CREATE TABLE `sys_operation_logs` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `type` tinyint NOT NULL DEFAULT 4 COMMENT '日志类型(1：登录  2：退出  3：注册  4：业务操作 ）',
+  `user_id` bigint NOT NULL COMMENT '用户Id',
+  `ip` varchar(32) NOT NULL COMMENT '操作IP',
+  `api` varchar(256) NOT NULL COMMENT 'api',
+  `method` varchar(16) NOT NULL COMMENT '方法',
+  `parameters` text NOT NULL COMMENT '参数',
+  `success` tinyint NOT NULL DEFAULT 4 COMMENT '是否执行成功(1：成功  0：失败 ）',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX `index_operation_log_type`(`type`),
+  INDEX `index_operation_log_user_id`(`user_id`),
+  INDEX `index_operation_log_api`(`api`),
+  INDEX `index_operation_log_created`(`created`),
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户操作日志表';

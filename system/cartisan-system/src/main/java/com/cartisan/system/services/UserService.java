@@ -69,11 +69,6 @@ public class UserService {
         user.assignRoles(userParam.getRoleCodes());
         user.assignDepartments(userParam.getDepartmentIds());
 
-
-        // TODO: operator info
-        user.setOperator("system");
-        user.setOperateIp("127.0.0.1");
-
         repository.save(user);
     }
 
@@ -100,10 +95,6 @@ public class UserService {
         user.assignRoles(userParam.getRoleCodes());
         user.assignDepartments(userParam.getDepartmentIds());
 
-        // TODO: operator info
-        user.setOperator("system update");
-        user.setOperateIp("127.0.0.1");
-
         repository.save(user);
     }
 
@@ -124,10 +115,6 @@ public class UserService {
 
         user.frozen();
 
-        // TODO: operator info
-        user.setOperator("system update");
-        user.setOperateIp("127.0.0.1");
-
         repository.save(user);
     }
 
@@ -143,10 +130,6 @@ public class UserService {
 
         user.unFrozen();
 
-        // TODO: operator info
-        user.setOperator("system update");
-        user.setOperateIp("127.0.0.1");
-
         repository.save(user);
     }
 
@@ -161,10 +144,6 @@ public class UserService {
         final User user = userOptional.get();
 
         user.changePassword(password);
-
-        // TODO: operator info
-        user.setOperator("system update");
-        user.setOperateIp("127.0.0.1");
 
         repository.save(user);
     }

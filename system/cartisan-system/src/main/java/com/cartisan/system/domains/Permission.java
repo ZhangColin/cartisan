@@ -39,13 +39,6 @@ public class Permission extends AbstractEntity implements AggregateRoot {
     @Setter
     private Integer sort;
 
-    @Column(name = "operator")
-    @Setter
-    private String operator;
-    @Column(name = "operate_ip")
-    @Setter
-    private String operateIp;
-
     private Permission() {
     }
 

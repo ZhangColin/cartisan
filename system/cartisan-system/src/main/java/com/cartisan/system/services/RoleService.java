@@ -58,9 +58,6 @@ public class RoleService {
         final Role role = new Role(idWorker.nextId(), roleParam.getName(), roleParam.getCode());
         role.setDescription(roleParam.getDescription());
 
-        // TODO: operator info
-        role.setOperator("system");
-        role.setOperateIp("127.0.0.1");
         repository.save(role);
     }
 
@@ -76,9 +73,6 @@ public class RoleService {
 
         role.setDescription(roleParam.getDescription());
 
-        // TODO: operator info
-        role.setOperator("system update");
-        role.setOperateIp("127.0.0.1");
         repository.save(role);
     }
 

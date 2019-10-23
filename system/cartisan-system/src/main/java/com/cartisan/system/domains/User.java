@@ -69,13 +69,6 @@ public class User extends SoftDeleteEntity implements AggregateRoot {
     @Fetch(FetchMode.SUBSELECT)
     private List<UserRole> roles = new ArrayList<>();
 
-    @Column(name = "operator")
-    @Setter
-    private String operator;
-    @Setter
-    @Column(name = "operate_ip")
-    private String operateIp;
-
     private User() {
 
     }

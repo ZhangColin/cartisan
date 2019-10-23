@@ -41,13 +41,6 @@ public class Role extends AbstractEntity implements AggregateRoot {
     @JoinColumn(name = "role_id")
     private List<RolePermission> permissions = new ArrayList<>();
 
-    @Column(name = "operator")
-    @Setter
-    private String operator;
-    @Column(name = "operate_ip")
-    @Setter
-    private String operateIp;
-
     private Role() {
     }
 

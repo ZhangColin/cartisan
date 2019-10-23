@@ -51,8 +51,6 @@ public class DepartmentService {
         department.setDescription(departmentParam.getDescription());
         department.setSort(departmentParam.getSort());
 
-        department.setOperator("system");
-        department.setOperateIp("127.0.0.1");
 
         repository.save(department);
     }
