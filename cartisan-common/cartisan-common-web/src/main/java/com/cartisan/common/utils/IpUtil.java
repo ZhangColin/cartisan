@@ -13,6 +13,9 @@ public class IpUtil {
     private static final String N255 = "(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
     private static final Pattern PATTERN = Pattern.compile("^(?:" + N255 + "\\.){3}" + N255 + "$");
     private static final String X_FORWARDED_FOR = "x-forwarded-for";
+    private static final String PROXY_CLIENT_IP = "Proxy-Client-IP";
+    private static final String WL_PROXY_CLIENT_IP = "WL-Proxy-Client-IP";
+    private static final String UNKNOWN = "unknown";
 
     private IpUtil() {
     }
@@ -48,6 +51,12 @@ public class IpUtil {
 
     public static String getIpFromRequest(HttpServletRequest request) {
         String ip = request.getHeader(X_FORWARDED_FOR);
+        if(ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader(PROXY_CLIENT_IP);
+        }
+        if(ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
+            ip = request.getHeader(WL_PROXY_CLIENT_IP);
+        }
         boolean found = false;
         if (ip != null) {
             final StringTokenizer tokenizer = new StringTokenizer(ip, ",");

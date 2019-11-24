@@ -27,11 +27,8 @@ public class LoginService {
     public String login(LoginParam loginParam) {
         final Optional<User> userOptional = userService.findByUserName(loginParam.getUsername());
 
-        if (!userOptional.isPresent()) {
-            throw new CartisanException(SystemCodeMessage.ERROR_USERNAME_OR_PASSWORD);
-        }
-
-        final User user = userOptional.get();
+        final User user = userOptional
+                .orElseThrow(() -> new CartisanException(SystemCodeMessage.ERROR_USERNAME_OR_PASSWORD));
 
         if (!user.valid(loginParam.getPassword())) {
             throw new CartisanException(SystemCodeMessage.ERROR_USERNAME_OR_PASSWORD);

@@ -29,9 +29,12 @@
         <mybatis.spring.boot.version>2.1.0</mybatis.spring.boot.version>
         <pagehelper.version>1.2.12</pagehelper.version>
         <druid-spring-boot-starter.version>1.1.20</druid-spring-boot-starter.version>
+        <flyway.version>6.0.8</flyway.version>
 
         <!-- util -->
         <fastjson.version>1.2.61</fastjson.version>
+        <jjwt.version>0.10.7</jjwt.version>
+        <zxing.version>3.4.0</zxing.version>
 
         <!-- Swagger 文档 -->
         <swagger.version>1.5.23</swagger.version>
@@ -67,12 +70,47 @@
                 <version>${druid-spring-boot-starter.version}</version>
             </dependency>
 
-            <!-- 工具 -->
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
 
+            <!-- 工具 -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jjwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jjwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${zxing.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>javase</artifactId>
+                <version>${zxing.version}</version>
             </dependency>
 
             <!-- Swagger 文档 -->
@@ -124,6 +162,11 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>versions-maven-plugin</artifactId>
                     <version>2.7</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.flywaydb</groupId>
+                    <artifactId>flyway-maven-plugin</artifactId>
+                    <version>${flyway.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
