@@ -4,10 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.Predicate;
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import static java.util.Arrays.asList;
 
@@ -25,6 +24,7 @@ public final class QuerySpecifications {
                 return null;
             }
 
+            final ArrayList<Predicate> predicates = new ArrayList<>();
             final List<Field> allFields = getAllFields(searchParam.getClass());
             try {
                 for (Field field : allFields) {
@@ -44,8 +44,45 @@ public final class QuerySpecifications {
                         }
 
                         switch (query.type()) {
+                            case EQUAL:
+                                predicates.add(criteriaBuilder.equal(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                break;
+                            case NOT_EQUAL:
+                                predicates.add(criteriaBuilder.notEqual(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                break;
+                            case GREATER_EQUAL:
+                                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                break;
+                            case GREATER:
+                                predicates.add(criteriaBuilder.greaterThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                break;
+                            case LESS_EQUAL:
+                                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                break;
+                            case LESS:
+                                predicates.add(criteriaBuilder.lessThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                break;
                             case INNER_LIKE:
-                                return criteriaBuilder.like(root.get(attributeName), "%" + val.toString() + "%");
+                                predicates.add(criteriaBuilder.like(root.get(attributeName).as(String.class), "%" + val.toString() + "%"));
+                                break;
+                            case LEFT_LIKE:
+                                predicates.add(criteriaBuilder.like(root.get(attributeName).as(String.class), "%" + val.toString()));
+                                break;
+                            case RIGHT_LIKE:
+                                predicates.add(criteriaBuilder.like(root.get(attributeName).as(String.class), val.toString() + "%"));
+                                break;
+                            case IN:
+                                final Collection<Object> ins = (Collection<Object>) val;
+                                if (!ins.isEmpty()) {
+                                    predicates.add(root.get(attributeName).in(ins));
+                                }
+                                break;
+                            case BETWEEN:
+                                final List<Object> between = (List<Object>) val;
+                                predicates.add(criteriaBuilder.between(root.get(attributeName).as((Class<? extends Comparable>) between.get(0).getClass()), (Comparable)between.get(0), (Comparable) between.get(1)));
+                                break;
+                            default:
+                                break;
                         }
                     }
 
@@ -54,7 +91,11 @@ public final class QuerySpecifications {
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
-            return null;
+
+            if (predicates.isEmpty()) {
+                return null;
+            }
+            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
 

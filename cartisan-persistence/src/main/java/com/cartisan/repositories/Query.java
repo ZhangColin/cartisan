@@ -48,7 +48,7 @@ public @interface Query {
         /**
          * 大于等于
          */
-        GREATER_THAN,
+        GREATER_EQUAL,
         /**
          * 大于
          */
@@ -56,7 +56,7 @@ public @interface Query {
         /**
          * 小于等于
          */
-        LESS_THAN,
+        LESS_EQUAL,
         /**
          * 小于
          */
