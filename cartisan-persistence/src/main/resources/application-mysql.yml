@@ -34,7 +34,8 @@ spring:
       # 合并多个 DruidDataSource 的监控数据
       use-global-data-source-stat: false
       # 配置扩展插件
-      filters: stat, wall, slf4j
+#      filters: stat, wall, slf4j
+      filters: stat, slf4j
       # 通过 connectProperties 属性来打开 mergeSql 功能，慢 SQL 记录
       #      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;config.decrypt=${spring.datasource.decrypt};config.decrypt.key=${spring.datasource.public-key}
       connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;config.decrypt=${spring.datasource.decrypt};config.decrypt.key=${spring.datasource.public-key}
