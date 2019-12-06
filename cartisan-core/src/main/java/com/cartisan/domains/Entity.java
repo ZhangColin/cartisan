@@ -13,9 +13,6 @@ public interface Entity<TEntity, TId> {
     }
 
     default boolean isNew() {
-        if (getId() == null) {
-            return true;
-        }
-        return false;
+        return getId() == null;
     }
 }

@@ -45,10 +45,10 @@ public final class QuerySpecifications {
 
                         switch (query.type()) {
                             case EQUAL:
-                                predicates.add(criteriaBuilder.equal(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                predicates.add(criteriaBuilder.equal(root.get(attributeName).as((Class<? extends Comparable>) fieldType), val));
                                 break;
                             case NOT_EQUAL:
-                                predicates.add(criteriaBuilder.notEqual(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                predicates.add(criteriaBuilder.notEqual(root.get(attributeName).as((Class<? extends Comparable>) fieldType), val));
                                 break;
                             case GREATER_EQUAL:
                                 predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
@@ -99,7 +99,7 @@ public final class QuerySpecifications {
         };
     }
 
-    private static List<Field> getAllFields(Class clazz) {
+    private static List<Field> getAllFields(Class<?> clazz) {
         if (Objects.isNull(clazz)) {
             return Collections.emptyList();
         }

@@ -48,7 +48,7 @@ public class GenericResponse<T> {
         return new GenericResponse<>(true, CommonCodeMessage.SUCCESS);
     }
 
-    public static GenericResponse fail(CodeMessage codeMessage) {
-        return new GenericResponse(false, codeMessage);
+    public static GenericResponse<?> fail(CodeMessage codeMessage) {
+        return new GenericResponse<>(false, codeMessage);
     }
 }
