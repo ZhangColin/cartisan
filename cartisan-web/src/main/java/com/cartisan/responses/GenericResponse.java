@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * @author colin
@@ -21,7 +22,7 @@ public class GenericResponse<T> {
     @ApiModelProperty(value = "返回结果", required = true)
     private T data;
     @ApiModelProperty(value = "运行时间截", required = true)
-    private Timestamp timestamp;
+    private LocalDateTime timestamp;
 
     private GenericResponse(Boolean success, CodeMessage codeMessage, T data) {
         this(success, codeMessage);
@@ -32,7 +33,7 @@ public class GenericResponse<T> {
         this.success = success;
         this.code = codeMessage.getCode();
         this.message = codeMessage.getMessage();
-        this.timestamp = new Timestamp(System.currentTimeMillis());
+        this.timestamp = LocalDateTime.now();
     }
 
     public static <T> GenericResponse<T> success(CodeMessage codeMessage, T data) {

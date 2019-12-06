@@ -8,8 +8,8 @@ public final class CommonCodeMessage extends CodeMessage{
         super(code, message);
     }
 
-    public static CodeMessage SUCCESS = new CommonCodeMessage(20000, "成功");
-    public static CodeMessage SERVER_ERROR = new CommonCodeMessage(50000, "服务端异常");
+    public static final CodeMessage SUCCESS = new CommonCodeMessage(20000, "成功");
+    public static final CodeMessage SERVER_ERROR = new CommonCodeMessage(50000, "服务端异常");
 
-    public static CodeMessage VALIDATE_ERROR = new CommonCodeMessage(40000, "%s");
+    public static final CodeMessage VALIDATE_ERROR = new CommonCodeMessage(40000, "%s");
 }

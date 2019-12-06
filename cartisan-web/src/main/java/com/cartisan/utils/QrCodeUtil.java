@@ -5,6 +5,7 @@ import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -17,11 +18,12 @@ import java.util.Hashtable;
 /**
  * @author colin
  */
-public class QRCodeUtil {
+@Slf4j
+public class QrCodeUtil {
     private static final String CHARSET = "utf-8";
     private static final String FORMAT_NAME = "JPG";
     // 二维码尺寸
-    private static final int QRCODE_SIZE = 300;
+    private static final int QR_CODE_SIZE = 300;
     // LOGO宽度
     private static final int WIDTH = 60;
     // LOGO高度
@@ -32,7 +34,7 @@ public class QRCodeUtil {
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
         hints.put(EncodeHintType.CHARACTER_SET, CHARSET);
         hints.put(EncodeHintType.MARGIN, 1);
-        BitMatrix bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, QRCODE_SIZE, QRCODE_SIZE,
+        BitMatrix bitMatrix = new MultiFormatWriter().encode(content, BarcodeFormat.QR_CODE, QR_CODE_SIZE, QR_CODE_SIZE,
                 hints);
         int width = bitMatrix.getWidth();
         int height = bitMatrix.getHeight();
@@ -46,14 +48,14 @@ public class QRCodeUtil {
             return image;
         }
         // 插入图片
-        QRCodeUtil.insertImage(image, imgPath, needCompress);
+        QrCodeUtil.insertImage(image, imgPath, needCompress);
         return image;
     }
 
     private static void insertImage(BufferedImage source, String imgPath, boolean needCompress) throws Exception {
         File file = new File(imgPath);
         if (!file.exists()) {
-            System.err.println("" + imgPath + "   该文件不存在！");
+            log.error("" + imgPath + "   该文件不存在！");
             return;
         }
         Image src = ImageIO.read(new File(imgPath));
@@ -75,8 +77,8 @@ public class QRCodeUtil {
         }
         // 插入LOGO
         Graphics2D graph = source.createGraphics();
-        int x = (QRCODE_SIZE - width) / 2;
-        int y = (QRCODE_SIZE - height) / 2;
+        int x = (QR_CODE_SIZE - width) / 2;
+        int y = (QR_CODE_SIZE - height) / 2;
         graph.drawImage(src, x, y, width, height, null);
         Shape shape = new RoundRectangle2D.Float(x, y, width, width, 6, 6);
         graph.setStroke(new BasicStroke(3f));
@@ -85,13 +87,13 @@ public class QRCodeUtil {
     }
 
     public static void encode(String content, String imgPath, String destPath, boolean needCompress) throws Exception {
-        BufferedImage image = QRCodeUtil.createImage(content, imgPath, needCompress);
+        BufferedImage image = QrCodeUtil.createImage(content, imgPath, needCompress);
         mkdirs(destPath);
         ImageIO.write(image, FORMAT_NAME, new File(destPath));
     }
 
     public static BufferedImage encode(String content, String imgPath, boolean needCompress) throws Exception {
-        BufferedImage image = QRCodeUtil.createImage(content, imgPath, needCompress);
+        BufferedImage image = QrCodeUtil.createImage(content, imgPath, needCompress);
         return image;
     }
 
@@ -99,17 +101,20 @@ public class QRCodeUtil {
         File file = new File(destPath);
         // 当文件夹不存在时，mkdirs会自动创建多层目录，区别于mkdir．(mkdir如果父目录不存在则会抛出异常)
         if (!file.exists() && !file.isDirectory()) {
-            file.mkdirs();
+            final boolean result = file.mkdirs();
+            if (!result) {
+                log.error("目录创建失败");
+            }
         }
     }
 
     public static void encode(String content, String imgPath, OutputStream output, boolean needCompress)
             throws Exception {
-        BufferedImage image = QRCodeUtil.createImage(content, imgPath, needCompress);
+        BufferedImage image = QrCodeUtil.createImage(content, imgPath, needCompress);
         ImageIO.write(image, FORMAT_NAME, output);
     }
 
     public static void encode(String content, OutputStream output) throws Exception {
-        QRCodeUtil.encode(content, null, output, false);
+        QrCodeUtil.encode(content, null, output, false);
     }
 }
