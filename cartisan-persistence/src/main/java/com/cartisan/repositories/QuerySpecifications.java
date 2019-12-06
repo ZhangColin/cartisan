@@ -24,7 +24,7 @@ public final class QuerySpecifications {
                 return null;
             }
 
-            final ArrayList<Predicate> predicates = new ArrayList<>();
+            final List<Predicate> predicates = new ArrayList<>();
             final List<Field> allFields = getAllFields(searchParam.getClass());
             try {
                 for (Field field : allFields) {
@@ -43,24 +43,33 @@ public final class QuerySpecifications {
                             continue;
                         }
 
+                        String blurry = query.blurry();
+                        if (StringUtils.isEmpty(blurry)) {
+                            final Predicate[] orPredicates = Arrays.stream(blurry.split(","))
+                                    .map(b -> criteriaBuilder.like(root.get(b).as(String.class), "%" + val.toString() + "%"))
+                                    .toArray(Predicate[]::new);
+                            predicates.add(criteriaBuilder.or(orPredicates));
+                            continue;
+                        }
+
                         switch (query.type()) {
                             case EQUAL:
-                                predicates.add(criteriaBuilder.equal(root.get(attributeName).as((Class<? extends Comparable>) fieldType), val));
+                                predicates.add(criteriaBuilder.equal(root.get(attributeName).as(fieldType), val));
                                 break;
                             case NOT_EQUAL:
-                                predicates.add(criteriaBuilder.notEqual(root.get(attributeName).as((Class<? extends Comparable>) fieldType), val));
+                                predicates.add(criteriaBuilder.notEqual(root.get(attributeName).as(fieldType), val));
                                 break;
                             case GREATER_EQUAL:
-                                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
                                 break;
                             case GREATER:
-                                predicates.add(criteriaBuilder.greaterThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                predicates.add(criteriaBuilder.greaterThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
                                 break;
                             case LESS_EQUAL:
-                                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
                                 break;
                             case LESS:
-                                predicates.add(criteriaBuilder.lessThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable)val));
+                                predicates.add(criteriaBuilder.lessThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
                                 break;
                             case INNER_LIKE:
                                 predicates.add(criteriaBuilder.like(root.get(attributeName).as(String.class), "%" + val.toString() + "%"));
@@ -79,7 +88,7 @@ public final class QuerySpecifications {
                                 break;
                             case BETWEEN:
                                 final List<Object> between = (List<Object>) val;
-                                predicates.add(criteriaBuilder.between(root.get(attributeName).as((Class<? extends Comparable>) between.get(0).getClass()), (Comparable)between.get(0), (Comparable) between.get(1)));
+                                predicates.add(criteriaBuilder.between(root.get(attributeName).as((Class<? extends Comparable>) between.get(0).getClass()), (Comparable) between.get(0), (Comparable) between.get(1)));
                                 break;
                             default:
                                 break;
