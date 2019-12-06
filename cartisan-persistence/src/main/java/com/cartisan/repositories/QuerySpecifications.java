@@ -51,7 +51,6 @@ public final class QuerySpecifications {
                             predicates.add(criteriaBuilder.or(orPredicates));
                             continue;
                         }
-
                         predicates.add(handlerOf(query.type()).toPredicate(root, criteriaBuilder, fieldType, attributeName, val));
                     }
 

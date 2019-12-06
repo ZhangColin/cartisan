@@ -22,16 +22,6 @@ public @interface Query {
     Type type() default Type.EQUAL;
 
     /**
-     * @return 连接查询的属性名
-     */
-    String joinName() default "";
-
-    /**
-     * @return 连接方式，默认左连接
-     */
-    Join join() default Join.LEFT;
-
-    /**
      * @return 多字段模糊搜索，仅支持String类型字段，多个用逗号隔开
      */
     String blurry() default "";
@@ -81,16 +71,5 @@ public @interface Query {
          * 在..区间内
          */
         BETWEEN
-    }
-
-    enum Join{
-        /**
-         * 左连接
-         */
-        LEFT,
-        /**
-         * 右连接
-         */
-        RIGHT
     }
 }
