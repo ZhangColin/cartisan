@@ -44,7 +44,7 @@ public final class QuerySpecifications {
                         }
 
                         String blurry = query.blurry();
-                        if (StringUtils.isEmpty(blurry)) {
+                        if (!StringUtils.isEmpty(blurry)) {
                             final Predicate[] orPredicates = Arrays.stream(blurry.split(","))
                                     .map(b -> criteriaBuilder.like(root.get(b).as(String.class), "%" + val.toString() + "%"))
                                     .toArray(Predicate[]::new);
@@ -52,47 +52,7 @@ public final class QuerySpecifications {
                             continue;
                         }
 
-                        switch (query.type()) {
-                            case EQUAL:
-                                predicates.add(criteriaBuilder.equal(root.get(attributeName).as(fieldType), val));
-                                break;
-                            case NOT_EQUAL:
-                                predicates.add(criteriaBuilder.notEqual(root.get(attributeName).as(fieldType), val));
-                                break;
-                            case GREATER_EQUAL:
-                                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
-                                break;
-                            case GREATER:
-                                predicates.add(criteriaBuilder.greaterThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
-                                break;
-                            case LESS_EQUAL:
-                                predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
-                                break;
-                            case LESS:
-                                predicates.add(criteriaBuilder.lessThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
-                                break;
-                            case INNER_LIKE:
-                                predicates.add(criteriaBuilder.like(root.get(attributeName).as(String.class), "%" + val.toString() + "%"));
-                                break;
-                            case LEFT_LIKE:
-                                predicates.add(criteriaBuilder.like(root.get(attributeName).as(String.class), "%" + val.toString()));
-                                break;
-                            case RIGHT_LIKE:
-                                predicates.add(criteriaBuilder.like(root.get(attributeName).as(String.class), val.toString() + "%"));
-                                break;
-                            case IN:
-                                final Collection<Object> ins = (Collection<Object>) val;
-                                if (!ins.isEmpty()) {
-                                    predicates.add(root.get(attributeName).in(ins));
-                                }
-                                break;
-                            case BETWEEN:
-                                final List<Object> between = (List<Object>) val;
-                                predicates.add(criteriaBuilder.between(root.get(attributeName).as((Class<? extends Comparable>) between.get(0).getClass()), (Comparable) between.get(0), (Comparable) between.get(1)));
-                                break;
-                            default:
-                                break;
-                        }
+                        predicates.add(handlerOf(query.type()).toPredicate(root, criteriaBuilder, fieldType, attributeName, val));
                     }
 
                     field.setAccessible(accessible);
@@ -104,9 +64,56 @@ public final class QuerySpecifications {
             if (predicates.isEmpty()) {
                 return null;
             }
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
+
+    private static QuerySpecificationHandler handlerOf(Query.Type queryType) {
+        return handlers.get(queryType);
+    }
+
+    private static Map<Query.Type, QuerySpecificationHandler> handlers =
+            new HashMap<Query.Type, QuerySpecificationHandler>() {{
+                put(Query.Type.EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) -> criteriaBuilder.equal(root.get(attributeName).as(fieldType), val));
+
+                put(Query.Type.NOT_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                        criteriaBuilder.notEqual(root.get(attributeName).as(fieldType), val));
+
+                put(Query.Type.GREATER_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                        criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
+
+                put(Query.Type.GREATER, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                        criteriaBuilder.greaterThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
+
+                put(Query.Type.LESS_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                        criteriaBuilder.lessThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
+
+                put(Query.Type.LESS, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                        criteriaBuilder.lessThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
+
+                put(Query.Type.INNER_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                        criteriaBuilder.like(root.get(attributeName).as(String.class), "%" + val.toString() + "%"));
+
+                put(Query.Type.LEFT_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                        criteriaBuilder.like(root.get(attributeName).as(String.class), "%" + val.toString()));
+
+                put(Query.Type.RIGHT_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                        criteriaBuilder.like(root.get(attributeName).as(String.class), val.toString() + "%"));
+
+                put(Query.Type.IN, (root, criteriaBuilder, fieldType, attributeName, val) -> {
+                    final Collection<Object> ins = (Collection<Object>) val;
+                    if (!ins.isEmpty()) {
+                        return root.get(attributeName).in(ins);
+                    }
+                    return null;
+                });
+
+                put(Query.Type.BETWEEN, (root, criteriaBuilder, fieldType, attributeName, val) -> {
+                    final List<Object> between = (List<Object>) val;
+                    return criteriaBuilder.between(root.get(attributeName).as((Class<? extends Comparable>) between.get(0).getClass()), (Comparable) between.get(0), (Comparable) between.get(1));
+                });
+            }};
 
     private static List<Field> getAllFields(Class<?> clazz) {
         if (Objects.isNull(clazz)) {
