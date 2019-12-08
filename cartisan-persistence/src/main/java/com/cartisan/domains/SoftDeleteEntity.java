@@ -1,8 +1,6 @@
 package com.cartisan.domains;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -12,14 +10,13 @@ import java.io.Serializable;
  * @author colin
  */
 @MappedSuperclass
-@Data
-@ToString
-@EqualsAndHashCode(callSuper = true)
+@Getter
+@Setter
 public class SoftDeleteEntity extends AbstractEntity implements Serializable {
-    @Column(name = "active", nullable = false)
+    @Column(name = "active", columnDefinition = "bit default 1", nullable = false)
     private boolean isActive = true;
 
-    @Column(name = "deleted", nullable = false)
-    private boolean isDeleted;
+    @Column(name = "deleted", columnDefinition = "bit default 0", nullable = false)
+    private boolean isDeleted = false;
 
 }
