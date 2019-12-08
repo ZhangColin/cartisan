@@ -14,6 +14,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
+import static com.cartisan.utils.RequestHolder.getHttpServletRequest;
+
 /**
  * @author colin
  */
@@ -21,14 +23,14 @@ import java.util.Arrays;
 @Component
 @Slf4j
 public class LogAspect {
-    @Pointcut("execution(public * com.cartisan.*.controllers.*Controller.*(..))")
+    @Pointcut("execution(public * *.*Controller.*(..))")
     public void cut() {
 
     }
 
     @Before("cut()")
     public void before(JoinPoint joinPoint) {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        HttpServletRequest request = getHttpServletRequest();
 
         log.info("@@@ API Request - { url: {}, httpMethod: {}, ip: {}, classMethod:{}, args:{} } @@@",
                 request.getRequestURL().toString(),
