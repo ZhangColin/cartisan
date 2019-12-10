@@ -18,14 +18,14 @@ public final class ConditionSpecifications {
     private ConditionSpecifications() {
     }
 
-    public static <T, S> Specification<T> querySpecification(S searchParam) {
+    public static <T, S> Specification<T> querySpecification(S searchCondition) {
         return (root, criteriaQuery, criteriaBuilder) -> {
-            if (Objects.isNull(searchParam)) {
+            if (Objects.isNull(searchCondition)) {
                 return null;
             }
 
             final List<Predicate> predicates = new ArrayList<>();
-            final List<Field> allFields = getAllFields(searchParam.getClass());
+            final List<Field> allFields = getAllFields(searchCondition.getClass());
             try {
                 for (Field field : allFields) {
                     boolean accessible = field.isAccessible();
@@ -37,7 +37,7 @@ public final class ConditionSpecifications {
                         String attributeName = StringUtils.isEmpty(propName) ? field.getName() : propName;
                         final Class<?> fieldType = field.getType();
 
-                        final Object val = field.get(searchParam);
+                        final Object val = field.get(searchCondition);
 
                         if (Objects.isNull(val) || "".equals(val)) {
                             continue;

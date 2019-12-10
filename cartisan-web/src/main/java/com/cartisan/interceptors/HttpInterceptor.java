@@ -1,8 +1,9 @@
 package com.cartisan.interceptors;
 
-import com.alibaba.fastjson.JSON;
 import com.cartisan.CartisanContext;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -19,6 +20,9 @@ import java.util.Map;
 public class HttpInterceptor extends HandlerInterceptorAdapter {
     private static final String START_TIME = "requestStartTime";
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String url = request.getRequestURI();
@@ -27,7 +31,7 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
         long start = System.currentTimeMillis();
         request.setAttribute(START_TIME, start);
 
-        log.info("request start. url:{}, params: {}", url, JSON.toJSONString(parameterMap));
+        log.info("request start. url: [{}], params: [{}]", url, objectMapper.writeValueAsString(parameterMap));
 
         return true;
     }
@@ -50,7 +54,7 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
         long start = (Long) request.getAttribute(START_TIME);
         long end = System.currentTimeMillis();
 
-        log.info("request complete. url:{}, cost: {}", url, end - start);
+        log.info("request complete. url: [{}], cost: [{}]", url, end - start);
 
         CartisanContext.cleanCurrentUser();
     }
