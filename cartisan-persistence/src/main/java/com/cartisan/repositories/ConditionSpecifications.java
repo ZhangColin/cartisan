@@ -14,8 +14,8 @@ import static java.util.Arrays.asList;
  * @author colin
  */
 @Slf4j
-public final class QuerySpecifications {
-    private QuerySpecifications() {
+public final class ConditionSpecifications {
+    private ConditionSpecifications() {
     }
 
     public static <T, S> Specification<T> querySpecification(S searchParam) {
@@ -31,9 +31,9 @@ public final class QuerySpecifications {
                     boolean accessible = field.isAccessible();
                     field.setAccessible(true);
 
-                    final Query query = field.getAnnotation(Query.class);
-                    if (!Objects.isNull(query)) {
-                        String propName = query.propName();
+                    final Condition condition = field.getAnnotation(Condition.class);
+                    if (!Objects.isNull(condition)) {
+                        String propName = condition.propName();
                         String attributeName = StringUtils.isEmpty(propName) ? field.getName() : propName;
                         final Class<?> fieldType = field.getType();
 
@@ -43,7 +43,7 @@ public final class QuerySpecifications {
                             continue;
                         }
 
-                        String blurry = query.blurry();
+                        String blurry = condition.blurry();
                         if (!StringUtils.isEmpty(blurry)) {
                             final Predicate[] orPredicates = Arrays.stream(blurry.split(","))
                                     .map(b -> criteriaBuilder.like(root.get(b).as(String.class), "%" + val.toString() + "%"))
@@ -51,7 +51,7 @@ public final class QuerySpecifications {
                             predicates.add(criteriaBuilder.or(orPredicates));
                             continue;
                         }
-                        predicates.add(handlerOf(query.type()).toPredicate(root, criteriaBuilder, fieldType, attributeName, val));
+                        predicates.add(handlerOf(condition.type()).toPredicate(root, criteriaBuilder, fieldType, attributeName, val));
                     }
 
                     field.setAccessible(accessible);
@@ -68,39 +68,39 @@ public final class QuerySpecifications {
         };
     }
 
-    private static QuerySpecificationHandler handlerOf(Query.Type queryType) {
+    private static ConditionSpecificationHandler handlerOf(Condition.Type queryType) {
         return handlers.get(queryType);
     }
 
-    private static Map<Query.Type, QuerySpecificationHandler> handlers =
-            new HashMap<Query.Type, QuerySpecificationHandler>() {{
-                put(Query.Type.EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) -> criteriaBuilder.equal(root.get(attributeName).as(fieldType), val));
+    private static Map<Condition.Type, ConditionSpecificationHandler> handlers =
+            new HashMap<Condition.Type, ConditionSpecificationHandler>() {{
+                put(Condition.Type.EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) -> criteriaBuilder.equal(root.get(attributeName).as(fieldType), val));
 
-                put(Query.Type.NOT_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                put(Condition.Type.NOT_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
                         criteriaBuilder.notEqual(root.get(attributeName).as(fieldType), val));
 
-                put(Query.Type.GREATER_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                put(Condition.Type.GREATER_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
                         criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
 
-                put(Query.Type.GREATER, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                put(Condition.Type.GREATER, (root, criteriaBuilder, fieldType, attributeName, val) ->
                         criteriaBuilder.greaterThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
 
-                put(Query.Type.LESS_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                put(Condition.Type.LESS_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
                         criteriaBuilder.lessThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
 
-                put(Query.Type.LESS, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                put(Condition.Type.LESS, (root, criteriaBuilder, fieldType, attributeName, val) ->
                         criteriaBuilder.lessThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
 
-                put(Query.Type.INNER_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                put(Condition.Type.INNER_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
                         criteriaBuilder.like(root.get(attributeName).as(String.class), "%" + val.toString() + "%"));
 
-                put(Query.Type.LEFT_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                put(Condition.Type.LEFT_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
                         criteriaBuilder.like(root.get(attributeName).as(String.class), "%" + val.toString()));
 
-                put(Query.Type.RIGHT_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
+                put(Condition.Type.RIGHT_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
                         criteriaBuilder.like(root.get(attributeName).as(String.class), val.toString() + "%"));
 
-                put(Query.Type.IN, (root, criteriaBuilder, fieldType, attributeName, val) -> {
+                put(Condition.Type.IN, (root, criteriaBuilder, fieldType, attributeName, val) -> {
                     final Collection<Object> ins = (Collection<Object>) val;
                     if (!ins.isEmpty()) {
                         return root.get(attributeName).in(ins);
@@ -108,7 +108,7 @@ public final class QuerySpecifications {
                     return null;
                 });
 
-                put(Query.Type.BETWEEN, (root, criteriaBuilder, fieldType, attributeName, val) -> {
+                put(Condition.Type.BETWEEN, (root, criteriaBuilder, fieldType, attributeName, val) -> {
                     final List<Object> between = (List<Object>) val;
                     return criteriaBuilder.between(root.get(attributeName).as((Class<? extends Comparable>) between.get(0).getClass()), (Comparable) between.get(0), (Comparable) between.get(1));
                 });

@@ -8,7 +8,13 @@
 
 ```bash
 docker pull rabbitmq:3.7.13-management
-docker run -d -p 5672:5672 -p 15672:15672 -v ~/docker/rabbitmq:/var/rabbitmq/lib --hostname cartisan-rabbitmq -e RABBITMQ_DEFAULT_USER=rabbitmqadmin -e RABBITMQ_DEFAULT_PASS=123456 --name cartisan-rabbitmq rabbitmq:3.7.13-management 
+docker run -d \
+    -p 5672:5672 -p 15672:15672 \
+    -v ~/docker/rabbitmq:/var/rabbitmq/lib \
+    --hostname cartisan-rabbitmq \
+    -e RABBITMQ_DEFAULT_USER=rabbitmqadmin \
+    -e RABBITMQ_DEFAULT_PASS=123456 \
+    --name cartisan-rabbitmq rabbitmq:3.7.13-management 
 ```
 
 ### redis 
