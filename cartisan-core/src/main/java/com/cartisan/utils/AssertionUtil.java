@@ -1,7 +1,7 @@
 package com.cartisan.utils;
 
-import com.cartisan.constants.CommonCodeMessage;
 import com.cartisan.exceptions.CartisanException;
+import com.cartisan.constants.CodeMessage;
 
 import java.util.Optional;
 
@@ -11,6 +11,6 @@ import java.util.Optional;
 public class AssertionUtil {
     public static <T> T requirePresent(Optional<T> dictOptional) {
         return dictOptional
-                .orElseThrow(() -> new CartisanException(CommonCodeMessage.SERVER_ERROR));
+                .orElseThrow(() -> new CartisanException(CodeMessage.ENTITY_NOT_FOUND));
     }
 }

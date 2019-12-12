@@ -9,27 +9,6 @@ import lombok.ToString;
 @Getter
 @ToString
 public class CodeMessage {
-    /**
-     * 模仿 Http status 约定：
-     * 2 开头：表示成功
-     *  通用成功 code：20000
-     * 4 开头：表示请求参数错误，多用于参数校验
-     * 5 开头：表示服务端处理错误，多为不符合业务规则
-     *
-     * code 一共 5 位
-     *  第一位：表示成功或失败
-     *  第二三位：表示具体业务编号
-     *      00~09：通用业务
-     *  第四五位：表示具体操作
-     *      00~09：通用操作相关
-     *      10~29：添加操作相关
-     *      30~49：更新操作相关
-     *      50~69：删除操作相关
-     *      70~99：其它
-     *
-     * 不同业务间的 code 允许重复，同一业务内 code 不允许重复
-     * 00 往往代表普适或不具体
-     */
     private Integer code;
     private String message;
 
@@ -44,4 +23,26 @@ public class CodeMessage {
 
         return new CodeMessage(code, message);
     }
+
+    public static final CodeMessage SUCCESS = new CodeMessage(200, "%s");
+    public static final CodeMessage FAIL = new CodeMessage(500, "%s");
+
+    public static final CodeMessage BAD_REQUEST = new CodeMessage(400, "Bad Request");
+    public static final CodeMessage UNAUTHORIZED = new CodeMessage(401, "Unauthorized");
+    public static final CodeMessage FORBIDDEN = new CodeMessage(403, "Forbidden");
+    public static final CodeMessage NOT_FOUND = new CodeMessage(404, "Not Found");
+    public static final CodeMessage METHOD_NOT_ALLOWED = new CodeMessage(405, "Method Not Allowed");
+    public static final CodeMessage REQUEST_TIMEOUT = new CodeMessage(408, "Request Timeout");
+    public static final CodeMessage INTERNAL_SERVER_ERROR = new CodeMessage(500, "Internal Server Error");
+    public static final CodeMessage NOT_IMPLEMENTED = new CodeMessage(501, "Not Implemented");
+    public static final CodeMessage BAD_GATEWAY = new CodeMessage(502, "Bad Gateway");
+    public static final CodeMessage SERVICE_UNAVAILABLE = new CodeMessage(503, "Service Unavailable");
+    public static final CodeMessage GATEWAY_TIMEOUT = new CodeMessage(504, "Gateway Timeout");
+
+    public static final CodeMessage UNKNOWN = new CodeMessage(500, "发生未知异常，请与管理员联系。");
+    public static final CodeMessage LIMIT_ERROR = new CodeMessage(500, "访问次数受限制。");
+    public static final CodeMessage ENTITY_NOT_FOUND = new CodeMessage(404, "实体没有找到。");
+    public static final CodeMessage ENTITY_EXIST = new CodeMessage(500, "实体已经存在。");
+    public static final CodeMessage VALIDATE_ERROR = new CodeMessage(500, "%s");
+    public static final CodeMessage ERROR = new CodeMessage(500, "%s");
 }

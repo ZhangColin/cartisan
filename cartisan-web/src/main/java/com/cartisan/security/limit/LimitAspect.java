@@ -1,7 +1,7 @@
 package com.cartisan.security.limit;
 
-import com.cartisan.constants.CommonCodeMessage;
 import com.cartisan.exceptions.CartisanException;
+import com.cartisan.constants.CodeMessage;
 import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -69,7 +69,7 @@ public class LimitAspect {
             log.info("第[{}]次访问[{}]的接口，key为[{}]", count, limit.name(), keys);
             return joinPoint.proceed();
         } else {
-            throw new CartisanException(CommonCodeMessage.LIMIT_ERROR);
+            throw new CartisanException(CodeMessage.LIMIT_ERROR);
         }
     }
 

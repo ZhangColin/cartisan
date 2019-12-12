@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +13,7 @@ import java.time.LocalDateTime;
  * @author colin
  */
 @Getter
-public class GenericResponse {
+public class GenericResponseWithData<T> {
     @ApiModelProperty(value = "错误编码", required = true)
     private Integer status;
 
@@ -26,9 +25,13 @@ public class GenericResponse {
     @JsonFormat(pattern = DateUtil.Pattern.DATETIME_SSS)
     private LocalDateTime timestamp;
 
-    public GenericResponse(Integer status, String message) {
+    @ApiModelProperty(value = "返回结果", required = true)
+    private T data;
+
+    public GenericResponseWithData(Integer status, String message, T data) {
         this.status = status;
         this.message = message;
+        this.data = data;
 
         this.timestamp = LocalDateTime.now();
     }

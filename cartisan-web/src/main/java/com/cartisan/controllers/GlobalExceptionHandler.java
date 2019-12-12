@@ -1,18 +1,19 @@
 package com.cartisan.controllers;
 
-import com.cartisan.constants.CommonCodeMessage;
 import com.cartisan.exceptions.CartisanException;
-import com.cartisan.responses.GenericResponse;
+import com.cartisan.constants.CodeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.stream.Collectors;
+
+import static com.cartisan.exceptions.ThrowableUtil.getStackTrace;
+import static com.cartisan.responses.ResponseUtil.fail;
 
 /**
  * @author colin
@@ -21,39 +22,36 @@ import java.util.stream.Collectors;
 @Slf4j
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = CartisanException.class)
-    @ResponseStatus(HttpStatus.OK)
-    public GenericResponse error(CartisanException cartisanException) {
-        return GenericResponse.fail(cartisanException.getCodeMessage());
+    public ResponseEntity<?> error(CartisanException cartisanException) {
+        log.error("业务处理异常：", cartisanException);
+        return fail(cartisanException.getCodeMessage());
     }
 
+    /**
+     * 数据验证异常
+     */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.OK)
-    public GenericResponse error(MethodArgumentNotValidException exception) {
-        return GenericResponse.fail(CommonCodeMessage.VALIDATE_ERROR.fillArgs(
+    public ResponseEntity<?> error(MethodArgumentNotValidException exception) {
+        log.error("数据验证失败：{}", getStackTrace(exception));
+        return fail(CodeMessage.VALIDATE_ERROR.fillArgs(
                 exception.getBindingResult().getFieldErrors().stream()
                         .map(DefaultMessageSourceResolvable::getDefaultMessage)
                         .collect(Collectors.joining("\n"))
         ));
     }
 
-    @ExceptionHandler(value = DataAccessException.class)
-    @ResponseStatus(HttpStatus.OK)
-    public GenericResponse error(DataAccessException e) {
-        log.error("数据库操作异常：", e);
-        return GenericResponse.fail(CommonCodeMessage.SERVER_ERROR);
-    }
-
-    @ExceptionHandler(value = RuntimeException.class)
-    @ResponseStatus(HttpStatus.OK)
-    public GenericResponse error(RuntimeException e) {
-        log.error("运行时异常：", e);
-        return GenericResponse.fail(CommonCodeMessage.SERVER_ERROR);
-    }
-
-    @ExceptionHandler(value = Exception.class)
-    @ResponseStatus(HttpStatus.OK)
-    public GenericResponse error(Exception e) {
+    /**
+     * 未处理异常
+     */
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<?> handleException(Throwable e){
         log.error("未处理异常：", e);
-        return GenericResponse.fail(CommonCodeMessage.SERVER_ERROR);
+        return fail(CodeMessage.UNKNOWN);
+    }
+
+    @ExceptionHandler(value = DataAccessException.class)
+    public ResponseEntity<?> error(DataAccessException e) {
+        log.error("数据库操作异常：", e);
+        return fail(CodeMessage.INTERNAL_SERVER_ERROR);
     }
 }
