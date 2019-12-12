@@ -2,8 +2,13 @@ package com.cartisan.responses;
 
 import com.cartisan.constants.CodeMessage;
 import com.cartisan.constants.CommonCodeMessage;
+import com.cartisan.utils.DateUtil;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
+import org.springframework.util.unit.DataUnit;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -22,6 +27,8 @@ public class GenericResponse<T> {
     @ApiModelProperty(value = "返回结果", required = true)
     private T data;
     @ApiModelProperty(value = "运行时间截", required = true)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = DateUtil.Pattern.DATETIME_SSS)
     private LocalDateTime timestamp;
 
     private GenericResponse(Boolean success, CodeMessage codeMessage, T data) {
