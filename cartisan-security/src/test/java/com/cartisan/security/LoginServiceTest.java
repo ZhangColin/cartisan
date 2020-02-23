@@ -1,0 +1,72 @@
+package com.cartisan.security;
+
+import com.cartisan.exceptions.CartisanException;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+public class LoginServiceTest {
+    private JwtTokenProvider tokenProvider;
+    private UserDetailsService userDetailsService;
+    private PasswordEncoder passwordEncoder;
+    private LoginService loginService;
+    private HashOperations<String, String, Object> hashOperations;
+
+    private CartisanUser cartisanUser;
+
+    @Before
+    public void setUp() {
+        tokenProvider = mock(JwtTokenProvider.class);
+        userDetailsService = mock(UserDetailsService.class);
+        passwordEncoder = mock(PasswordEncoder.class);
+        hashOperations = mock(HashOperations.class);
+
+        loginService = new LoginService(userDetailsService, tokenProvider, passwordEncoder, hashOperations);
+        cartisanUser = new CartisanUser("colin", "123456");
+    }
+
+    @Test
+    public void should_be_login_success() {
+        // given
+        when(tokenProvider.generateToken(anyString())).thenReturn("colinToken");
+        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
+        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(cartisanUser);
+
+        // when
+        final String token = loginService.login("colin", "123456");
+
+        // then
+        assertThat(token).isEqualTo("colinToken");
+    }
+
+    @Test
+    public void when_user_not_found_then_throw_exception() {
+        // given
+        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(null);
+
+        // then
+        assertThatThrownBy(()-> loginService.login("colin", "123456"))
+                .isInstanceOf(CartisanException.class)
+                .hasMessage("用户名或密码不正确");
+    }
+
+    @Test
+    public void when_password_not_valid_then_throw_exception() {
+        // given
+        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
+        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(cartisanUser);
+
+        // then
+        assertThatThrownBy(()-> loginService.login("colin", "123456"))
+                .isInstanceOf(CartisanException.class)
+                .hasMessage("用户名或密码不正确");
+    }
+}

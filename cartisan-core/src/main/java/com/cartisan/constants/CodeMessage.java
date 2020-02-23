@@ -28,7 +28,7 @@ public class CodeMessage {
     public static final CodeMessage FAIL = new CodeMessage(500, "%s");
 
     public static final CodeMessage BAD_REQUEST = new CodeMessage(400, "Bad Request");
-    public static final CodeMessage UNAUTHORIZED = new CodeMessage(401, "访问服务需要身份认证，请引导用户到登录页。");
+    public static final CodeMessage UNAUTHORIZED = new CodeMessage(401, "访问此资源需要身份验证。");
     public static final CodeMessage FORBIDDEN = new CodeMessage(403, "Forbidden");
     public static final CodeMessage NOT_FOUND = new CodeMessage(404, "Not Found");
     public static final CodeMessage METHOD_NOT_ALLOWED = new CodeMessage(405, "Method Not Allowed");

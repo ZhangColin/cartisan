@@ -77,4 +77,6 @@ public class JwtTokenProvider implements InitializingBean {
     private Date generateExpirationDate() {
         return Date.from(Instant.now().plusSeconds(securityProperties.getExpiration()));
     }
+
+
 }
