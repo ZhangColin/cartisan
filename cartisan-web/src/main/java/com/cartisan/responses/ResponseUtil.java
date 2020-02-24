@@ -15,16 +15,13 @@ public class ResponseUtil {
 
     public static final String SUCCESS_MESSAGE = "执行成功。";
 
+
     public static ResponseEntity<?> success() {
-        return new ResponseEntity<>(HttpStatus.OK);
+        return successWithMessage(SUCCESS_MESSAGE);
     }
 
     public static <T> ResponseEntity<T> success(T data) {
         return new ResponseEntity<>(data, HttpStatus.OK);
-    }
-
-    public static ResponseEntity<?> successWithMessage() {
-        return successWithMessage(SUCCESS_MESSAGE);
     }
 
     public static ResponseEntity<?> successWithMessage(String message) {

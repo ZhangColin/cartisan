@@ -4,6 +4,7 @@ import com.cartisan.exceptions.CartisanException;
 import com.cartisan.constants.CodeMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,6 +21,7 @@ import static com.cartisan.responses.ResponseUtil.fail;
  */
 @RestControllerAdvice
 @Slf4j
+@Order(99)
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = CartisanException.class)
     public ResponseEntity<?> error(CartisanException cartisanException) {

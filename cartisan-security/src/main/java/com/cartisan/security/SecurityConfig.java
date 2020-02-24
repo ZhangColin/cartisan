@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // 自定义权限拒绝处理类
+        // 异常被全局 ExceptionHandler 优先处理掉了
         registry.and()
                 .exceptionHandling()
                 .accessDeniedHandler(restfulAccessDeniedHandler)
