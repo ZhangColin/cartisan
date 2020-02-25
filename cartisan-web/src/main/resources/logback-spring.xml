@@ -65,13 +65,11 @@
         <appender-ref ref="ERROR_LOG"/>
     </appender>
 
-    <springProfile name="dev">
-        <root level="INFO">
-            <appender-ref ref="CONSOLE"/>
-        </root>
-    </springProfile>
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
 
-    <springProfile name="test,staging,prod">
+    <springProfile name="dev,test,staging,prod">
         <root level="INFO">
             <appender-ref ref="INFO_LOG"/>
             <appender-ref ref="ERROR_LOG"/>
