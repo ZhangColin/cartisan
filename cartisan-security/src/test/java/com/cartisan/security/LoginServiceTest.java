@@ -4,11 +4,13 @@ import com.cartisan.exceptions.CartisanException;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.data.redis.core.HashOperations;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -20,7 +22,7 @@ public class LoginServiceTest {
     private LoginService loginService;
     private HashOperations<String, String, Object> hashOperations;
 
-    private CartisanUser cartisanUser;
+    private UserDetails userDetails;
 
     @Before
     public void setUp() {
@@ -30,15 +32,16 @@ public class LoginServiceTest {
         hashOperations = mock(HashOperations.class);
 
         loginService = new LoginService(userDetailsService, tokenProvider, passwordEncoder, hashOperations);
-        cartisanUser = new CartisanUser("colin", "123456");
+        userDetails = mock(UserDetails.class);
     }
 
     @Test
     public void should_be_login_success() {
         // given
-        when(tokenProvider.generateToken(anyString())).thenReturn("colinToken");
+        when(tokenProvider.generateToken(any())).thenReturn("colinToken");
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
-        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(cartisanUser);
+        when(userDetails.getPassword()).thenReturn("123456");
+        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(userDetails);
 
         // when
         final String token = loginService.login("colin", "123456");
@@ -62,7 +65,7 @@ public class LoginServiceTest {
     public void when_password_not_valid_then_throw_exception() {
         // given
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
-        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(cartisanUser);
+        when(userDetailsService.loadUserByUsername(anyString())).thenReturn(userDetails);
 
         // then
         assertThatThrownBy(()-> loginService.login("colin", "123456"))

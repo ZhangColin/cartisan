@@ -53,7 +53,6 @@ public class LoginService {
     }
 
     private void authenticate(UserDetails userDetails) {
-
         final UsernamePasswordAuthenticationToken authentication =
                 new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);

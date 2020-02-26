@@ -20,8 +20,11 @@ import java.util.Map;
 public class HttpInterceptor extends HandlerInterceptorAdapter {
     private static final String START_TIME = "requestStartTime";
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private final ObjectMapper objectMapper;
+
+    public HttpInterceptor(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -44,7 +47,6 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 //        long end = System.currentTimeMillis();
 //
 //        log.info("request finished. url:{}, cost: {}", url, end - start);
-        CartisanContext.cleanCurrentUser();
     }
 
     @Override
@@ -56,6 +58,5 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
 
         log.info("request complete. url: [{}], cost: [{}]", url, end - start);
 
-        CartisanContext.cleanCurrentUser();
     }
 }

@@ -55,6 +55,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
+        // 禁用缓存
+        registry.and()
+                .headers()
+                .cacheControl();
+
         // 自定义权限拒绝处理类
         // 异常被全局 ExceptionHandler 优先处理掉了
         registry.and()
