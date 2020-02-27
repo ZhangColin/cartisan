@@ -1,5 +1,6 @@
 package com.cartisan.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.Expression
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
@@ -21,19 +23,26 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private SecurityProperties securityProperties;
-    private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
-    private RestAuthenticationEntryPoint restAuthenticationEntryPoint;
-    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    private final SecurityProperties securityProperties;
+    private final RestfulAccessDeniedHandler restfulAccessDeniedHandler;
+    private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+    private final JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+
+    private final DynamicSecurityService dynamicSecurityService;
+    private final DynamicSecurityFilter dynamicSecurityFilter;
 
     public SecurityConfig(SecurityProperties securityProperties,
                           RestfulAccessDeniedHandler restfulAccessDeniedHandler,
                           RestAuthenticationEntryPoint restAuthenticationEntryPoint,
-                          JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter) {
+                          JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter,
+                          @Autowired(required = false) DynamicSecurityService dynamicSecurityService,
+                          @Autowired(required = false) DynamicSecurityFilter dynamicSecurityFilter) {
         this.securityProperties = securityProperties;
         this.restfulAccessDeniedHandler = restfulAccessDeniedHandler;
         this.restAuthenticationEntryPoint = restAuthenticationEntryPoint;
         this.jwtAuthenticationTokenFilter = jwtAuthenticationTokenFilter;
+        this.dynamicSecurityService = dynamicSecurityService;
+        this.dynamicSecurityFilter = dynamicSecurityFilter;
     }
 
     @Override
@@ -70,6 +79,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // 自定义权限拦截器
         registry.and()
                 .addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+
+        // 有动态权限配置时添加动态权限校验过滤器
+        if (dynamicSecurityService != null) {
+            registry.and()
+                    .addFilterBefore(dynamicSecurityFilter, FilterSecurityInterceptor.class);
+        }
     }
 
     @Override
