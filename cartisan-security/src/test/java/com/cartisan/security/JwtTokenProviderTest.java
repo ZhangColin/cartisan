@@ -48,7 +48,7 @@ public class JwtTokenProviderTest {
         final String token = jwtTokenProvider.generateToken("colin");
 
         // when
-        final String userName = jwtTokenProvider.getUserName(token);
+        final String userName = jwtTokenProvider.getUsername(token);
 
         // then
         assertThat(userName).isEqualTo("colin");

@@ -19,7 +19,7 @@ import java.util.Objects;
 public class CartisanContext implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 
-    private static void setAppContext(ApplicationContext context) {
+    public static void setAppContext(ApplicationContext context) {
         if (!Objects.isNull(applicationContext)) {
             log.warn("CartisanContext 中的 ApplicationContext 被覆盖，原有 ApplicationContext 为："
                     + applicationContext);

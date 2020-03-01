@@ -54,7 +54,7 @@ public class JwtTokenProvider implements InitializingBean {
      * @param token
      * @return
      */
-    public String getUserName(String token) {
+    public String getUsername(String token) {
         return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
     }
 

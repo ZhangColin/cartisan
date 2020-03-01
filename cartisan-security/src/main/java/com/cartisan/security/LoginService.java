@@ -48,8 +48,12 @@ public class LoginService {
     }
 
     public void logout(String token) {
-        final String userName = tokenProvider.getUserName(token);
-        hashOperations.delete("onlineUsers", userName);
+        final String username = tokenProvider.getUsername(token);
+        hashOperations.delete("onlineUsers", username);
+    }
+
+    public void logoutByUsername(String username) {
+        hashOperations.delete("onlineUsers", username);
     }
 
     private void authenticate(UserDetails userDetails) {
