@@ -1,13 +1,9 @@
 package com.cartisan.configs;
 
-import com.cartisan.filters.RequestLoggingFilter;
-import com.cartisan.interceptors.HttpInterceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -40,16 +36,16 @@ public class MvcConfig implements WebMvcConfigurer {
         return mappingJackson2HttpMessageConverter;
     }
 
-    @Bean
-    public FilterRegistrationBean requestLogFilter() {
-        RequestLoggingFilter filter = new RequestLoggingFilter();
-        filter.setIncludeQueryString(true);
-        filter.setIncludeClientInfo(true);
-        filter.setIncludePayload(true);
-        filter.setMaxPayloadLength(5120);
-
-        return new FilterRegistrationBean(filter);
-    }
+//    @Bean
+//    public FilterRegistrationBean requestLogFilter() {
+//        RequestLoggingFilter filter = new RequestLoggingFilter();
+//        filter.setIncludeQueryString(true);
+//        filter.setIncludeClientInfo(true);
+//        filter.setIncludePayload(true);
+//        filter.setMaxPayloadLength(5120);
+//
+//        return new FilterRegistrationBean(filter);
+//    }
 
     @Override
     public void configureAsyncSupport(AsyncSupportConfigurer configurer) {
@@ -73,8 +69,8 @@ public class MvcConfig implements WebMvcConfigurer {
 //    @Autowired
 //    private SignatureInterceptor signatureInterceptor;
 
-    @Autowired
-    private HttpInterceptor httpInterceptor;
+//    @Autowired
+//    private HttpInterceptor httpInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -92,6 +88,6 @@ public class MvcConfig implements WebMvcConfigurer {
 
 //        registry.addInterceptor(signatureInterceptor).addPathPatterns("/**");
 
-        registry.addInterceptor(httpInterceptor).addPathPatterns("/**");
+//        registry.addInterceptor(httpInterceptor).addPathPatterns("/**");
     }
 }
