@@ -1,4 +1,4 @@
-package com.cartisan.security.limit;
+package com.cartisan.aops.limit;
 
 /**
  * @author colin

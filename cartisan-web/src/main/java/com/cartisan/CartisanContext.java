@@ -1,5 +1,6 @@
 package com.cartisan;
 
+import com.cartisan.constants.CodeMessage;
 import com.cartisan.exceptions.CartisanException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
@@ -50,7 +51,7 @@ public class CartisanContext implements ApplicationContextAware {
      */
     private static void assertApplicationContext() {
         if (null == applicationContext) {
-            throw new CartisanException(ContextCodeMessage.APPLICATION_CONTEXT_IS_NULL);
+            throw new CartisanException(CodeMessage.FAIL.fillArgs("applicationContext为空,请检查是否注入springContextHolder"));
         }
     }
 

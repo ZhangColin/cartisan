@@ -82,7 +82,6 @@
                 <version>${p6spy.version}</version>
             </dependency>
 
-
             <!-- 工具 -->
             <dependency>
                 <groupId>com.google.guava</groupId>
@@ -145,11 +144,6 @@
             <dependency>
                 <groupId>io.springfox</groupId>
                 <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger-fox.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger-fox.version}</version>
             </dependency>
             <dependency>

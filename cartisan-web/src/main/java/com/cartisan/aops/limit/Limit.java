@@ -1,4 +1,4 @@
-package com.cartisan.security.limit;
+package com.cartisan.aops.limit;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

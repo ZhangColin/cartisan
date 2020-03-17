@@ -1,7 +1,7 @@
-package com.cartisan.security.limit;
+package com.cartisan.aops.limit;
 
-import com.cartisan.exceptions.CartisanException;
 import com.cartisan.constants.CodeMessage;
+import com.cartisan.exceptions.CartisanException;
 import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -38,7 +38,7 @@ public class LimitAspect {
         this.redisTemplate = redisTemplate;
     }
 
-    @Pointcut("@annotation(com.cartisan.security.limit.Limit)")
+    @Pointcut("@annotation(com.cartisan.aops.limit.Limit)")
     public void pointcut() {
 
     }

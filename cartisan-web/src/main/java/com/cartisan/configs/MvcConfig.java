@@ -1,17 +1,10 @@
 package com.cartisan.configs;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.List;
 
 /**
  * @author colin
@@ -19,22 +12,22 @@ import java.util.List;
 @Configuration
 @Slf4j
 public class MvcConfig implements WebMvcConfigurer {
-    @Autowired
-    @Qualifier("outerObjectMapper")
-    private ObjectMapper outerObjectMapper;
+//    @Autowired
+//    @Qualifier("outerObjectMapper")
+//    private ObjectMapper outerObjectMapper;
 
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(createMappingJackson2HttpMessageConverter());
-    }
-
-    private MappingJackson2HttpMessageConverter createMappingJackson2HttpMessageConverter() {
-        final MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter
-                = new MappingJackson2HttpMessageConverter();
-        mappingJackson2HttpMessageConverter.setObjectMapper(outerObjectMapper);
-
-        return mappingJackson2HttpMessageConverter;
-    }
+//    @Override
+//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+//        converters.add(createMappingJackson2HttpMessageConverter());
+//    }
+//
+//    private MappingJackson2HttpMessageConverter createMappingJackson2HttpMessageConverter() {
+//        final MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter
+//                = new MappingJackson2HttpMessageConverter();
+//        mappingJackson2HttpMessageConverter.setObjectMapper(outerObjectMapper);
+//
+//        return mappingJackson2HttpMessageConverter;
+//    }
 
 //    @Bean
 //    public FilterRegistrationBean requestLogFilter() {
