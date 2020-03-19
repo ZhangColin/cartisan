@@ -5,7 +5,7 @@ logging:
     root: info
     org.apache.http.wire: info
     org.apache.http.headers: info
-    com.cartisan.common.filters.RequestLoggingFilter: debug
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: trace
     com.cartisan: debug
 
 ---

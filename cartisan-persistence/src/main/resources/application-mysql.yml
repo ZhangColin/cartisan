@@ -34,11 +34,12 @@ spring:
       # 合并多个 DruidDataSource 的监控数据
       use-global-data-source-stat: false
       # 配置扩展插件
-#      filters: stat, wall, slf4j
+      # filters: stat, wall, slf4j
       filters: stat, slf4j
       # 通过 connectProperties 属性来打开 mergeSql 功能，慢 SQL 记录
       #      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;config.decrypt=${spring.datasource.decrypt};config.decrypt.key=${spring.datasource.public-key}
-      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;config.decrypt=${spring.datasource.decrypt};config.decrypt.key=${spring.datasource.public-key}
+      # mergeSql=true时，项目在执行flyway脚本时会把Sql解析异常，但执行结果正确
+      connection-properties: druid.stat.mergeSql=false;druid.stat.slowSqlMillis=5000;config.decrypt=${spring.datasource.decrypt};config.decrypt.key=${spring.datasource.public-key}
       # 定时输出统计信息到日志中，并每次输出日志会导致清零（reset）连接池相关的计数器
       # 合并多个 DruidDataSource 的监控数据 use-global-data-source-stat 不可开启，否则会报错
       # time-between-log-stats-millis: 30000

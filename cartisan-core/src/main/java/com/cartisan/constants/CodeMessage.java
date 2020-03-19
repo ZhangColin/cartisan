@@ -43,5 +43,5 @@ public class CodeMessage {
     public static final CodeMessage LIMIT_ERROR = new CodeMessage(500, "访问次数受限制。");
     public static final CodeMessage ENTITY_NOT_FOUND = new CodeMessage(404, "实体没有找到。");
     public static final CodeMessage ENTITY_EXIST = new CodeMessage(500, "实体已经存在。");
-    public static final CodeMessage VALIDATE_ERROR = new CodeMessage(500, "%s");
+    public static final CodeMessage VALIDATE_ERROR = new CodeMessage(400, "%s");
 }

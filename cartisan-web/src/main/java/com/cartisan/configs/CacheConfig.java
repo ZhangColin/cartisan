@@ -10,6 +10,7 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
 
@@ -31,18 +32,33 @@ public class CacheConfig extends CachingConfigurerSupport {
      * 配置 redisCache 的序列化方式。
      * RedisCacheConfiguration 默认使用的是 JdkSerializationRedisSerializer
      * 这会导致 key 与 value 在 redis 中，都是人不可读。
+     *
      * @return RedisCacheConfiguration
      */
     private RedisCacheConfiguration redisCacheConfiguration(RedisSerializer<?> redisSerializer) {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig();
         // TODO: 确定前缀与缓存过期时间的处理
         redisCacheConfiguration = redisCacheConfiguration
-                .prefixKeysWith("cache:")
-                .serializeValuesWith(
-                        RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer))
-                .entryTtl(Duration.ofDays(1));
+                // 设置缓存前缀
+                // .prefixKeysWith("cache:")
+                // 禁止缓存 null 值
+                .disableCachingNullValues()
+                // 设置 key 序列化
+                .serializeKeysWith(keyPair())
+                // 设置 value 序列化
+                .serializeValuesWith(valuePair(redisSerializer))
+                // 设置过期时间
+                .entryTtl(Duration.ofMinutes(60));
 
         return redisCacheConfiguration;
+    }
+
+    private RedisSerializationContext.SerializationPair<?> valuePair(RedisSerializer<?> redisSerializer) {
+        return RedisSerializationContext.SerializationPair.fromSerializer(redisSerializer);
+    }
+
+    private RedisSerializationContext.SerializationPair<String> keyPair() {
+        return RedisSerializationContext.SerializationPair.fromSerializer(StringRedisSerializer.UTF_8);
     }
 
     @Override
