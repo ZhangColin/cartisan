@@ -12,23 +12,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @Slf4j
 public class MvcConfig implements WebMvcConfigurer {
-//    @Autowired
-//    @Qualifier("outerObjectMapper")
-//    private ObjectMapper outerObjectMapper;
-
-//    @Override
-//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        converters.add(createMappingJackson2HttpMessageConverter());
-//    }
-//
-//    private MappingJackson2HttpMessageConverter createMappingJackson2HttpMessageConverter() {
-//        final MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter
-//                = new MappingJackson2HttpMessageConverter();
-//        mappingJackson2HttpMessageConverter.setObjectMapper(outerObjectMapper);
-//
-//        return mappingJackson2HttpMessageConverter;
-//    }
-
 //    @Bean
 //    public FilterRegistrationBean requestLogFilter() {
 //        RequestLoggingFilter filter = new RequestLoggingFilter();
@@ -56,11 +39,6 @@ public class MvcConfig implements WebMvcConfigurer {
 //        return new AnnotationInterceptor();
 //    }
 
-//    @Autowired
-//    private JwtFilter jwtFilter;
-
-//    @Autowired
-//    private SignatureInterceptor signatureInterceptor;
 
 //    @Autowired
 //    private HttpInterceptor httpInterceptor;

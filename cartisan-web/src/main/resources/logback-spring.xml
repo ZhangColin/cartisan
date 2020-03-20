@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<configuration>
+<configuration scan="true" scanPeriod="30 seconds">
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
 
     <property name="LOG_FILE" value="${LOG_FILE:-spring.log}"/>
     <property name="LOG_PATH" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}"/>
+
+    <!-- 输出logback的本身状态数据 -->
+    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+
     <!--获取比info级别高(包括info级别)但除error级别的日志-->
     <appender name="INFO_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -48,21 +52,23 @@
     </appender>
 
     <!-- 异步输出 -->
-    <appender name="ASYNC-INFO" class="ch.qos.logback.classic.AsyncAppender">
+    <appender name="ASYNC_INFO" class="ch.qos.logback.classic.AsyncAppender">
         <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
         <discardingThreshold>0</discardingThreshold>
         <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
-        <queueSize>256</queueSize>
+        <queueSize>1024</queueSize>
         <!-- 添加附加的appender,最多只能添加一个 -->
         <appender-ref ref="INFO_LOG"/>
+        <includeCallerData>true</includeCallerData>
     </appender>
-    <appender name="ASYNC-ERROR" class="ch.qos.logback.classic.AsyncAppender">
+    <appender name="ASYNC_ERROR" class="ch.qos.logback.classic.AsyncAppender">
         <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
         <discardingThreshold>0</discardingThreshold>
         <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
-        <queueSize>256</queueSize>
+        <queueSize>1024</queueSize>
         <!-- 添加附加的appender,最多只能添加一个 -->
         <appender-ref ref="ERROR_LOG"/>
+        <includeCallerData>true</includeCallerData>
     </appender>
 
     <root level="INFO">
@@ -71,9 +77,8 @@
 
     <springProfile name="dev,test,staging,prod">
         <root level="INFO">
-            <appender-ref ref="INFO_LOG"/>
-            <appender-ref ref="ERROR_LOG"/>
-            <appender-ref ref="CONSOLE"/>
+            <appender-ref ref="ASYNC_INFO"/>
+            <appender-ref ref="ASYNC_ERROR"/>
         </root>
     </springProfile>
 </configuration>

@@ -23,14 +23,18 @@ import java.io.InputStreamReader;
 @Component
 @Slf4j
 public class MDCFilter extends OncePerRequestFilter {
+
+    public static final String REQUEST_ID_KEY = "request-id";
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             if (!StringUtils.contains(request.getRequestURI(), "druid")
                     && !StringUtils.contains(request.getRequestURI(), "swagger")
                     && !StringUtils.contains(request.getRequestURI(), "api-docs")) {
-                MDC.put("identify", RandomStringUtils.randomAlphabetic(10));
+                MDC.put(REQUEST_ID_KEY, getRequestId(request));
                 MDC.put("user", request.getRemoteUser());
+                response.addHeader(REQUEST_ID_KEY, MDC.get(REQUEST_ID_KEY));
                 String query = request.getQueryString() != null ? "?" + request.getQueryString() : "";
                 if (request.getMethod().equals(HttpMethod.POST.name())) {
                     final MultiReadHttpServletRequest multiReadHttpServletRequest = new MultiReadHttpServletRequest(request);
@@ -54,6 +58,21 @@ public class MDCFilter extends OncePerRequestFilter {
         finally {
             MDC.clear();
         }
+    }
+
+    private String getRequestId(HttpServletRequest request) {
+        final String headerRequestId = request.getHeader(REQUEST_ID_KEY);
+        final String parameterRequestId = request.getParameter(REQUEST_ID_KEY);
+
+        if (!StringUtils.isEmpty(headerRequestId)) {
+            return headerRequestId;
+        }
+
+        if (!StringUtils.isEmpty(parameterRequestId)) {
+            return parameterRequestId;
+        }
+
+        return RandomStringUtils.randomAlphabetic(10);
     }
 
     /**
