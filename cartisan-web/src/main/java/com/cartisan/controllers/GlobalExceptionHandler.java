@@ -25,7 +25,7 @@ import static com.cartisan.responses.ResponseUtil.fail;
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = CartisanException.class)
     public ResponseEntity<?> error(CartisanException cartisanException) {
-        log.error("业务处理异常：", cartisanException);
+        log.warn("业务处理异常：", cartisanException);
         return fail(cartisanException.getCodeMessage());
     }
 
@@ -34,7 +34,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<?> error(MethodArgumentNotValidException exception) {
-        log.error("数据验证失败：{}", getStackTrace(exception));
+        log.warn("数据验证失败：{}", getStackTrace(exception));
         return fail(CodeMessage.VALIDATE_ERROR.fillArgs(
                 exception.getBindingResult().getFieldErrors().stream()
                         .map(DefaultMessageSourceResolvable::getDefaultMessage)

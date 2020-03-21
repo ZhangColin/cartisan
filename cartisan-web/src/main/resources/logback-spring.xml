@@ -20,6 +20,7 @@
             <pattern>${FILE_LOG_PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>
+        <file>${LOG_PATH}/${LOG_FILE}.info.log</file>
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/${LOG_FILE}.info.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
@@ -41,6 +42,7 @@
             <pattern>${FILE_LOG_PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>
+        <file>${LOG_PATH}/${LOG_FILE}.error.log</file>
         <!--滚动策略-->
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <fileNamePattern>${LOG_PATH}/%d{yyyy-MM-dd}/${LOG_FILE}.error.%d{yyyy-MM-dd}-%i.log</fileNamePattern>

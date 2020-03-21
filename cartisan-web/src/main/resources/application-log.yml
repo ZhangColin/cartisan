@@ -1,6 +1,6 @@
 logging:
   pattern:
-    file: "[%d{yyyyMMdd HHmmss.SSS} %X{request-id} %X{user}] %level - [%thread %logger{30}] - [%replace(%msg){'\n', ''}]%n"
+    file: "[%d{yyyy-MM-dd HH:mm:ss.SSS} %X{request-id} %X{user}] %level - [%thread %logger{30}] - [%replace(%msg){'\n', ''}]%n"
   level:
     root: info
 
