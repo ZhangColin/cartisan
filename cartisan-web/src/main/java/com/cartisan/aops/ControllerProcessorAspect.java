@@ -20,21 +20,17 @@ import static com.cartisan.utils.RequestHolder.getHttpServletRequest;
 @Aspect
 @Component
 @Slf4j
-public class LogAspect {
-    @Pointcut("execution(public * *.*Controller.*(..))")
+public class ControllerProcessorAspect {
+    @Pointcut("execution(public * com..*Controller.*(..))")
     public void cut() {
 
     }
 
     @Before("cut()")
     public void before(JoinPoint joinPoint) {
-        HttpServletRequest request = getHttpServletRequest();
-
-        log.info("@@@ API Request - { url: {}, httpMethod: {}, ip: {}, classMethod:{}, args:{} } @@@",
-                request.getRequestURL().toString(),
-                request.getMethod(),
-                request.getRemoteAddr(),
-                joinPoint.getSignature().getDeclaringTypeName()+"."+joinPoint.getSignature().getName(),
+        log.debug("Controller:[{}], Method:[{}], Args:[{}] ",
+                joinPoint.getSignature().getDeclaringTypeName(),
+                joinPoint.getSignature().getName(),
                 Arrays.toString(joinPoint.getArgs()));
     }
 
@@ -47,7 +43,7 @@ public class LogAspect {
     public Object doAround(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
         Object obj = proceedingJoinPoint.proceed();
-        log.info("耗时：{}", System.currentTimeMillis()-startTime);
+        log.debug("处理耗时：[{} 毫秒]", System.currentTimeMillis()-startTime);
         return obj;
     }
 }

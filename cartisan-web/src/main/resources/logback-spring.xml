@@ -7,7 +7,7 @@
     <property name="LOG_PATH" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}"/>
 
     <!-- 输出logback的本身状态数据 -->
-    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
+    <!-- <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" /> -->
 
     <!--获取比info级别高(包括info级别)但除error级别的日志-->
     <appender name="INFO_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">

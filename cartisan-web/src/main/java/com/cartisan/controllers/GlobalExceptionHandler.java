@@ -11,9 +11,10 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.stream.Collectors;
 
-import static com.cartisan.exceptions.ThrowableUtil.getStackTrace;
 import static com.cartisan.responses.ResponseUtil.fail;
 
 /**
@@ -24,9 +25,9 @@ import static com.cartisan.responses.ResponseUtil.fail;
 @Order(99)
 public class GlobalExceptionHandler {
     @ExceptionHandler(value = CartisanException.class)
-    public ResponseEntity<?> error(CartisanException cartisanException) {
-        log.warn("业务处理异常：", cartisanException);
-        return fail(cartisanException.getCodeMessage());
+    public ResponseEntity<?> error(CartisanException exception) {
+        log.warn("业务处理异常：{}", exception.getMessage());
+        return fail(exception.getCodeMessage());
     }
 
     /**
@@ -34,26 +35,43 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<?> error(MethodArgumentNotValidException exception) {
-        log.warn("数据验证失败：{}", getStackTrace(exception));
-        return fail(CodeMessage.VALIDATE_ERROR.fillArgs(
+        final CodeMessage errorMessage = CodeMessage.VALIDATE_ERROR.fillArgs(
                 exception.getBindingResult().getFieldErrors().stream()
                         .map(DefaultMessageSourceResolvable::getDefaultMessage)
                         .collect(Collectors.joining("\n"))
-        ));
+        );
+
+        log.warn("数据校验异常：{}", errorMessage.getMessage());
+        return fail(errorMessage);
+    }
+
+    /**
+     * 数据验证异常
+     */
+    @ExceptionHandler(value = ConstraintViolationException.class)
+    public ResponseEntity<?> error(ConstraintViolationException exception) {
+        final CodeMessage errorMessage = CodeMessage.VALIDATE_ERROR.fillArgs(
+                exception.getConstraintViolations().stream()
+                        .map(ConstraintViolation::getMessage)
+                        .collect(Collectors.joining("\n"))
+        );
+
+        log.warn("数据校验异常：{}", errorMessage.getMessage());
+        return fail(errorMessage);
     }
 
     /**
      * 未处理异常
      */
     @ExceptionHandler(Throwable.class)
-    public ResponseEntity<?> handleException(Throwable e){
-        log.error("未处理异常：", e);
+    public ResponseEntity<?> handleException(Throwable exception){
+        log.error("未处理异常：", exception);
         return fail(CodeMessage.UNKNOWN);
     }
 
     @ExceptionHandler(value = DataAccessException.class)
-    public ResponseEntity<?> error(DataAccessException e) {
-        log.error("数据库操作异常：", e);
+    public ResponseEntity<?> error(DataAccessException exception) {
+        log.error("数据库操作异常：", exception);
         return fail(CodeMessage.INTERNAL_SERVER_ERROR);
     }
 }
