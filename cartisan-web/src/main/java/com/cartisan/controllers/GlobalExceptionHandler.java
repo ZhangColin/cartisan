@@ -7,6 +7,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.core.annotation.Order;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -24,6 +25,11 @@ import static com.cartisan.responses.ResponseUtil.fail;
 @Slf4j
 @Order(99)
 public class GlobalExceptionHandler {
+    @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<?> error(HttpRequestMethodNotSupportedException exception) {
+        return fail(CodeMessage.METHOD_NOT_ALLOWED);
+    }
+
     @ExceptionHandler(value = CartisanException.class)
     public ResponseEntity<?> error(CartisanException exception) {
         log.warn("业务处理异常：{}", exception.getMessage());
