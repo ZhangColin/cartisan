@@ -3,10 +3,15 @@ package com.cartisan.configs;
 import com.cartisan.controllers.CartisanRequestMappingHandlerMapping;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
+
+import java.util.List;
 
 /**
  * @author colin
@@ -25,9 +30,24 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 //        return new FilterRegistrationBean(filter);
 //    }
 
+//    @Override
+//    protected RequestMappingHandlerMapping createRequestMappingHandlerMapping() {
+//        return new CartisanRequestMappingHandlerMapping();
+//    }
+
+
     @Override
-    protected RequestMappingHandlerMapping createRequestMappingHandlerMapping() {
-        return new CartisanRequestMappingHandlerMapping();
+    protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        super.addArgumentResolvers(argumentResolvers);
+
+        // 注册 Spring data jpa pageable 的参数分解器
+        argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
+    }
+
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
     @Override

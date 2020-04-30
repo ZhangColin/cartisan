@@ -29,6 +29,7 @@ public class RedisDistributedLock {
      * @return 是否获取成功
      */
     public Boolean tryGet(String lockKey, String requestId, int expireTime) {
+
         return redisTemplate.opsForValue().setIfAbsent(lockKey, requestId, expireTime, TimeUnit.MILLISECONDS);
     }
 

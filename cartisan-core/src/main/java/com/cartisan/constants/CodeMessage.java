@@ -33,7 +33,7 @@ public class CodeMessage {
     public static final CodeMessage NOT_FOUND = new CodeMessage(404, "Not Found");
     public static final CodeMessage METHOD_NOT_ALLOWED = new CodeMessage(405, "Method Not Allowed");
     public static final CodeMessage REQUEST_TIMEOUT = new CodeMessage(408, "Request Timeout");
-    public static final CodeMessage INTERNAL_SERVER_ERROR = new CodeMessage(500, "Internal Server Error");
+    public static final CodeMessage INTERNAL_SERVER_ERROR = new CodeMessage(500, "系统内部错误，请与管理员联系。");
     public static final CodeMessage NOT_IMPLEMENTED = new CodeMessage(501, "Not Implemented");
     public static final CodeMessage BAD_GATEWAY = new CodeMessage(502, "Bad Gateway");
     public static final CodeMessage SERVICE_UNAVAILABLE = new CodeMessage(503, "Service Unavailable");

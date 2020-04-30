@@ -1,5 +1,6 @@
 package com.cartisan.configs;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.List;
  * @author colin
  */
 @EnableSwagger2
+@EnableKnife4j
 @Configuration
 public class SwaggerConfig {
     @Autowired
