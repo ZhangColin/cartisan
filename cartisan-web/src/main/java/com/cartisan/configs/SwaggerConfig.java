@@ -1,5 +1,6 @@
 package com.cartisan.configs;
 
+import com.beust.jcommander.internal.Lists;
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,7 +38,9 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .securityContexts(Lists.newArrayList(getContextByPath("/.*")))
+                .securitySchemes(securitySchemes());
     }
 
     private ApiInfo apiInfo() {

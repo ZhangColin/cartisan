@@ -4,7 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -46,7 +48,7 @@ public final class ConditionSpecifications {
                         String blurry = condition.blurry();
                         if (!StringUtils.isEmpty(blurry)) {
                             final Predicate[] orPredicates = Arrays.stream(blurry.split(","))
-                                    .map(b -> criteriaBuilder.like(root.get(b).as(String.class), "%" + val.toString() + "%"))
+                                    .map(b -> criteriaBuilder.like(getObjectPath(root, b).as(String.class), "%" + val.toString() + "%"))
                                     .toArray(Predicate[]::new);
                             predicates.add(criteriaBuilder.or(orPredicates));
                             continue;
@@ -74,45 +76,57 @@ public final class ConditionSpecifications {
 
     private static Map<Condition.Type, ConditionSpecificationHandler> handlers =
             new HashMap<Condition.Type, ConditionSpecificationHandler>() {{
-                put(Condition.Type.EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) -> criteriaBuilder.equal(root.get(attributeName).as(fieldType), val));
+                put(Condition.Type.EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) -> criteriaBuilder.equal(getObjectPath(root, attributeName).as(fieldType), val));
 
                 put(Condition.Type.NOT_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
-                        criteriaBuilder.notEqual(root.get(attributeName).as(fieldType), val));
+                        criteriaBuilder.notEqual(getObjectPath(root, attributeName).as(fieldType), val));
 
                 put(Condition.Type.GREATER_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
-                        criteriaBuilder.greaterThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
+                        criteriaBuilder.greaterThanOrEqualTo(getObjectPath(root, attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
 
                 put(Condition.Type.GREATER, (root, criteriaBuilder, fieldType, attributeName, val) ->
-                        criteriaBuilder.greaterThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
+                        criteriaBuilder.greaterThan(getObjectPath(root, attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
 
                 put(Condition.Type.LESS_EQUAL, (root, criteriaBuilder, fieldType, attributeName, val) ->
-                        criteriaBuilder.lessThanOrEqualTo(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
+                        criteriaBuilder.lessThanOrEqualTo(getObjectPath(root, attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
 
                 put(Condition.Type.LESS, (root, criteriaBuilder, fieldType, attributeName, val) ->
-                        criteriaBuilder.lessThan(root.get(attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
+                        criteriaBuilder.lessThan(getObjectPath(root, attributeName).as((Class<? extends Comparable>) fieldType), (Comparable) val));
 
                 put(Condition.Type.INNER_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
-                        criteriaBuilder.like(root.get(attributeName).as(String.class), "%" + val.toString() + "%"));
+                        criteriaBuilder.like(getObjectPath(root, attributeName).as(String.class), "%" + val.toString() + "%"));
 
                 put(Condition.Type.LEFT_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
-                        criteriaBuilder.like(root.get(attributeName).as(String.class), "%" + val.toString()));
+                        criteriaBuilder.like(getObjectPath(root, attributeName).as(String.class), "%" + val.toString()));
 
                 put(Condition.Type.RIGHT_LIKE, (root, criteriaBuilder, fieldType, attributeName, val) ->
-                        criteriaBuilder.like(root.get(attributeName).as(String.class), val.toString() + "%"));
+                        criteriaBuilder.like(getObjectPath(root, attributeName).as(String.class), val.toString() + "%"));
 
                 put(Condition.Type.IN, (root, criteriaBuilder, fieldType, attributeName, val) -> {
                     final Collection<Object> ins = (Collection<Object>) val;
                     if (!ins.isEmpty()) {
-                        return root.get(attributeName).in(ins);
+                        return getObjectPath(root, attributeName).in(ins);
                     }
                     return null;
                 });
 
                 put(Condition.Type.BETWEEN, (root, criteriaBuilder, fieldType, attributeName, val) -> {
                     final List<Object> between = (List<Object>) val;
-                    return criteriaBuilder.between(root.get(attributeName).as((Class<? extends Comparable>) between.get(0).getClass()), (Comparable) between.get(0), (Comparable) between.get(1));
+                    return criteriaBuilder.between(getObjectPath(root, attributeName).as((Class<? extends Comparable>) between.get(0).getClass()), (Comparable) between.get(0), (Comparable) between.get(1));
                 });
             }};
+
+    private static Path<Object> getObjectPath(Root<?> root, String attributeName) {
+        if (attributeName.contains(".")){
+            final String[] pathAttributes = attributeName.split("\\.");
+            Path<Object> path = root.get(pathAttributes[0]);
+            for (int i = 1; i < pathAttributes.length; i++) {
+                path = path.get(pathAttributes[i]);
+            }
+            return path;
+        }
+        return root.get(attributeName);
+    }
 
     private static List<Field> getAllFields(Class<?> clazz) {
         if (Objects.isNull(clazz)) {

@@ -1,17 +1,20 @@
 package com.cartisan.configs;
 
-import com.cartisan.controllers.CartisanRequestMappingHandlerMapping;
+import com.cartisan.CartisanContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.AsyncSupportConfigurer;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author colin
@@ -35,6 +38,16 @@ public class MvcConfig extends WebMvcConfigurationSupport {
 //        return new CartisanRequestMappingHandlerMapping();
 //    }
 
+
+    @Override
+    protected void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
+        final Collection<HttpMessageConverter> customConverters = CartisanContext.getBeansOfType(HttpMessageConverter.class).values();
+        final Set<? extends Class<? extends HttpMessageConverter>> customConverterTypes = customConverters.stream().map(converter -> converter.getClass()).collect(Collectors.toSet());
+        converters.removeIf(converter-> customConverterTypes.contains(converter.getClass()));
+        customConverters.forEach(converter->converters.add(0, converter));
+
+        super.extendMessageConverters(converters);
+    }
 
     @Override
     protected void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {

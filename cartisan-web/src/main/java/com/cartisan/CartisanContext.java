@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -44,6 +45,11 @@ public class CartisanContext implements ApplicationContextAware {
     public static <T> T getBean(String name, Class<T> clazz) {
         assertApplicationContext();
         return Objects.requireNonNull(applicationContext.getBean(name, clazz));
+    }
+
+    public static <T> Map<String, T> getBeansOfType(Class<T> clazz) {
+        assertApplicationContext();
+        return Objects.requireNonNull(applicationContext.getBeansOfType(clazz));
     }
 
     /**

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
@@ -51,7 +52,11 @@ public class CartisanJackson2ObjectMapperBuilderCustomizer implements Jackson2Ob
         final SimpleModule amountModule = new SimpleModule();
         amountModule.addSerializer(BigDecimal.class, new AmountJsonSerializer());
 
-        jacksonObjectMapperBuilder.modules(javaTimeModule, amountModule);
+        final SimpleModule longModule = new SimpleModule();
+        longModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
+        longModule.addSerializer(Long.class, ToStringSerializer.instance);
+
+        jacksonObjectMapperBuilder.modules(javaTimeModule, amountModule, longModule);
 
         // 禁止 Date 类型转化为时间戳
         // 默认开启，将 Date 类型序列化为数字时间戳（毫秒表示）。关闭后，序列化为文本表现形式（2020-03-17T01:58:58.308+0000）

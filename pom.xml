@@ -21,4 +21,18 @@
         <module>cartisan-cloud</module>
         <module>cartisan-security</module>
     </modules>
+
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <name>Nexus Release Repository</name>
+            <url>http://nexus.zsgcm.com/repository/maven-releases/</url>
+        </repository>
+
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <name>Nexus Release Repository</name>
+            <url>http://nexus.zsgcm.com/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
