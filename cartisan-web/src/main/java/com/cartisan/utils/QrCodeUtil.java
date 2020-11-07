@@ -1,9 +1,8 @@
 package com.cartisan.utils;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.EncodeHintType;
-import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.*;
 import com.google.zxing.common.BitMatrix;
+import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import lombok.extern.slf4j.Slf4j;
 
@@ -12,6 +11,7 @@ import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Hashtable;
 
@@ -92,11 +92,6 @@ public class QrCodeUtil {
         ImageIO.write(image, FORMAT_NAME, new File(destPath));
     }
 
-    public static BufferedImage encode(String content, String imgPath, boolean needCompress) throws Exception {
-        BufferedImage image = QrCodeUtil.createImage(content, imgPath, needCompress);
-        return image;
-    }
-
     public static void mkdirs(String destPath) {
         File file = new File(destPath);
         // 当文件夹不存在时，mkdirs会自动创建多层目录，区别于mkdir．(mkdir如果父目录不存在则会抛出异常)
@@ -108,6 +103,19 @@ public class QrCodeUtil {
         }
     }
 
+    public static BufferedImage encode(String content, String imgPath, boolean needCompress) throws Exception {
+        BufferedImage image = QrCodeUtil.createImage(content, imgPath, needCompress);
+        return image;
+    }
+
+    public static void encode(String context, String imgPath, String destPath) throws Exception {
+        QrCodeUtil.encode(context, imgPath, destPath, false);
+    }
+
+    public static void encode(String context, String destPath) throws Exception {
+        QrCodeUtil.encode(context, null, destPath, false);
+    }
+
     public static void encode(String content, String imgPath, OutputStream output, boolean needCompress)
             throws Exception {
         BufferedImage image = QrCodeUtil.createImage(content, imgPath, needCompress);
@@ -116,5 +124,25 @@ public class QrCodeUtil {
 
     public static void encode(String content, OutputStream output) throws Exception {
         QrCodeUtil.encode(content, null, output, false);
+    }
+
+    public static String decode(File file) throws IOException, NotFoundException {
+        final BufferedImage image = ImageIO.read(file);
+
+        if (image == null) {
+            return null;
+        }
+
+        final BufferedImageLuminanceSource source = new BufferedImageLuminanceSource(image);
+        final BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+
+        final Hashtable<DecodeHintType, String> hints = new Hashtable<>();
+        hints.put(DecodeHintType.CHARACTER_SET, CHARSET);
+        final Result result = new MultiFormatReader().decode(bitmap, hints);
+        return result.getText();
+    }
+
+    public static String decode(String path) throws IOException, NotFoundException {
+        return QrCodeUtil.decode(new File(path));
     }
 }
