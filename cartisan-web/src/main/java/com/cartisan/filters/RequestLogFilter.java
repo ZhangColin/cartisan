@@ -19,6 +19,8 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author colin
@@ -30,33 +32,28 @@ public class RequestLogFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try {
-            if (!StringUtils.contains(request.getRequestURI(), "druid")
-                    && !StringUtils.contains(request.getRequestURI(), "swagger")
-                    && !StringUtils.contains(request.getRequestURI(), "api-docs")) {
+        if (!StringUtils.contains(request.getRequestURI(), "druid")
+                && !StringUtils.contains(request.getRequestURI(), "swagger")
+                && !StringUtils.contains(request.getRequestURI(), "api-docs")) {
 
-                String query = request.getQueryString() != null ? "?" + request.getQueryString() : "";
-                if (request.getMethod().equals(HttpMethod.POST.name())) {
-                    final MultiReadHttpServletRequest multiReadHttpServletRequest = new MultiReadHttpServletRequest(request);
+            String query = request.getQueryString() != null ? "?" + request.getQueryString() : "";
+            if (request.getMethod().equals(HttpMethod.POST.name()) || request.getMethod().equals(HttpMethod.PUT.name())) {
+                final MultiReadHttpServletRequest multiReadHttpServletRequest = new MultiReadHttpServletRequest(request);
 
-                    log.info("IP:[{}], Method:[{}], URI:[{}], Body:[{}]", request.getRemoteAddr(), request.getMethod(),
-                            request.getRequestURI() + query, multiReadHttpServletRequest.getRequestBody());
+                log.info("IP:[{}], Method:[{}], URI:[{}], Body:[{}]", request.getRemoteAddr(), request.getMethod(),
+                        request.getRequestURI() + query, multiReadHttpServletRequest.getRequestBody());
 
-                    filterChain.doFilter(multiReadHttpServletRequest, response);
-                }
-                else {
-                    log.info("IP:[{}], Method:[{}], URI:[{}]", request.getRemoteAddr(), request.getMethod(),
-                            request.getRequestURI() + query);
-
-                    filterChain.doFilter(request, response);
-                }
+                filterChain.doFilter(multiReadHttpServletRequest, response);
             }
             else {
+                log.info("IP:[{}], Method:[{}], URI:[{}]", request.getRemoteAddr(), request.getMethod(),
+                        request.getRequestURI() + query);
+
                 filterChain.doFilter(request, response);
             }
         }
-        finally {
-            MDC.clear();
+        else {
+            filterChain.doFilter(request, response);
         }
     }
 
@@ -78,12 +75,14 @@ public class RequestLogFilter extends OncePerRequestFilter {
             requestBody = "";
             try {
                 final StringBuilder stringBuilder = new StringBuilder();
-                final ServletInputStream inputStream = request.getInputStream();
-                byte[] bs = new byte[1024];
-                int length;
-                while ((length = inputStream.read(bs)) != -1) {
-                    stringBuilder.append(new String(bs, 0, length));
+                final BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(request.getInputStream(), StandardCharsets.UTF_8));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line);
                 }
+
                 requestBody = stringBuilder.toString();
             } catch (IOException e) {
                 logger.error(e);
@@ -92,7 +91,7 @@ public class RequestLogFilter extends OncePerRequestFilter {
 
         @Override
         public ServletInputStream getInputStream() {
-            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(requestBody.getBytes());
+            final ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(requestBody.getBytes(StandardCharsets.UTF_8));
 
             return new ServletInputStream() {
                 @Override
