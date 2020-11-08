@@ -23,12 +23,13 @@ import java.io.IOException;
 public class MDCFilter extends OncePerRequestFilter {
 
     public static final String REQUEST_ID_KEY = "request-id";
+    public static final String USER_KEY = "user";
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             MDC.put(REQUEST_ID_KEY, getRequestId(request));
-            MDC.put("user", request.getRemoteUser());
+            MDC.put(USER_KEY, request.getRemoteUser());
             response.addHeader(REQUEST_ID_KEY, MDC.get(REQUEST_ID_KEY));
 
             filterChain.doFilter(request, response);
