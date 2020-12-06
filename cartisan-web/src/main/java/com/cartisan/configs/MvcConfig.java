@@ -1,7 +1,10 @@
 package com.cartisan.configs;
 
 import com.cartisan.CartisanContext;
+import com.cartisan.filters.RequestLoggingFilter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -22,16 +25,17 @@ import java.util.stream.Collectors;
 @Configuration
 @Slf4j
 public class MvcConfig extends WebMvcConfigurationSupport {
-//    @Bean
-//    public FilterRegistrationBean requestLogFilter() {
-//        RequestLoggingFilter filter = new RequestLoggingFilter();
-//        filter.setIncludeQueryString(true);
-//        filter.setIncludeClientInfo(true);
-//        filter.setIncludePayload(true);
-//        filter.setMaxPayloadLength(5120);
-//
-//        return new FilterRegistrationBean(filter);
-//    }
+    @Bean
+    public FilterRegistrationBean<RequestLoggingFilter> requestLoggingFilter() {
+        RequestLoggingFilter filter = new RequestLoggingFilter();
+        filter.setIncludeQueryString(true);
+        filter.setIncludeClientInfo(true);
+        filter.setIncludeHeaders(true);
+        filter.setIncludePayload(true);
+        filter.setMaxPayloadLength(5120);
+
+        return new FilterRegistrationBean<>(filter);
+    }
 
 //    @Override
 //    protected RequestMappingHandlerMapping createRequestMappingHandlerMapping() {
