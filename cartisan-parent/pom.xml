@@ -32,8 +32,8 @@
 <!--        <docker.repo>repository:5000</docker.repo>-->
 
         <!-- db -->
-<!--        <mybatis.spring.boot.version>2.1.0</mybatis.spring.boot.version>-->
-        <mybatis.spring.boot.version>2.0.0</mybatis.spring.boot.version>
+        <mybatis.spring.boot.version>2.1.0</mybatis.spring.boot.version>
+<!--        <mybatis.spring.boot.version>2.0.0</mybatis.spring.boot.version>-->
         <pagehelper.version>1.2.12</pagehelper.version>
         <druid-spring-boot-starter.version>1.1.20</druid-spring-boot-starter.version>
         <p6spy.version>3.8.6</p6spy.version>

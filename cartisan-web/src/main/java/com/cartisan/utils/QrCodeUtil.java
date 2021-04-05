@@ -23,7 +23,7 @@ public class QrCodeUtil {
     private static final String CHARSET = "utf-8";
     private static final String FORMAT_NAME = "JPG";
     // 二维码尺寸
-    private static final int QR_CODE_SIZE = 300;
+    private static final int QR_CODE_SIZE = 430;
     // LOGO宽度
     private static final int WIDTH = 60;
     // LOGO高度
