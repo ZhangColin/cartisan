@@ -2,293 +2,321 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.0.RELEASE</version>
-        <relativePath />
-    </parent>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.3.12.RELEASE</version>
+    <relativePath/>
+  </parent>
 
-    <groupId>com.cartisan</groupId>
-    <artifactId>cartisan-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+  <groupId>com.cartisan</groupId>
+  <artifactId>cartisan-parent</artifactId>
+  <version>1.0-SNAPSHOT</version>
 
-    <packaging>pom</packaging>
+  <packaging>pom</packaging>
 
-    <name>cartisan-parent</name>
-    <description>Cartisan parent</description>
+  <name>cartisan-parent</name>
+  <description>Cartisan parent</description>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <java.version>1.8</java.version>
-        <spring-cloud.version>Hoxton.SR9</spring-cloud.version>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <java.version>1.8</java.version>
+    <spring-cloud.version>Hoxton.SR11</spring-cloud.version>
 
-<!--        <docker.image.prefix>cartisan</docker.image.prefix>-->
-<!--        <docker.repo>repository:5000</docker.repo>-->
+    <!--        <docker.image.prefix>cartisan</docker.image.prefix>-->
+    <!--        <docker.repo>repository:5000</docker.repo>-->
 
-        <!-- db -->
-        <mybatis.spring.boot.version>2.1.0</mybatis.spring.boot.version>
-<!--        <mybatis.spring.boot.version>2.0.0</mybatis.spring.boot.version>-->
-        <pagehelper.version>1.2.12</pagehelper.version>
-        <druid-spring-boot-starter.version>1.1.20</druid-spring-boot-starter.version>
-        <p6spy.version>3.8.6</p6spy.version>
+    <!-- db -->
+    <mybatis.spring.boot.version>2.1.2</mybatis.spring.boot.version>
+    <pagehelper.version>1.3.0</pagehelper.version>
+    <druid-spring-boot-starter.version>1.2.6</druid-spring-boot-starter.version>
+    <p6spy.version>3.9.1</p6spy.version>
 
-        <!-- util -->
-        <guava.version>28.2-jre</guava.version>
-        <commons-io.version>2.6</commons-io.version>
-        <commons-collections4.version>4.4</commons-collections4.version>
-        <mapstruct.version>1.3.1.Final</mapstruct.version>
-        <jjwt.version>0.10.7</jjwt.version>
-        <zxing.version>3.4.0</zxing.version>
+    <!-- util -->
+    <guava.version>30.1.1-jre</guava.version>
+    <commons-io.version>2.9.0</commons-io.version>
+    <commons-collections4.version>4.4</commons-collections4.version>
+    <mapstruct.version>1.4.2.Final</mapstruct.version>
+    <jjwt.version>0.11.2</jjwt.version>
+    <zxing.version>3.4.1</zxing.version>
 
-        <!-- 测试 -->
+    <!-- 测试 -->
 
-        <!-- Swagger 文档 -->
-        <swagger.version>1.5.23</swagger.version>
-        <swagger-fox.version>2.9.2</swagger-fox.version>
-        <knife4j.version>2.0.2</knife4j.version>
-    </properties>
+    <!-- Swagger 文档 -->
+    <!--        <swagger.version>1.5.23</swagger.version>-->
+    <!--        <swagger-fox.version>2.9.2</swagger-fox.version>-->
+    <!--        <knife4j.version>3.0.2</knife4j.version>-->
+    <knife4j.version>2.0.7</knife4j.version>
+  </properties>
 
-    <dependencyManagement>
-        <dependencies>
-<!--                <dependency>-->
-<!--                    <groupId>org.springframework.boot</groupId>-->
-<!--                    <artifactId>spring-boot-dependencies</artifactId>-->
-<!--                    <version>${spring-boot.version}</version>-->
-<!--                    <type>pom</type>-->
-<!--                    <scope>import</scope>-->
-<!--                </dependency>-->
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
-            <!-- 数据库 -->
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>${mybatis.spring.boot.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${pagehelper.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid-spring-boot-starter.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>p6spy</groupId>
-                <artifactId>p6spy</artifactId>
-                <version>${p6spy.version}</version>
-            </dependency>
-
-            <!-- 工具 -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-io</groupId>
-                <artifactId>commons-io</artifactId>
-                <version>${commons-io.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.commons</groupId>
-                <artifactId>commons-collections4</artifactId>
-                <version>${commons-collections4.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct</artifactId>
-                <version>${mapstruct.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.mapstruct</groupId>
-                <artifactId>mapstruct-processor</artifactId>
-                <version>${mapstruct.version}</version>
-                <scope>provided</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-api</artifactId>
-                <version>${jjwt.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-impl</artifactId>
-                <version>${jjwt.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt-jackson</artifactId>
-                <version>${jjwt.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-
-            <dependency>
-                <groupId>com.google.zxing</groupId>
-                <artifactId>core</artifactId>
-                <version>${zxing.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.google.zxing</groupId>
-                <artifactId>javase</artifactId>
-                <version>${zxing.version}</version>
-            </dependency>
-
-            <!-- 测试 -->
-
-            <!-- Swagger 文档 -->
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-swagger2</artifactId>
-                <version>${swagger-fox.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-models</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-spring-boot-starter</artifactId>
-                <version>${knife4j.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
+  <dependencyManagement>
     <dependencies>
-        <!-- develop tools -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-devtools</artifactId>-->
-<!--            <scope>runtime</scope>-->
-<!--        </dependency>-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
+      <!--                <dependency>-->
+      <!--                    <groupId>org.springframework.boot</groupId>-->
+      <!--                    <artifactId>spring-boot-dependencies</artifactId>-->
+      <!--                    <version>${spring-boot.version}</version>-->
+      <!--                    <type>pom</type>-->
+      <!--                    <scope>import</scope>-->
+      <!--                </dependency>-->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>${spring-cloud.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- 数据库 -->
+      <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+        <version>${mybatis.spring.boot.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.github.pagehelper</groupId>
+        <artifactId>pagehelper-spring-boot-starter</artifactId>
+        <version>${pagehelper.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.alibaba</groupId>
+        <artifactId>druid-spring-boot-starter</artifactId>
+        <version>${druid-spring-boot-starter.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>p6spy</groupId>
+        <artifactId>p6spy</artifactId>
+        <version>${p6spy.version}</version>
+      </dependency>
+
+      <!-- 工具 -->
+      <!--            <dependency>-->
+      <!--                <groupId>com.google.guava</groupId>-->
+      <!--                <artifactId>guava</artifactId>-->
+      <!--                <version>${guava.version}</version>-->
+      <!--            </dependency>-->
+
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>${commons-io.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>${commons-collections4.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct</artifactId>
+        <version>${mapstruct.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-processor</artifactId>
+        <version>${mapstruct.version}</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-api</artifactId>
+        <version>${jjwt.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-impl</artifactId>
+        <version>${jjwt.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-jackson</artifactId>
+        <version>${jjwt.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.zxing</groupId>
+        <artifactId>core</artifactId>
+        <version>${zxing.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>com.google.zxing</groupId>
+        <artifactId>javase</artifactId>
+        <version>${zxing.version}</version>
+      </dependency>
+
+      <!-- 测试 -->
+
+      <!-- Swagger 文档 -->
+      <!--            <dependency>-->
+      <!--                <groupId>io.springfox</groupId>-->
+      <!--                <artifactId>springfox-swagger2</artifactId>-->
+      <!--                <version>${swagger-fox.version}</version>-->
+      <!--            </dependency>-->
+      <!--            <dependency>-->
+      <!--                <groupId>io.swagger</groupId>-->
+      <!--                <artifactId>swagger-annotations</artifactId>-->
+      <!--                <version>${swagger.version}</version>-->
+      <!--            </dependency>-->
+      <!--            <dependency>-->
+      <!--                <groupId>io.swagger</groupId>-->
+      <!--                <artifactId>swagger-models</artifactId>-->
+      <!--                <version>${swagger.version}</version>-->
+      <!--            </dependency>-->
+      <dependency>
+        <groupId>com.github.xiaoymin</groupId>
+        <artifactId>knife4j-spring-boot-starter</artifactId>
+        <version>${knife4j.version}</version>
+      </dependency>
     </dependencies>
+  </dependencyManagement>
 
-    <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                </plugin>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.7</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.flywaydb</groupId>
-                    <artifactId>flyway-maven-plugin</artifactId>
-                    <version>${flyway.version}</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+  <dependencies>
+    <!-- develop tools -->
+    <!--        <dependency>-->
+    <!--            <groupId>org.springframework.boot</groupId>-->
+    <!--            <artifactId>spring-boot-devtools</artifactId>-->
+    <!--            <scope>runtime</scope>-->
+    <!--        </dependency>-->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
 
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-compiler-plugin</artifactId>-->
-<!--                <version>3.8.1</version>-->
-<!--                <configuration>-->
-<!--                    <source>1.8</source>-->
-<!--                    <target>1.8</target>-->
-<!--                    <encoding>UTF-8</encoding>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-<!--            <plugin>-->
-<!--                <groupId>com.spotify</groupId>-->
-<!--                <artifactId>docker-maven-plugin</artifactId>-->
-<!--                <version>0.4.3</version>-->
-<!--                <configuration>-->
-<!--                    <forceTags>true</forceTags>-->
-<!--                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
-<!--                    <imageTags>-->
-<!--                        <imageTag>${project.version}</imageTag>-->
-<!--                        <imageTag>latest</imageTag>-->
-<!--                    </imageTags>-->
-<!--                    <baseImage>java:8</baseImage>-->
-<!--                    <entryPoint>["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/${project.build.finalName}.jar"]</entryPoint>-->
-<!--                    <cmd>["&#45;&#45;spring.profiles.active=docker"]</cmd>-->
-<!--                    <resources>-->
-<!--                        <resource>-->
-<!--                            <targetPath>/</targetPath>-->
-<!--                            <directory>${project.build.directory}</directory>-->
-<!--                            <include>${project.build.finalName}.jar</include>-->
-<!--                        </resource>-->
-<!--                    </resources>-->
-<!--                    <image>${docker.image.prefix}/${project.artifactId}</image>-->
-<!--                    <newName>${docker.repo}/${project.artifactId}</newName>-->
-<!--                    <imageName>${docker.repo}/${project.artifactId}</imageName>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-        </plugins>
-    </build>
-    <distributionManagement>
-<!--        <repository>-->
-<!--            <id>nexus-releases</id>-->
-<!--            <name>Nexus Release Repository</name>-->
-<!--            <url>http://nexus.zsgcm.com/repository/maven-releases/</url>-->
-<!--        </repository>-->
-<!--        <snapshotRepository>-->
-<!--            <id>nexus-snapshots</id>-->
-<!--            <name>Nexus Snapshot Repository</name>-->
-<!--            <url>http://nexus.zsgcm.com/repository/maven-snapshots/</url>-->
-<!--        </snapshotRepository>-->
-    </distributionManagement>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.7</version>
+        </plugin>
+        <plugin>
+          <groupId>org.flywaydb</groupId>
+          <artifactId>flyway-maven-plugin</artifactId>
+          <version>${flyway.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>spring-snapshots</id>-->
-<!--            <name>Spring Snapshots</name>-->
-<!--            <url>https://repo.spring.io/snapshot</url>-->
-<!--            <snapshots>-->
-<!--                <enabled>true</enabled>-->
-<!--            </snapshots>-->
-<!--        </repository>-->
-<!--        <repository>-->
-<!--            <id>spring-milestones</id>-->
-<!--            <name>Spring Milestones</name>-->
-<!--            <url>https://repo.spring.io/milestone</url>-->
-<!--            <snapshots>-->
-<!--                <enabled>false</enabled>-->
-<!--            </snapshots>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.6.1</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+            <!-- This is needed when using Lombok 1.18.16 and above -->
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok-mapstruct-binding</artifactId>
+              <version>0.2.0</version>
+            </path>
+            <!-- Mapstruct should follow the lombok path(s) -->
+            <path>
+              <groupId>org.mapstruct</groupId>
+              <artifactId>mapstruct-processor</artifactId>
+              <version>${mapstruct.version}</version>
+            </path>
+          </annotationProcessorPaths>
+        </configuration>
+      </plugin>
+      <!--            <plugin>-->
+      <!--                <groupId>org.apache.maven.plugins</groupId>-->
+      <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+      <!--                <version>3.8.1</version>-->
+      <!--                <configuration>-->
+      <!--                    <source>1.8</source>-->
+      <!--                    <target>1.8</target>-->
+      <!--                    <encoding>UTF-8</encoding>-->
+      <!--                </configuration>-->
+      <!--            </plugin>-->
+      <!--            <plugin>-->
+      <!--                <groupId>com.spotify</groupId>-->
+      <!--                <artifactId>docker-maven-plugin</artifactId>-->
+      <!--                <version>0.4.3</version>-->
+      <!--                <configuration>-->
+      <!--                    <forceTags>true</forceTags>-->
+      <!--                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
+      <!--                    <imageTags>-->
+      <!--                        <imageTag>${project.version}</imageTag>-->
+      <!--                        <imageTag>latest</imageTag>-->
+      <!--                    </imageTags>-->
+      <!--                    <baseImage>java:8</baseImage>-->
+      <!--                    <entryPoint>["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/${project.build.finalName}.jar"]</entryPoint>-->
+      <!--                    <cmd>["&#45;&#45;spring.profiles.active=docker"]</cmd>-->
+      <!--                    <resources>-->
+      <!--                        <resource>-->
+      <!--                            <targetPath>/</targetPath>-->
+      <!--                            <directory>${project.build.directory}</directory>-->
+      <!--                            <include>${project.build.finalName}.jar</include>-->
+      <!--                        </resource>-->
+      <!--                    </resources>-->
+      <!--                    <image>${docker.image.prefix}/${project.artifactId}</image>-->
+      <!--                    <newName>${docker.repo}/${project.artifactId}</newName>-->
+      <!--                    <imageName>${docker.repo}/${project.artifactId}</imageName>-->
+      <!--                </configuration>-->
+      <!--            </plugin>-->
+    </plugins>
+  </build>
+  <distributionManagement>
+    <!--        <repository>-->
+    <!--            <id>nexus-releases</id>-->
+    <!--            <name>Nexus Release Repository</name>-->
+    <!--            <url>http://nexus.zsgcm.com/repository/maven-releases/</url>-->
+    <!--        </repository>-->
+    <!--        <snapshotRepository>-->
+    <!--            <id>nexus-snapshots</id>-->
+    <!--            <name>Nexus Snapshot Repository</name>-->
+    <!--            <url>http://nexus.zsgcm.com/repository/maven-snapshots/</url>-->
+    <!--        </snapshotRepository>-->
+  </distributionManagement>
+
+  <!--    <repositories>-->
+  <!--        <repository>-->
+  <!--            <id>spring-snapshots</id>-->
+  <!--            <name>Spring Snapshots</name>-->
+  <!--            <url>https://repo.spring.io/snapshot</url>-->
+  <!--            <snapshots>-->
+  <!--                <enabled>true</enabled>-->
+  <!--            </snapshots>-->
+  <!--        </repository>-->
+  <!--        <repository>-->
+  <!--            <id>spring-milestones</id>-->
+  <!--            <name>Spring Milestones</name>-->
+  <!--            <url>https://repo.spring.io/milestone</url>-->
+  <!--            <snapshots>-->
+  <!--                <enabled>false</enabled>-->
+  <!--            </snapshots>-->
+  <!--        </repository>-->
+  <!--    </repositories>-->
 </project>

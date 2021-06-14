@@ -18,7 +18,6 @@
         <module>cartisan-core</module>
         <module>cartisan-persistence</module>
         <module>cartisan-web</module>
-        <module>cartisan-cloud</module>
         <module>cartisan-security</module>
     </modules>
 
