@@ -43,6 +43,7 @@ docker run -p 9200:9200 -p 9300:9300 --name elasticsearch \
 -d elasticsearch:7.8.0
 
 docker exec -it elasticsearch /bin/bash
+#此命令需要在容器中运行
 elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.8.0/elasticsearch-analysis-ik-7.8.0.zip
 docker restart elasticsearch
 
