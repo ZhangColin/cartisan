@@ -34,10 +34,24 @@ docker run -d -p 27017:27017 -v ~/docker/mongodb:/data/db -e MONGO_INITDB_ROOT_U
 ### elasticsearch 
 
 ```bash
-docker pull elasticsearch:6.7.0
-docker run -d -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" --name cartisan-elasticsearch elasticsearch:6.7.0
-docker pull kibana:6.7.0
-docker run -d -p 5601:5601 -v ~/docker/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml --name cartisan-kibana kibana:6.7.0
+docker pull elasticsearch:7.8.0
+docker run -p 9200:9200 -p 9300:9300 --name elasticsearch \
+-e "discovery.type=single-node" \
+-e "cluster.name=elasticsearch" \
+-v ~/docker/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+-v ~/docker/elasticsearch/data:/usr/share/elasticsearch/data \
+-d elasticsearch:7.8.0
+
+docker exec -it elasticsearch /bin/bash
+elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.8.0/elasticsearch-analysis-ik-7.8.0.zip
+docker restart elasticsearch
+
+docker pull kibana:7.8.0
+docker run --name kibana -p 5601:5601 \
+--link elasticsearch:es \
+-e "elasticsearch.hosts=http://es:9200" \
+-d kibana:7.8.0
+
 ```
 
 ### nginx
