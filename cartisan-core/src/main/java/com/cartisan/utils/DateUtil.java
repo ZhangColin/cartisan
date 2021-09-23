@@ -78,9 +78,9 @@ public final class DateUtil {
     }
 
     /**
-     * 解释日期
+     * 解析日期
      * @param date 日期（时间）
-     * @return 解释后的日期，默认格式：yyyy-MM-dd HH:mm:ss
+     * @return 解析后的日期，默认格式：yyyy-MM-dd HH:mm:ss
      */
     public static LocalDateTime parseDate(String date) {
         if (StringUtils.isBlank(date)) {
@@ -91,10 +91,10 @@ public final class DateUtil {
     }
 
     /**
-     * 解释日期
+     * 解析日期
      * @param date 日期（时间）
      * @param pattern 匹配模式 参考：{@link DateUtil.Pattern}
-     * @return 解释后的日期，默认格式：yyyy-MM-dd HH:mm:ss
+     * @return 解析后的日期，默认格式：yyyy-MM-dd HH:mm:ss
      */
     public static LocalDateTime paseDate(String date, String pattern) {
         pattern= StringUtils.isNotBlank(pattern)?pattern:DEFAULT_PATTERN;
