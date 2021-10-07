@@ -2,6 +2,7 @@ package com.cartisan.responses;
 
 import com.cartisan.utils.DateUtil;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
  * @author colin
  */
 @Getter
+@JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class GenericResponse {
     @ApiModelProperty(value = "错误编码", required = true)
     private Integer status;
