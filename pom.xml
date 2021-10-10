@@ -19,6 +19,7 @@
         <module>cartisan-persistence</module>
         <module>cartisan-web</module>
         <module>cartisan-security</module>
+      <module>cartisan-kafka</module>
     </modules>
 
     <distributionManagement>

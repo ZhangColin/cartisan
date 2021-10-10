@@ -1,7 +1,7 @@
 package com.cartisan.repositories;
 
-import com.cartisan.domains.AggregateRoot;
-import com.cartisan.domains.SoftDeleteEntity;
+import com.cartisan.domain.AggregateRoot;
+import com.cartisan.domain.SoftDeleteEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.util.Assert;

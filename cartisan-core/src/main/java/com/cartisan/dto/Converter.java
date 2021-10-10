@@ -1,4 +1,4 @@
-package com.cartisan.dtos;
+package com.cartisan.dto;
 
 import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mappings;

@@ -1,4 +1,4 @@
-package com.cartisan.domains;
+package com.cartisan.domain;
 
 /**
  * 聚合根标记接口，只有聚合根才能使用仓储

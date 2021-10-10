@@ -1,4 +1,4 @@
-package com.cartisan.application;
+package com.cartisan.event;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -6,7 +6,7 @@ import java.util.UUID;
 /**
  * @author colin
  */
-public class ApplicationEvent implements Event{
+public abstract class ApplicationEvent implements Event {
     protected final String eventId;
     protected final String createdTimestamp;
     protected final String version;
@@ -17,12 +17,13 @@ public class ApplicationEvent implements Event{
 
     public ApplicationEvent(String version) {
         this.eventId = UUID.randomUUID().toString();
-        this.createdTimestamp = LocalDateTime.now().toString();
+        createdTimestamp = LocalDateTime.now().toString();
+
         this.version = version;
     }
 
     @Override
     public String eventId() {
-        return eventId;
+        return this.eventId;
     }
 }

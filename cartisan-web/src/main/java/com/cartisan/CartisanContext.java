@@ -1,7 +1,7 @@
 package com.cartisan;
 
 import com.cartisan.constants.CodeMessage;
-import com.cartisan.exceptions.CartisanException;
+import com.cartisan.exception.CartisanException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

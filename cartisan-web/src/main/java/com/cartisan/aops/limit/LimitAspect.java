@@ -1,7 +1,7 @@
 package com.cartisan.aops.limit;
 
 import com.cartisan.constants.CodeMessage;
-import com.cartisan.exceptions.CartisanException;
+import com.cartisan.exception.CartisanException;
 import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;

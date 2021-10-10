@@ -1,4 +1,4 @@
-package com.cartisan.domains;
+package com.cartisan.domain;
 
 import java.io.Serializable;
 

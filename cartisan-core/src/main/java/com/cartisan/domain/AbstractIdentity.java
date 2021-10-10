@@ -1,4 +1,4 @@
-package com.cartisan.domains;
+package com.cartisan.domain;
 
 import java.util.Objects;
 
@@ -32,8 +32,12 @@ public class AbstractIdentity<T> implements Identity<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         AbstractIdentity<?> that = (AbstractIdentity<?>) o;
         return Objects.equals(value, that.value);
     }

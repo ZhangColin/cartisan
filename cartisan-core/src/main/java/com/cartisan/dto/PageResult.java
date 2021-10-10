@@ -1,4 +1,4 @@
-package com.cartisan.dtos;
+package com.cartisan.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;

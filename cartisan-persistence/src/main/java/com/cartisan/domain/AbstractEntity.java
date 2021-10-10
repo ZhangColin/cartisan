@@ -1,4 +1,4 @@
-package com.cartisan.domains;
+package com.cartisan.domain;
 
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;

@@ -1,4 +1,4 @@
-package com.cartisan.exceptions;
+package com.cartisan.exception;
 
 import com.cartisan.constants.CodeMessage;
 import lombok.Getter;

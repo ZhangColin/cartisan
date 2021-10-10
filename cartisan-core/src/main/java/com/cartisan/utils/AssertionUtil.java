@@ -1,7 +1,7 @@
 package com.cartisan.utils;
 
 import com.cartisan.constants.CodeMessage;
-import com.cartisan.exceptions.CartisanException;
+import com.cartisan.exception.CartisanException;
 
 import java.util.Optional;
 
