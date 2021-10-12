@@ -1,6 +1,6 @@
 package com.cartisan.security;
 
-import com.cartisan.constants.BasePrefix;
+import com.cartisan.constant.BasePrefix;
 
 public class SecurityPrefixKey extends BasePrefix {
     public SecurityPrefixKey(String prefix) {

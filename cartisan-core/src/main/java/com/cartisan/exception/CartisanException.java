@@ -1,6 +1,6 @@
 package com.cartisan.exception;
 
-import com.cartisan.constants.CodeMessage;
+import com.cartisan.constant.CodeMessage;
 import lombok.Getter;
 
 /**

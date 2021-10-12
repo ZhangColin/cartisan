@@ -1,6 +1,6 @@
 package com.cartisan.security;
 
-import com.cartisan.constants.CodeMessage;
+import com.cartisan.constant.CodeMessage;
 import com.cartisan.exception.CartisanException;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
