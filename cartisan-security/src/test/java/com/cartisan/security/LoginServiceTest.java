@@ -1,6 +1,6 @@
 package com.cartisan.security;
 
-import com.cartisan.exceptions.CartisanException;
+import com.cartisan.exception.CartisanException;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.data.redis.core.HashOperations;

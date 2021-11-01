@@ -1,6 +1,6 @@
 package com.cartisan.security;
 
-import com.cartisan.constants.CodeMessage;
+import com.cartisan.constant.CodeMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.cartisan.responses.ResponseUtil.fail;
+import static com.cartisan.response.ResponseUtil.fail;
 
 /**
  * 自定义返回结果：没有权限访问时
