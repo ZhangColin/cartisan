@@ -13,6 +13,10 @@ public class IdName<TId, TName> implements ValueObject<IdName<TId, TName>> {
     private TId id;
     private TName name;
 
+    protected IdName() {
+
+    }
+
     @Override
     public boolean sameValueAs(IdName<TId, TName> other) {
         return id.equals(other.id) && name.equals(other.name);
