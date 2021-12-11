@@ -1,5 +1,6 @@
 package com.cartisan.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import lombok.Data;
@@ -12,14 +13,20 @@ import java.util.List;
  * @author colin
  */
 @Getter
-@Data
 public class TreeNode {
     private String id;
 
     private String name;
     private String parentId;
 
+    public TreeNode(String id, String name, String parentId) {
+        this.id = id;
+        this.name = name;
+        this.parentId = parentId;
+    }
+
     @Setter
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<TreeNode> children;
 
     public static List<TreeNode> buildTree(List<TreeNode> nodes) {
