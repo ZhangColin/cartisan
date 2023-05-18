@@ -2,331 +2,534 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.4.12</version>
-    <relativePath/>
-  </parent>
-
-  <groupId>com.cartisan</groupId>
-  <artifactId>cartisan-parent</artifactId>
-  <version>1.0-SNAPSHOT</version>
-
-  <packaging>pom</packaging>
-
-  <name>cartisan-parent</name>
-  <description>Cartisan parent</description>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <java.version>1.8</java.version>
-    <spring-cloud.version>2020.0.4</spring-cloud.version>
-
-    <!--        <docker.image.prefix>cartisan</docker.image.prefix>-->
-    <!--        <docker.repo>repository:5000</docker.repo>-->
-
-    <!-- db -->
-    <mybatis.spring.boot.version>2.1.2</mybatis.spring.boot.version>
-    <pagehelper.version>1.3.0</pagehelper.version>
-    <druid-spring-boot-starter.version>1.2.8</druid-spring-boot-starter.version>
-    <p6spy.version>3.9.1</p6spy.version>
-
-    <!-- util -->
-    <guava.version>31.0.1-jre</guava.version>
-    <commons-io.version>2.9.0</commons-io.version>
-    <commons-collections4.version>4.4</commons-collections4.version>
-    <lombok.version>1.18.22</lombok.version>
-    <mapstruct.version>1.4.2.Final</mapstruct.version>
-    <jjwt.version>0.11.2</jjwt.version>
-    <zxing.version>3.4.1</zxing.version>
-
-    <log4j2.version>2.15.0</log4j2.version>
-
-    <!-- 测试 -->
-
-    <!-- Swagger 文档 -->
-    <!--        <swagger.version>1.5.23</swagger.version>-->
-    <!--        <swagger-fox.version>2.9.2</swagger-fox.version>-->
-    <!--        <knife4j.version>3.0.2</knife4j.version>-->
-    <knife4j.version>2.0.7</knife4j.version>
-  </properties>
-
-  <dependencyManagement>
-    <dependencies>
-      <!--                <dependency>-->
-      <!--                    <groupId>org.springframework.boot</groupId>-->
-      <!--                    <artifactId>spring-boot-dependencies</artifactId>-->
-      <!--                    <version>${spring-boot.version}</version>-->
-      <!--                    <type>pom</type>-->
-      <!--                    <scope>import</scope>-->
-      <!--                </dependency>-->
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>${spring-cloud.version}</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.alibaba.cloud</groupId>
-        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-        <version>2021.1</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-      <!-- 数据库 -->
-      <dependency>
-        <groupId>org.mybatis.spring.boot</groupId>
-        <artifactId>mybatis-spring-boot-starter</artifactId>
-        <version>${mybatis.spring.boot.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.github.pagehelper</groupId>
-        <artifactId>pagehelper-spring-boot-starter</artifactId>
-        <version>${pagehelper.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.alibaba</groupId>
-        <artifactId>druid-spring-boot-starter</artifactId>
-        <version>${druid-spring-boot-starter.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>p6spy</groupId>
-        <artifactId>p6spy</artifactId>
-        <version>${p6spy.version}</version>
-      </dependency>
-
-      <!-- 工具 -->
-      <!--            <dependency>-->
-      <!--                <groupId>com.google.guava</groupId>-->
-      <!--                <artifactId>guava</artifactId>-->
-      <!--                <version>${guava.version}</version>-->
-      <!--            </dependency>-->
-
-      <dependency>
-        <groupId>commons-io</groupId>
-        <artifactId>commons-io</artifactId>
-        <version>${commons-io.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-collections4</artifactId>
-        <version>${commons-collections4.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.mapstruct</groupId>
-        <artifactId>mapstruct</artifactId>
-        <version>${mapstruct.version}</version>
-      </dependency>
-
-<!--      <dependency>-->
-<!--        <groupId>org.mapstruct</groupId>-->
-<!--        <artifactId>mapstruct-processor</artifactId>-->
-<!--        <version>${mapstruct.version}</version>-->
-<!--        <scope>provided</scope>-->
-<!--      </dependency>-->
-
-      <dependency>
-        <groupId>io.jsonwebtoken</groupId>
-        <artifactId>jjwt-api</artifactId>
-        <version>${jjwt.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.jsonwebtoken</groupId>
-        <artifactId>jjwt-impl</artifactId>
-        <version>${jjwt.version}</version>
-        <scope>runtime</scope>
-      </dependency>
-      <dependency>
-        <groupId>io.jsonwebtoken</groupId>
-        <artifactId>jjwt-jackson</artifactId>
-        <version>${jjwt.version}</version>
-        <scope>runtime</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>com.google.zxing</groupId>
-        <artifactId>core</artifactId>
-        <version>${zxing.version}</version>
-      </dependency>
-
-      <dependency>
-        <groupId>com.google.zxing</groupId>
-        <artifactId>javase</artifactId>
-        <version>${zxing.version}</version>
-      </dependency>
-
-      <!-- 测试 -->
-
-      <!-- Swagger 文档 -->
-      <!--            <dependency>-->
-      <!--                <groupId>io.springfox</groupId>-->
-      <!--                <artifactId>springfox-swagger2</artifactId>-->
-      <!--                <version>${swagger-fox.version}</version>-->
-      <!--            </dependency>-->
-      <!--            <dependency>-->
-      <!--                <groupId>io.swagger</groupId>-->
-      <!--                <artifactId>swagger-annotations</artifactId>-->
-      <!--                <version>${swagger.version}</version>-->
-      <!--            </dependency>-->
-      <!--            <dependency>-->
-      <!--                <groupId>io.swagger</groupId>-->
-      <!--                <artifactId>swagger-models</artifactId>-->
-      <!--                <version>${swagger.version}</version>-->
-      <!--            </dependency>-->
-      <dependency>
-        <groupId>com.github.xiaoymin</groupId>
-        <artifactId>knife4j-spring-boot-starter</artifactId>
-        <version>${knife4j.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
-  <dependencies>
-    <!-- develop tools -->
-    <!--        <dependency>-->
-    <!--            <groupId>org.springframework.boot</groupId>-->
-    <!--            <artifactId>spring-boot-devtools</artifactId>-->
-    <!--            <scope>runtime</scope>-->
-    <!--        </dependency>-->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>${lombok.version}</version>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>versions-maven-plugin</artifactId>
-          <version>2.7</version>
-        </plugin>
-        <plugin>
-          <groupId>org.flywaydb</groupId>
-          <artifactId>flyway-maven-plugin</artifactId>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
-    <plugins>
-      <plugin>
+    <parent>
         <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-          <annotationProcessorPaths>
-            <path>
-              <groupId>org.projectlombok</groupId>
-              <artifactId>lombok</artifactId>
-              <version>${lombok.version}</version>
-            </path>
-<!--            &lt;!&ndash; This is needed when using Lombok 1.18.16 and above &ndash;&gt;-->
-<!--            <path>-->
-<!--              <groupId>org.projectlombok</groupId>-->
-<!--              <artifactId>lombok-mapstruct-binding</artifactId>-->
-<!--              <version>0.2.0</version>-->
-<!--            </path>-->
-            <!-- Mapstruct should follow the lombok path(s) -->
-            <path>
-              <groupId>org.mapstruct</groupId>
-              <artifactId>mapstruct-processor</artifactId>
-              <version>${mapstruct.version}</version>
-            </path>
-          </annotationProcessorPaths>
-        </configuration>
-      </plugin>
-      <!--            <plugin>-->
-      <!--                <groupId>org.apache.maven.plugins</groupId>-->
-      <!--                <artifactId>maven-compiler-plugin</artifactId>-->
-      <!--                <version>3.8.1</version>-->
-      <!--                <configuration>-->
-      <!--                    <source>1.8</source>-->
-      <!--                    <target>1.8</target>-->
-      <!--                    <encoding>UTF-8</encoding>-->
-      <!--                </configuration>-->
-      <!--            </plugin>-->
-      <!--            <plugin>-->
-      <!--                <groupId>com.spotify</groupId>-->
-      <!--                <artifactId>docker-maven-plugin</artifactId>-->
-      <!--                <version>0.4.3</version>-->
-      <!--                <configuration>-->
-      <!--                    <forceTags>true</forceTags>-->
-      <!--                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
-      <!--                    <imageTags>-->
-      <!--                        <imageTag>${project.version}</imageTag>-->
-      <!--                        <imageTag>latest</imageTag>-->
-      <!--                    </imageTags>-->
-      <!--                    <baseImage>java:8</baseImage>-->
-      <!--                    <entryPoint>["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/${project.build.finalName}.jar"]</entryPoint>-->
-      <!--                    <cmd>["&#45;&#45;spring.profiles.active=docker"]</cmd>-->
-      <!--                    <resources>-->
-      <!--                        <resource>-->
-      <!--                            <targetPath>/</targetPath>-->
-      <!--                            <directory>${project.build.directory}</directory>-->
-      <!--                            <include>${project.build.finalName}.jar</include>-->
-      <!--                        </resource>-->
-      <!--                    </resources>-->
-      <!--                    <image>${docker.image.prefix}/${project.artifactId}</image>-->
-      <!--                    <newName>${docker.repo}/${project.artifactId}</newName>-->
-      <!--                    <imageName>${docker.repo}/${project.artifactId}</imageName>-->
-      <!--                </configuration>-->
-      <!--            </plugin>-->
-    </plugins>
-  </build>
-  <distributionManagement>
-    <!--        <repository>-->
-    <!--            <id>nexus-releases</id>-->
-    <!--            <name>Nexus Release Repository</name>-->
-    <!--            <url>http://nexus.zsgcm.com/repository/maven-releases/</url>-->
-    <!--        </repository>-->
-    <!--        <snapshotRepository>-->
-    <!--            <id>nexus-snapshots</id>-->
-    <!--            <name>Nexus Snapshot Repository</name>-->
-    <!--            <url>http://nexus.zsgcm.com/repository/maven-snapshots/</url>-->
-    <!--        </snapshotRepository>-->
-  </distributionManagement>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.11</version>
+        <relativePath/>
+    </parent>
 
-  <!--    <repositories>-->
-  <!--        <repository>-->
-  <!--            <id>spring-snapshots</id>-->
-  <!--            <name>Spring Snapshots</name>-->
-  <!--            <url>https://repo.spring.io/snapshot</url>-->
-  <!--            <snapshots>-->
-  <!--                <enabled>true</enabled>-->
-  <!--            </snapshots>-->
-  <!--        </repository>-->
-  <!--        <repository>-->
-  <!--            <id>spring-milestones</id>-->
-  <!--            <name>Spring Milestones</name>-->
-  <!--            <url>https://repo.spring.io/milestone</url>-->
-  <!--            <snapshots>-->
-  <!--                <enabled>false</enabled>-->
-  <!--            </snapshots>-->
-  <!--        </repository>-->
-  <!--    </repositories>-->
+    <groupId>com.cartisan</groupId>
+    <artifactId>cartisan-parent</artifactId>
+    <version>1.0.0</version>
+
+    <packaging>pom</packaging>
+
+    <name>cartisan-parent</name>
+    <description>Cartisan parent</description>
+
+    <properties>
+        <cartisan.version>1.0.0</cartisan.version>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!-- 微服务 -->
+        <spring-boot.version>2.7.11</spring-boot.version>
+        <spring-cloud.version>2022.0.2</spring-cloud.version>
+        <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
+        <nacos.version>2.2.2</nacos.version>
+
+        <!-- 数据库驱动 -->
+        <!--    <postgresql.version>42.2.25</postgresql.version>-->
+        <!--    <ojdbc6.version>11.2.0.3</ojdbc6.version>-->
+        <!--    <sqljdbc4.version>4.0</sqljdbc4.version>-->
+        <mysql-connector-java.version>8.0.33</mysql-connector-java.version>
+
+        <!-- 持久层 -->
+        <!--    <mybatis-plus.version>3.5.3.1</mybatis-plus.version>-->
+        <mybatis.spring.boot.version>3.0.1</mybatis.spring.boot.version>
+        <dynamic-datasource-spring-boot-starter.version>3.6.1</dynamic-datasource-spring-boot-starter.version>
+        <!--    <druid.version>1.2.18</druid.version>-->
+        <druid-spring-boot-starter.version>1.2.18</druid-spring-boot-starter.version>
+        <pagehelper.version>1.4.6</pagehelper.version>
+        <p6spy.version>3.9.1</p6spy.version>
+        <!--    <minidao.version>1.9.0</minidao.version>-->
+
+        <!-- util -->
+        <xxl-job-core.version>2.4.0</xxl-job-core.version>
+        <fastjson.version>2.0.31</fastjson.version>
+        <!--    <pegdown.version>1.6.0</pegdown.version>-->
+
+
+        <guava.version>31.1-jre</guava.version>
+        <commons-io.version>2.11.0</commons-io.version>
+        <commons-collections4.version>4.4</commons-collections4.version>
+        <lombok.version>1.18.26</lombok.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <jjwt.version>0.11.5</jjwt.version>
+        <zxing.version>3.5.1</zxing.version>
+
+        <hutool.version>5.8.18</hutool.version>
+
+        <log4j2.version>2.17.0</log4j2.version>
+
+        <!-- 测试 -->
+
+        <!-- Swagger 文档 -->
+        <!--        <swagger.version>1.5.23</swagger.version>-->
+        <!--        <swagger-fox.version>2.9.2</swagger-fox.version>-->
+        <!--        <knife4j.version>3.0.2</knife4j.version>-->
+        <!--        <knife4j.version>2.0.7</knife4j.version>-->
+        <knife4j-spring-boot-starter.version>3.0.3</knife4j-spring-boot-starter.version>
+        <!--        <knife4j-spring-ui.version>3.0.3</knife4j-spring-ui.version>-->
+
+        <!--        <docker.image.prefix>cartisan</docker.image.prefix>-->
+        <!--        <docker.repo>repository:5000</docker.repo>-->
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>aliyun</id>
+            <name>aliyun Repository</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- develop tools -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.boot</groupId>-->
+        <!--            <artifactId>spring-boot-devtools</artifactId>-->
+        <!--            <scope>runtime</scope>-->
+        <!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            <version>${lombok.version}</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba</groupId>-->
+        <!--            <artifactId>fastjson</artifactId>-->
+        <!--            <version>${fastjson.version}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.pegdown</groupId>-->
+        <!--            <artifactId>pegdown</artifactId>-->
+        <!--            <version>${pegdown.version}</version>-->
+        <!--        </dependency>-->
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <!--                <dependency>-->
+            <!--                    <groupId>org.springframework.boot</groupId>-->
+            <!--                    <artifactId>spring-boot-dependencies</artifactId>-->
+            <!--                    <version>${spring-boot.version}</version>-->
+            <!--                    <type>pom</type>-->
+            <!--                    <scope>import</scope>-->
+            <!--                </dependency>-->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- Cartisan -->
+            <dependency>
+                <groupId>com.cartisan</groupId>
+                <artifactId>cartisan-core</artifactId>
+                <version>${cartisan.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cartisan</groupId>
+                <artifactId>cartisan-persistence</artifactId>
+                <version>${cartisan.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cartisan</groupId>
+                <artifactId>cartisan-security</artifactId>
+                <version>${cartisan.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cartisan</groupId>
+                <artifactId>cartisan-web</artifactId>
+                <version>${cartisan.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.cartisan</groupId>
+                <artifactId>cartisan-kafka</artifactId>
+                <version>${cartisan.version}</version>
+            </dependency>
+
+            <!-- 数据库 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.spring.boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-spring-boot-starter.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>${p6spy.version}</version>
+            </dependency>
+
+            <!-- 工具 -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${commons-collections4.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jjwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jjwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>core</artifactId>
+                <version>${zxing.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.zxing</groupId>
+                <artifactId>javase</artifactId>
+                <version>${zxing.version}</version>
+            </dependency>
+
+            <!-- 测试 -->
+
+            <!-- Swagger 文档 -->
+            <!--            <dependency>-->
+            <!--                <groupId>io.springfox</groupId>-->
+            <!--                <artifactId>springfox-swagger2</artifactId>-->
+            <!--                <version>${swagger-fox.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>io.swagger</groupId>-->
+            <!--                <artifactId>swagger-annotations</artifactId>-->
+            <!--                <version>${swagger.version}</version>-->
+            <!--            </dependency>-->
+            <!--            <dependency>-->
+            <!--                <groupId>io.swagger</groupId>-->
+            <!--                <artifactId>swagger-models</artifactId>-->
+            <!--                <version>${swagger.version}</version>-->
+            <!--            </dependency>-->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j-spring-boot-starter.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <!-- 指定JDK编译版本 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                    <!--                    <annotationProcessorPaths>-->
+                    <!--                        <path>-->
+                    <!--                            <groupId>org.projectlombok</groupId>-->
+                    <!--                            <artifactId>lombok</artifactId>-->
+                    <!--                            <version>${lombok.version}</version>-->
+                    <!--                        </path>-->
+                    <!--                        &lt;!&ndash; This is needed when using Lombok 1.18.16 and above &ndash;&gt;-->
+                    <!--                        <path>-->
+                    <!--                            <groupId>org.projectlombok</groupId>-->
+                    <!--                            <artifactId>lombok-mapstruct-binding</artifactId>-->
+                    <!--                            <version>0.2.0</version>-->
+                    <!--                        </path>-->
+                    <!--                        &lt;!&ndash; Mapstruct should follow the lombok path(s) &ndash;&gt;-->
+                    <!--                        <path>-->
+                    <!--                            <groupId>org.mapstruct</groupId>-->
+                    <!--                            <artifactId>mapstruct-processor</artifactId>-->
+                    <!--                            <version>${mapstruct.version}</version>-->
+                    <!--                        </path>-->
+                    <!--                    </annotationProcessorPaths>-->
+                </configuration>
+            </plugin>
+            <!-- 打包跳过测试 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+            </plugin>
+            <!-- 避免font文件的二进制文件格式压缩破坏 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <configuration>
+                    <nonFilteredFileExtensions>
+                        <nonFilteredFileExtension>woff</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>woff2</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>eot</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>ttf</nonFilteredFileExtension>
+                        <nonFilteredFileExtension>svg</nonFilteredFileExtension>
+                    </nonFilteredFileExtensions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.0.6</version>
+            </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+            <!--                <version>3.8.1</version>-->
+            <!--                <configuration>-->
+            <!--                    <source>1.8</source>-->
+            <!--                    <target>1.8</target>-->
+            <!--                    <encoding>UTF-8</encoding>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>com.spotify</groupId>-->
+            <!--                <artifactId>docker-maven-plugin</artifactId>-->
+            <!--                <version>0.4.3</version>-->
+            <!--                <configuration>-->
+            <!--                    <forceTags>true</forceTags>-->
+            <!--                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
+            <!--                    <imageTags>-->
+            <!--                        <imageTag>${project.version}</imageTag>-->
+            <!--                        <imageTag>latest</imageTag>-->
+            <!--                    </imageTags>-->
+            <!--                    <baseImage>java:8</baseImage>-->
+            <!--                    <entryPoint>["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/${project.build.finalName}.jar"]</entryPoint>-->
+            <!--                    <cmd>["&#45;&#45;spring.profiles.active=docker"]</cmd>-->
+            <!--                    <resources>-->
+            <!--                        <resource>-->
+            <!--                            <targetPath>/</targetPath>-->
+            <!--                            <directory>${project.build.directory}</directory>-->
+            <!--                            <include>${project.build.finalName}.jar</include>-->
+            <!--                        </resource>-->
+            <!--                    </resources>-->
+            <!--                    <image>${docker.image.prefix}/${project.artifactId}</image>-->
+            <!--                    <newName>${docker.repo}/${project.artifactId}</newName>-->
+            <!--                    <imageName>${docker.repo}/${project.artifactId}</imageName>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
+        </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+            <!--            <resource>-->
+            <!--                <directory>src/main/java</directory>-->
+            <!--                <includes>-->
+            <!--                    <include>**/*.xml</include>-->
+            <!--                    <include>**/*.json</include>-->
+            <!--                    <include>**/*.ftl</include>-->
+            <!--                </includes>-->
+            <!--            </resource>-->
+        </resources>
+        <pluginManagement>
+            <plugins>
+                <!--                <plugin>-->
+                <!--                    <groupId>org.codehaus.mojo</groupId>-->
+                <!--                    <artifactId>versions-maven-plugin</artifactId>-->
+                <!--                    <version>2.7</version>-->
+                <!--                </plugin>-->
+<!--                <plugin>-->
+<!--                    <groupId>org.flywaydb</groupId>-->
+<!--                    <artifactId>flyway-maven-plugin</artifactId>-->
+<!--                    <version>9.18.0</version>-->
+<!--                </plugin>-->
+            </plugins>
+        </pluginManagement>
+
+
+    </build>
+    <distributionManagement>
+        <!--        <repository>-->
+        <!--            <id>nexus-releases</id>-->
+        <!--            <name>Nexus Release Repository</name>-->
+        <!--            <url>http://nexus.zsgcm.com/repository/maven-releases/</url>-->
+        <!--        </repository>-->
+        <!--        <snapshotRepository>-->
+        <!--            <id>nexus-snapshots</id>-->
+        <!--            <name>Nexus Snapshot Repository</name>-->
+        <!--            <url>http://nexus.zsgcm.com/repository/maven-snapshots/</url>-->
+        <!--        </snapshotRepository>-->
+    </distributionManagement>
+
+    <!--    <repositories>-->
+    <!--        <repository>-->
+    <!--            <id>spring-snapshots</id>-->
+    <!--            <name>Spring Snapshots</name>-->
+    <!--            <url>https://repo.spring.io/snapshot</url>-->
+    <!--            <snapshots>-->
+    <!--                <enabled>true</enabled>-->
+    <!--            </snapshots>-->
+    <!--        </repository>-->
+    <!--        <repository>-->
+    <!--            <id>spring-milestones</id>-->
+    <!--            <name>Spring Milestones</name>-->
+    <!--            <url>https://repo.spring.io/milestone</url>-->
+    <!--            <snapshots>-->
+    <!--                <enabled>false</enabled>-->
+    <!--            </snapshots>-->
+    <!--        </repository>-->
+    <!--    </repositories>-->
+    <!-- 环境 -->
+    <!--    <profiles>-->
+    <!--        &lt;!&ndash; 开发 &ndash;&gt;-->
+    <!--        <profile>-->
+    <!--            <id>dev</id>-->
+    <!--            <activation>-->
+    <!--                &lt;!&ndash;默认激活配置&ndash;&gt;-->
+    <!--                <activeByDefault>true</activeByDefault>-->
+    <!--            </activation>-->
+    <!--            <properties>-->
+    <!--                &lt;!&ndash;当前环境&ndash;&gt;-->
+    <!--                <profile.name>dev</profile.name>-->
+    <!--                &lt;!&ndash;Nacos服务地址&ndash;&gt;-->
+    <!--                <config.server-addr>jeecg-boot-nacos:8848</config.server-addr>-->
+    <!--                &lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+    <!--                <config.namespace></config.namespace>-->
+    <!--                &lt;!&ndash;Nacos配置分组名称&ndash;&gt;-->
+    <!--                <config.group>DEFAULT_GROUP</config.group>-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--        &lt;!&ndash; 测试 &ndash;&gt;-->
+    <!--        <profile>-->
+    <!--            <id>test</id>-->
+    <!--            <properties>-->
+    <!--                &lt;!&ndash;当前环境&ndash;&gt;-->
+    <!--                <profile.name>test</profile.name>-->
+    <!--                &lt;!&ndash;Nacos服务地址&ndash;&gt;-->
+    <!--                <config.server-addr>jeecg-boot-nacos:8848</config.server-addr>-->
+    <!--                &lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+    <!--                <config.namespace></config.namespace>-->
+    <!--                &lt;!&ndash;Nacos配置分组名称&ndash;&gt;-->
+    <!--                <config.group>DEFAULT_GROUP</config.group>-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--        &lt;!&ndash; 生产 &ndash;&gt;-->
+    <!--        <profile>-->
+    <!--            <id>prod</id>-->
+    <!--            <properties>-->
+    <!--                &lt;!&ndash;当前环境&ndash;&gt;-->
+    <!--                <profile.name>prod</profile.name>-->
+    <!--                &lt;!&ndash;Nacos服务地址&ndash;&gt;-->
+    <!--                <config.server-addr>jeecg-boot-nacos:8848</config.server-addr>-->
+    <!--                &lt;!&ndash;Nacos配置中心命名空间,用于支持多环境.这里必须使用ID，不能使用名称,默认为空&ndash;&gt;-->
+    <!--                <config.namespace></config.namespace>-->
+    <!--                &lt;!&ndash;Nacos配置分组名称&ndash;&gt;-->
+    <!--                <config.group>DEFAULT_GROUP</config.group>-->
+    <!--            </properties>-->
+    <!--        </profile>-->
+    <!--        &lt;!&ndash; SpringCloud运行环境 &ndash;&gt;-->
+    <!--        <profile>-->
+    <!--            <id>SpringCloud</id>-->
+    <!--            <modules>-->
+    <!--                &lt;!&ndash; 微服务模块&ndash;&gt;-->
+    <!--                <module>jeecg-server-cloud</module>-->
+    <!--            </modules>-->
+    <!--        </profile>-->
+    <!--    </profiles>-->
 </project>

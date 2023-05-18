@@ -6,7 +6,7 @@
 
   <groupId>com.cartisan</groupId>
   <artifactId>cartisan</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>${cartisan.version}</version>
 
   <packaging>pom</packaging>
 

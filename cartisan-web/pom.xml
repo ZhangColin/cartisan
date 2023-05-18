@@ -6,12 +6,12 @@
     <parent>
         <artifactId>cartisan-parent</artifactId>
         <groupId>com.cartisan</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0</version>
         <relativePath />
     </parent>
 
     <artifactId>cartisan-web</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <dependencies>
@@ -19,7 +19,6 @@
         <dependency>
             <groupId>com.cartisan</groupId>
             <artifactId>cartisan-core</artifactId>
-            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
 
@@ -101,6 +100,23 @@
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>javase</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Swagger 文档 -->

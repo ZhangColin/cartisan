@@ -6,12 +6,12 @@
   <parent>
     <artifactId>cartisan-parent</artifactId>
     <groupId>com.cartisan</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <relativePath />
   </parent>
 
   <artifactId>cartisan-kafka</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <packaging>jar</packaging>
 
   <dependencies>
@@ -19,14 +19,13 @@
     <dependency>
       <groupId>com.cartisan</groupId>
       <artifactId>cartisan-core</artifactId>
-      <version>1.0-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
 
     <dependency>
       <groupId>org.apache.kafka</groupId>
       <artifactId>kafka-clients</artifactId>
-      <version>2.8.0</version>
+      <version>3.4.0</version>
     </dependency>
 
     <dependency>
@@ -35,11 +34,6 @@
     </dependency>
 
     <!-- test -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-    </dependency>
-
     <dependency>
       <groupId>org.mockito</groupId>
       <artifactId>mockito-core</artifactId>
