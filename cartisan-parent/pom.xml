@@ -4,13 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.11</version>
-        <relativePath/>
-    </parent>
-
     <groupId>com.cartisan</groupId>
     <artifactId>cartisan-parent</artifactId>
     <version>1.0.0</version>
@@ -30,8 +23,8 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <!-- 微服务 -->
-        <spring-boot.version>2.7.11</spring-boot.version>
-        <spring-cloud.version>2022.0.2</spring-cloud.version>
+        <spring-boot.version>2.7.13</spring-boot.version>
+        <spring-cloud.version>2021.0.8</spring-cloud.version>
         <spring-cloud-alibaba.version>2021.0.4.0</spring-cloud-alibaba.version>
         <nacos.version>2.2.2</nacos.version>
 
@@ -43,7 +36,7 @@
 
         <!-- 持久层 -->
         <!--    <mybatis-plus.version>3.5.3.1</mybatis-plus.version>-->
-        <mybatis.spring.boot.version>3.0.1</mybatis.spring.boot.version>
+        <mybatis.spring.boot.version>2.1.2</mybatis.spring.boot.version>
         <dynamic-datasource-spring-boot-starter.version>3.6.1</dynamic-datasource-spring-boot-starter.version>
         <!--    <druid.version>1.2.18</druid.version>-->
         <druid-spring-boot-starter.version>1.2.18</druid-spring-boot-starter.version>
@@ -88,11 +81,28 @@
             <id>aliyun</id>
             <name>aliyun Repository</name>
             <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
         </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun</id>
+            <name>aliyun Repository</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencies>
         <dependency>
@@ -111,12 +121,17 @@
         <!--            <artifactId>spring-boot-devtools</artifactId>-->
         <!--            <scope>runtime</scope>-->
         <!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.projectlombok</groupId>-->
-<!--            <artifactId>lombok</artifactId>-->
-<!--            <version>${lombok.version}</version>-->
-<!--            <scope>provided</scope>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
         <!--        <dependency>-->
         <!--            <groupId>com.alibaba</groupId>-->
         <!--            <artifactId>fastjson</artifactId>-->
@@ -131,13 +146,7 @@
 
     <dependencyManagement>
         <dependencies>
-            <!--                <dependency>-->
-            <!--                    <groupId>org.springframework.boot</groupId>-->
-            <!--                    <artifactId>spring-boot-dependencies</artifactId>-->
-            <!--                    <version>${spring-boot.version}</version>-->
-            <!--                    <type>pom</type>-->
-            <!--                    <scope>import</scope>-->
-            <!--                </dependency>-->
+            <!-- SpringCloud 微服务 -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -145,10 +154,21 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!-- SpringCloud Alibaba 微服务 -->
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
                 <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!-- SpringBoot 依赖配置 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -307,7 +327,6 @@
 
     <build>
         <plugins>
-            <!-- 指定JDK编译版本 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -316,25 +335,23 @@
                     <source>${java.version}</source>
                     <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
-                    <!--                    <annotationProcessorPaths>-->
-                    <!--                        <path>-->
-                    <!--                            <groupId>org.projectlombok</groupId>-->
-                    <!--                            <artifactId>lombok</artifactId>-->
-                    <!--                            <version>${lombok.version}</version>-->
-                    <!--                        </path>-->
-                    <!--                        &lt;!&ndash; This is needed when using Lombok 1.18.16 and above &ndash;&gt;-->
-                    <!--                        <path>-->
-                    <!--                            <groupId>org.projectlombok</groupId>-->
-                    <!--                            <artifactId>lombok-mapstruct-binding</artifactId>-->
-                    <!--                            <version>0.2.0</version>-->
-                    <!--                        </path>-->
-                    <!--                        &lt;!&ndash; Mapstruct should follow the lombok path(s) &ndash;&gt;-->
-                    <!--                        <path>-->
-                    <!--                            <groupId>org.mapstruct</groupId>-->
-                    <!--                            <artifactId>mapstruct-processor</artifactId>-->
-                    <!--                            <version>${mapstruct.version}</version>-->
-                    <!--                        </path>-->
-                    <!--                    </annotationProcessorPaths>-->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                            <version>${spring-boot.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
             <!-- 打包跳过测试 -->
