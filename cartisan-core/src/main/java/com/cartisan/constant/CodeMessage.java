@@ -19,7 +19,7 @@ public class CodeMessage {
 
     public CodeMessage fillArgs(String... args) {
         Integer code = this.code;
-        String message = String.format(this.message, args);
+        String message = String.format(this.message, (Object[]) args);
 
         return new CodeMessage(code, message);
     }
