@@ -19,7 +19,6 @@
 		<dependency>
 			<groupId>com.cartisan</groupId>
 			<artifactId>cartisan-web</artifactId>
-			<scope>compile</scope>
 		</dependency>
 
 		<dependency>
