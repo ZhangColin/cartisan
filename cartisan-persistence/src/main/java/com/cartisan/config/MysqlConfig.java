@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * @author colin
  */
 @Configuration
-@EnableJpaRepositories(basePackages = {"com.cartisan"},
+@EnableJpaRepositories(basePackages = {"${cartisan.basePackages}"},
         repositoryFactoryBeanClass = CartisanRepositoryFactoryBean.class)
 public class MysqlConfig {
 }

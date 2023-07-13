@@ -33,7 +33,7 @@ public class AbstractEntity implements Serializable {
 //        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
 //        AbstractEntity brand = (AbstractEntity) o;
 //        return id != null && Objects.equals(id, brand.id);
-//    }x`
+//    }
 //
 //    @Override
 //    public int hashCode() {
