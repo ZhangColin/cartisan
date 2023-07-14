@@ -1,4 +1,4 @@
-//package com.cartisan.commons.util;
+//package com.cartisan.util;
 //
 //import org.apache.http.HttpEntity;
 //import org.apache.http.HttpStatus;
