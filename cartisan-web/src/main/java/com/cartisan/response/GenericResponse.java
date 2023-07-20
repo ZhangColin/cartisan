@@ -8,6 +8,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
+import javax.annotation.Nullable;
 import java.time.LocalDateTime;
 
 /**
@@ -15,17 +16,29 @@ import java.time.LocalDateTime;
  */
 @Getter
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
-public class GenericResponse {
+public class GenericResponse<T> {
     @ApiModelProperty(value = "错误编码", required = true)
-    private Integer status;
+    private final Integer status;
 
     @ApiModelProperty(value = "提示信息", required = true)
-    private String message;
+    private final String message;
 
     @ApiModelProperty(value = "运行时间截", required = true)
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonFormat(pattern = DateUtil.Pattern.DATETIME_SSS)
-    private LocalDateTime timestamp;
+    private final LocalDateTime timestamp;
+
+    @ApiModelProperty(value = "返回结果", required = true)
+    @Nullable
+    private T data;
+
+    public GenericResponse(Integer status, String message, @Nullable T data) {
+        this.status = status;
+        this.message = message;
+        this.data = data;
+
+        this.timestamp = LocalDateTime.now();
+    }
 
     public GenericResponse(Integer status, String message) {
         this.status = status;

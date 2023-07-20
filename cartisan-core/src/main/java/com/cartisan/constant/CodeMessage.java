@@ -9,8 +9,8 @@ import lombok.ToString;
 @Getter
 @ToString
 public class CodeMessage {
-    private Integer code;
-    private String message;
+    private final Integer code;
+    private final String message;
 
     protected CodeMessage(Integer code, String message) {
         this.code = code;
@@ -30,8 +30,8 @@ public class CodeMessage {
     public static final CodeMessage BAD_REQUEST = new CodeMessage(400, "Bad Request");
     public static final CodeMessage UNAUTHORIZED = new CodeMessage(401, "需要身份验证。");
     public static final CodeMessage FORBIDDEN = new CodeMessage(403, "没有获得此资源的授权");
-    public static final CodeMessage NOT_FOUND = new CodeMessage(404, "Not Found");
-    public static final CodeMessage METHOD_NOT_ALLOWED = new CodeMessage(405, "Method Not Allowed");
+    public static final CodeMessage NOT_FOUND = new CodeMessage(404, "Path Not Found: %s");
+    public static final CodeMessage METHOD_NOT_ALLOWED = new CodeMessage(405, "Method Not Allowed: %s");
     public static final CodeMessage REQUEST_TIMEOUT = new CodeMessage(408, "Request Timeout");
     public static final CodeMessage INTERNAL_SERVER_ERROR = new CodeMessage(500, "系统内部错误，请与管理员联系。");
     public static final CodeMessage NOT_IMPLEMENTED = new CodeMessage(501, "Not Implemented");
