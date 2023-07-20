@@ -2,8 +2,6 @@ package com.cartisan.response;
 
 import com.cartisan.constant.CodeMessage;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 /**
  * @author colin

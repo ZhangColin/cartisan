@@ -3,7 +3,6 @@ package com.cartisan.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
