@@ -1,6 +1,9 @@
 package com.cartisan.config;
 
 import com.cartisan.CartisanContext;
+import com.cartisan.constant.CodeMessage;
+import com.cartisan.dp.OnOffStatus;
+import com.cartisan.exception.CartisanException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.CorsEndpointProperties;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
@@ -15,8 +18,10 @@ import org.springframework.boot.actuate.endpoint.web.annotation.ServletEndpoints
 import org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.env.Environment;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.format.support.FormattingConversionService;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -116,6 +121,23 @@ public class MvcConfig extends WebMvcConfigurationSupport {
         // 注册 Spring data jpa pageable 的参数分解器
         argumentResolvers.add(new PageableHandlerMethodArgumentResolver());
     }
+
+//    @Override
+//    protected void addFormatters(FormatterRegistry registry) {
+//        registry.addConverter(new Converter<String, OnOffStatus>() {
+//            @Override
+//            public OnOffStatus convert(String source) {
+//                try {
+//                    int intValue = Integer.parseInt(source);
+//                    return OnOffStatus.getInstance(intValue);
+//                }
+//                catch (NumberFormatException e) {
+//                    throw new CartisanException(CodeMessage.FAIL.fillArgs("Invalid OnOffStatus value: " + source));
+//                }
+//            }
+//        });
+//        super.addFormatters(registry);
+//    }
 
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {

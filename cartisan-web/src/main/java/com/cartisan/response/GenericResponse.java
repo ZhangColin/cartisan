@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 @Getter
 @JsonInclude(value = JsonInclude.Include.NON_NULL)
 public class GenericResponse<T> {
-    @ApiModelProperty(value = "错误编码", required = true)
-    private final Integer status;
+    @ApiModelProperty(value = "执行编码", required = true)
+    private final Integer code;
 
     @ApiModelProperty(value = "提示信息", required = true)
     private final String message;
@@ -32,16 +32,16 @@ public class GenericResponse<T> {
     @Nullable
     private T data;
 
-    public GenericResponse(Integer status, String message, @Nullable T data) {
-        this.status = status;
+    public GenericResponse(Integer code, String message, @Nullable T data) {
+        this.code = code;
         this.message = message;
         this.data = data;
 
         this.timestamp = LocalDateTime.now();
     }
 
-    public GenericResponse(Integer status, String message) {
-        this.status = status;
+    public GenericResponse(Integer code, String message) {
+        this.code = code;
         this.message = message;
 
         this.timestamp = LocalDateTime.now();
