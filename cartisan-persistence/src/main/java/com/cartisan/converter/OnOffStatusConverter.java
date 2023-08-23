@@ -8,8 +8,8 @@ import javax.persistence.Convert;
 @Convert
 public class OnOffStatusConverter implements AttributeConverter<OnOffStatus, Integer> {
     @Override
-    public Integer convertToDatabaseColumn(OnOffStatus gender) {
-        return gender.getValue();
+    public Integer convertToDatabaseColumn(OnOffStatus status) {
+        return status.getValue();
     }
 
     @Override
