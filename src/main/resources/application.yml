@@ -2,18 +2,131 @@ server:
   # 端口
   port: 8088
 
-  redis:
-    host: localhost # Redis服务器地址
-    database: 0 # Redis数据库索引（默认为0）
-    port: 6379 # Redis服务器连接端口
-    password:  # Redis服务器连接密码（默认为空）
-    lettuce:
-      pool:
-        max-active: 200 # 连接池最大连接数（使用负值表示没有限制）
-        max-wait: -1ms # 连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-idle: 8 # 连接池中的最大空闲连接
-        min-idle: 0 # 连接池中的最小空闲连接
-    timeout: 200ms # 连接超时时间（毫秒）
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/cartisan?useSSL=false&serverTimezone=UTC # 数据库连接URL
+    username: root # 数据库用户名
+    password: Zjh@123456 # 数据库密码
+    driver-class-name: com.mysql.cj.jdbc.Driver # 实际的数据库驱动类名
+    type: com.alibaba.druid.pool.DruidDataSource # 使用Druid数据源
+    druid:
+      # 初始化时建立物理连接的个数
+      initial-size: 3
+      # 连接池最小连接数
+      min-idle: 3
+      # 连接池最大连接数
+      max-active: 20
+      # 获取连接时最大等待时间，单位毫秒
+      max-wait: 60000
+      # 既作为检测的间隔时间又作为 testWhileIdel 执行的依据
+      time-between-connect-error-millis: 60000
+      # 一个连接在池中最小生存的时间，单位毫秒
+      min-evictable-idle-time-millis: 60000
+      # 一个连接在池中最大生存的时间，单位毫秒
+      max-evictable-idle-time-millis: 90000
+      # 用来检测连接是否有效的 sql，必须是一个查询语句
+      # mysql 中为 select 1
+      # oracle 中为 select 1 from dual
+      validation-query: select 1
+      # 申请连接时会执行 validationQuery，检测连接是否有效，开启会降低性能，默认为 true
+      test-on-borrow: false
+      # 归还连接时会执行 validationQuery，检测连接是否有效，开启会降低性能，默认为 true
+      test-on-return: false
+      # 申请连接的时候检测，如果空闲时间大于 timeBetweenEvictionRunsMillis，执行 validationQuery 检测连接是否有效。
+      test-while-idle: true
+      # 是否缓存 preparedStatement，mysql5.5+ 建议开启
+      pool-prepared-statements: true
+      # 当值大于 0 时，poolPreparedStatements 会自动修改为 true
+      max-pool-prepared-statement-per-connection-size: 20
+      # 合并多个 DruidDataSource 的监控数据
+      use-global-data-source-stat: false
+      # 配置扩展插件
+      # filters: stat, wall, slf4j
+      filters: stat, slf4j
+      # 通过 connectProperties 属性来打开 mergeSql 功能，慢 SQL 记录
+      #      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000;config.decrypt=${spring.datasource.decrypt};config.decrypt.key=${spring.datasource.public-key}
+      # mergeSql=true时，项目在执行flyway脚本时会把Sql解析异常，但执行结果正确
+      connection-properties: druid.stat.mergeSql=false;druid.stat.slowSqlMillis=5000;config.decrypt=${spring.datasource.decrypt};config.decrypt.key=${spring.datasource.public-key}
+      # 定时输出统计信息到日志中，并每次输出日志会导致清零（reset）连接池相关的计数器
+      # 合并多个 DruidDataSource 的监控数据 use-global-data-source-stat 不可开启，否则会报错
+      # time-between-log-stats-millis: 30000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 2000
+      keep-alive: true
+      phy-max-use-count: 10000
+      filter:
+        config:
+          enabled: true
+      # 配置DruidStatFilter
+      web-stat-filter:
+        enabled: true
+        url-pattern: '/*'
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid*,/swagger-*"
+      # 配置 DruidStatViewServlet
+      stat-view-servlet:
+        # 是否启用 StatViewServlet（监控页面）默认值为 false（考虑安全问题默认并未启动，如需启用建议设置密码或白名单以保障安全）
+        enabled: true
+        url-pattern: "/druid/*"
+        # IP 白名单（没有配置或者为空，则允许所有访问）
+        allow:
+        # IP 黑名单（存在共同时，deny 优先于 allow）
+        deny:
+        # 禁用 HTML 页面上的 "Reset All" 功能
+        reset-enable: false
+        # 登录名
+        login-username: cartisan
+        # 登录密码
+        login-password: cartisan
+
+  jpa:
+    hibernate:
+      ddl-auto: none # Hibernate自动DDL策略，none表示不自动创建表结构
+    show-sql: true # 是否显示SQL语句
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect # 指定Hibernate方言
+
+  flyway:
+    enabled: true # 是否启用Flyway
+    locations: classpath:db/migration # Flyway迁移脚本的位置
+
+
+
+#p6spy:
+#  config:
+#    logfile: spy.log # P6Spy日志文件路径
+#    appender: com.p6spy.engine.logging.appender.Slf4JLogger # 日志记录器类型
+#    logMessageFormat: com.p6spy.engine.spy.appender.MessageFormattingStrategy # 日志消息格式化策略
+#    realdriver: com.mysql.cj.jdbc.Driver # 实际的数据库驱动类名
+
+
+logging:
+  file:
+    path: /Users/zhangcolin/logs/cartisan
+    name: ekin
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID} %10.10X{request-id} %10.10X{user}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+  level:
+    root: info
+    com.p6spy: debug # 设置P6Spy的日志级别为debug
+    org.apache.http.wire: info
+    org.apache.http.headers: info
+    # 在日志中打印应用映射的所有请求路径
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: trace
+    com.cartisan: debug
+#management:
+#  endpoints:
+#    web:
+#      exposure:
+#        include: "*"
+#  endpoint:
+#    druid:
+#      enabled: true
+#  endpoint:
+#    health:
+#      show-details: always
+
+
 
 ############## Sa-Token 配置 (文档: https://sa-token.cc) ##############
 sa-token:
@@ -33,3 +146,16 @@ sa-token:
   is-log: true
   # 是否在初始化配置时打印版本字符画
   isPrint: false
+
+  # 配置 Sa-Token 单独使用的 Redis 连接
+  alone-redis:
+    # Redis数据库索引（默认为0）
+    database: 2
+    # Redis服务器地址
+    host: 127.0.0.1
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password:
+    # 连接超时时间
+    timeout: 10s
