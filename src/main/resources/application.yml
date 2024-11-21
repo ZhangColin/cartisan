@@ -5,6 +5,7 @@ server:
 spring:
   datasource:
     url: jdbc:p6spy:mysql://localhost:3306/cartisan?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC # 数据库连接URL
+#    url: jdbc:mysql://localhost:3306/cartisan?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC # 数据库连接URL
     username: root # 数据库用户名
     password: Zjh@123456 # 数据库密码
     driver-class-name: com.p6spy.engine.spy.P6SpyDriver
@@ -96,12 +97,7 @@ spring:
 
 
 
-#p6spy:
-#  config:
-#    logfile: spy.log # P6Spy日志文件路径
-#    appender: com.p6spy.engine.logging.appender.Slf4JLogger # 日志记录器类型
-#    logMessageFormat: com.p6spy.engine.spy.appender.MessageFormattingStrategy # 日志消息格式化策略
-#    realdriver: com.mysql.cj.jdbc.Driver # 实际的数据库驱动类名
+
 
 
 logging:
