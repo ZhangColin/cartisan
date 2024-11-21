@@ -4,11 +4,12 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/cartisan?useSSL=false&serverTimezone=UTC # 数据库连接URL
+    url: jdbc:p6spy:mysql://localhost:3306/cartisan?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC # 数据库连接URL
     username: root # 数据库用户名
     password: Zjh@123456 # 数据库密码
-    driver-class-name: com.mysql.cj.jdbc.Driver # 实际的数据库驱动类名
-    type: com.alibaba.druid.pool.DruidDataSource # 使用Druid数据源
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
+#    driver-class-name: com.mysql.cj.jdbc.Driver # 实际的数据库驱动类名
+    type: com.alibaba.druid.pool.DruidDataSource
     druid:
       # 初始化时建立物理连接的个数
       initial-size: 3
@@ -81,10 +82,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none # Hibernate自动DDL策略，none表示不自动创建表结构
-    show-sql: true # 是否显示SQL语句
+    show-sql: false # 是否显示SQL语句
+    database: mysql
+    generate-ddl: false   # 是否生成 ddl 语句
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect # 指定Hibernate方言
+
 
   flyway:
     enabled: true # 是否启用Flyway
@@ -112,7 +116,10 @@ logging:
     org.apache.http.wire: info
     org.apache.http.headers: info
     # 在日志中打印应用映射的所有请求路径
-    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: trace
+#    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: trace
+    org.hibernate: info
+    org.hibernate.type.descriptor.sql.BasicBinder: info
+    org.hibernate.type.descriptor.sql.BasicExtractor: info
     com.cartisan: debug
 #management:
 #  endpoints:
