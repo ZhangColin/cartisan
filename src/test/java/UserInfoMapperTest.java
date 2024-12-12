@@ -1,8 +1,8 @@
 import cn.hutool.core.convert.Convert;
 import cn.hutool.json.JSONUtil;
 import com.cartisan.CartisanApplication;
-import com.cartisan.entity.UserInfo;
-import com.cartisan.mapper.UserInfoMapper;
+import com.cartisan.example.entity.UserInfo;
+import com.cartisan.example.mapper.UserInfoMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
